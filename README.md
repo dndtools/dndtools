@@ -19,6 +19,7 @@ Installation info
 2. Django-1.2.7.tar.gz
 3. etianen-django-reversion-release-1.3.3-0-g3c9a873.zip (setup.py install), https://nodeload.github.com/etianen/django-reversion/zipball/release-1.3.3
 4. appserv-win32-2.5.10.exe (MySQL), MySQL-python-1.2.3.win32-py2.7.exe (or 64b)
+4x. probably missing easy_install here
 5. ez_setup.py
 6. easy_install pip
 7. easy_install South
