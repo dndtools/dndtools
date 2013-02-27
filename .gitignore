@@ -1,1 +1,11 @@
+#   IDEs   #
+############
 .idea
+
+# Configuration #
+#################
+/dndtools/local.py
+
+# Binaries #
+############
+*.pyc
