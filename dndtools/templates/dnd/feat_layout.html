@@ -1,0 +1,11 @@
+{% extends "dnd/layout.html" %}
+
+{% block menu_feats %} class="selected"{% endblock %}
+
+{% block sidebar %}
+  <h3>Useful Links</h3>
+  <ul>
+    <li><a href="{% url feat_category_list %}">Categories</a></li>
+    <li><a href="{% url feat_list_by_rulebook %}">By Rulebooks</a></li>
+  </ul>
+{% endblock %}

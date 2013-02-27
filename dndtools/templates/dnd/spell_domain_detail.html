@@ -1,0 +1,21 @@
+{% extends "dnd/spell_layout.html" %}
+
+{#{% block extra_link %}<link rel="canonical" href="{% url character_class_spells character_class_slug=character_class.slug level=level %}" />{% endblock %}#}
+
+{% block title %}{{ spell_domain.name }}{% endblock %}
+
+{% block breadcrumbs %}
+    &raquo; <a href="{% url spell_index %}">Spells</a>
+    &raquo; <a href="{% url spell_domain_list  %}">Spell Domains</a>
+    &raquo; <a href="{{ spell_domain.get_absolute_url }}">{{ spell_domain.name }}</a>
+{% endblock %}
+
+{% block admin_edit %}<a href="{% url admin:dnd_domain_change spell_domain.id %}">EDIT</a>{% endblock %}
+
+{% block content %}
+
+<h2>Spells in {{ spell_domain.name }} domain</h2>
+
+{% include "dnd/spell_table.html" %}
+
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends "dnd/feat_layout.html" %}
+
+{% block extra_link %}{{ paginator.print_rel_prev_next }}{{ block.super }}{% endblock %}
+
+{% block title %}Feats in {{ rulebook.name }}{% endblock %}
+
+{% block breadcrumbs %}
+    &raquo; <a href="{% url feat_index %}">Feats</a>
+    &raquo; <a href="{% url feats_in_rulebook rulebook_slug=rulebook.slug rulebook_id=rulebook.id  %}">{{ rulebook.name }}</a> (<a href="{{ rulebook.get_absolute_url }}">book</a>)
+{% endblock %}
+
+{% block content %}
+
+<h2>Feats in {{ rulebook.name }}</h2>
+
+{% include "dnd/feat_table.html" %}
+
+{% endblock %}

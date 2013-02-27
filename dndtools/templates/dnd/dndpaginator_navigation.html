@@ -1,0 +1,38 @@
+<div class="pagination">
+  {% load i18n %}
+  {% if page_obj.has_previous %}
+      <a href="{% if page_obj.previous_page_number > 1 %}?page={{ page_obj.previous_page_number }}{{ get_vars }}{% else %}{{ get_vars_solo }}{% endif %}" class="prev">&lsaquo;&lsaquo; previous</a>
+  {% else %}
+      <span class="disabled prev">&lsaquo;&lsaquo; previous</span>
+  {% endif %}
+  {% for page in pages %}
+    {% if page %}
+      {% ifequal page page_obj.number %}
+          <span class="current page">{{ page }}</span>
+      {% else %}
+          <a href="{% if page > 1 %}?page={{ page }}{{ get_vars }}{% else %}{{ get_vars_solo }}{% endif %}" class="page">{{ page }}</a>
+      {% endifequal %}
+    {% else %}
+      ...
+    {% endif %}
+  {% endfor %}
+  {% if page_obj.has_next %}
+      <a href="?page={{ page_obj.next_page_number }}{{ get_vars }}" class="next">next &rsaquo;&rsaquo;</a>
+  {% else %}
+      <span class="disabled next">next &rsaquo;&rsaquo;</span>
+  {% endif %}
+  (total {{ count }} items)
+  <form method="get" action="{{ get_vars_solo }}">
+    {% for key, value in hidden_inputs %}
+        <input type="hidden" name="{{ key }}" value="{{ value }}"/>
+    {% endfor %}
+    <label>Items per page:
+      <select name="page_size" onchange="this.form.submit()">
+        {% for page_size in available_page_sizes %}
+        <option value="{{ page_size }}"
+        {% if page_size == selected_page_size %} selected="selected"{% endif %}>{{ page_size }}</option>
+      {% endfor %}
+    </select>
+    </label>
+  </form>
+</div>

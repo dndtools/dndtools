@@ -1,0 +1,16 @@
+{% load custom_filters %}
+
+<strong>Body Slot:</strong> {{ item.body_slot|empty_as_dash }}<br/>
+
+<strong>Caster Level:</strong> {{ item.caster_level|ordinal_number }}<br/>
+
+<strong>Aura:</strong> {{ item.aura }};
+{% if item.aura_dc %}
+    (DC {{ item.aura_dc }})
+{% endif %}
+{% for aura_school in aura_schools %}
+    <a href="{{ aura_school.get_absolute_url }}">{{ aura_school }}</a>{% if not forloop.last %}, {% endif %}
+{% endfor %}<br/>
+
+<strong>Activation:</strong> {{ item.activation|empty_as_dash }}<br/>
+<strong>Weight:</strong> {{ item.weight|empty_as_dash }} lb.<br/>

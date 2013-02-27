@@ -1,0 +1,185 @@
+/* Effective stylesheet produced by snapshot save */
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td {
+    margin: 0;
+    padding: 0;
+    border: 0 none;
+    outline: 0 none;
+    font-size: 100%;
+    vertical-align: baseline;
+    background: none repeat scroll 0 0 transparent;
+}
+
+body {
+    line-height: 1;
+}
+
+ol, ul {
+    list-style: none outside none;
+}
+
+blockquote, q {
+    quotes: none;
+}
+
+ins {
+    text-decoration: none;
+}
+
+del {
+    text-decoration: line-through;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+.left {
+    float: left;
+}
+
+.right {
+    float: right;
+}
+
+.align-r {
+    text-align: right;
+}
+
+.align-l {
+    text-align: left;
+}
+
+.clr {
+    clear: both;
+}
+
+.line {
+    border-bottom: 1px solid rgb(221, 221, 221);
+}
+
+.border-no {
+    border: medium none ! important;
+}
+
+.margin-r {
+    margin-right: 20px;
+}
+
+.margin-r-no {
+    margin-right: 0 ! important;
+}
+
+.pad-t {
+    padding-top: 20px;
+}
+
+.pad-t-no {
+    padding-top: 0 ! important;
+}
+
+.pad-l-no {
+    padding-left: 0 ! important;
+}
+
+.pad-r-no {
+    padding-right: 0 ! important;
+}
+
+a:active {
+    outline: medium none;
+}
+
+a span {
+    display: none;
+}
+
+*::-moz-selection {
+    background: none repeat scroll 0 0 rgb(99, 183, 187);
+    color: rgb(255, 255, 255);
+}
+
+body {
+    font-family: Arial, Sans-serif;
+    font-size: 15px;
+    background: none repeat scroll 0 0 rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
+}
+
+#content {
+    width: 950px;
+    margin: 0 auto;
+}
+
+#content h1 {
+    font-family: NeoSansRegular, Arial, Sans-serif;
+    font-size: 72px;
+    font-weight: normal;
+    letter-spacing: -5px;
+}
+
+#content h2 {
+    font-size: 28px;
+    font-weight: normal;
+    border-bottom: 1px solid rgb(4, 7, 7);
+    margin-bottom: 10px;
+    letter-spacing: -1px;
+}
+
+#content p {
+    line-height: 1.3em;
+    padding: 10px 0;
+}
+
+#content p.highlight {
+    font-size: 20px;
+    color: rgb(151, 151, 151);
+    font-style: italic;
+}
+
+#content p a {
+    font-style: normal;
+    font-weight: normal;
+}
+
+#content a, #content a:link {
+    color: rgb(99, 183, 187);
+    text-decoration: none;
+    font-style: italic;
+    font-weight: bold;
+}
+
+#content a:hover {
+    text-decoration: underline;
+}
+
+.box {
+    padding: 40px 0;
+}
+
+.box.two-thirds-right .box-left {
+    width: 300px;
+    float: left;
+}
+
+.box.two-thirds-right .box-right {
+    width: 600px;
+    float: right;
+}
+
+.btn-big {
+    background: url("error-sprite.png") repeat scroll 0 0 transparent;
+    width: 83px;
+    height: 83px;
+    z-index: 3;
+    display: block;
+    cursor: pointer;
+}
+
+.btn-big.force {
+    background-position: 0 0;
+}
+
+.btn-big.force:hover {
+    background-position: -89px 0;
+}

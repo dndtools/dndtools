@@ -1,0 +1,26 @@
+{% load custom_filters %}
+
+{{ paginator.print_navigation }}
+
+<table class="common">
+<tr>
+  <th>Spell name</th>
+  <th>Spell School</th>
+  <th>
+    <abbr title="Verbal Component">V</abbr>&nbsp;<abbr title="Somatic Component">S</abbr>&nbsp;<abbr title="Material Component">M</abbr>&nbsp;<abbr title="Arcane Focus Component">AF</abbr>&nbsp;<abbr title="Divine Focus Component">DF</abbr>&nbsp;<abbr title="XP Component">XP</abbr>
+  </th>
+  <th>Rulebook name</th>
+  <th>Edition</th>
+</tr>
+{% for spell in spell_list %}
+<tr>
+    <td><a href="{{ spell.get_absolute_url }}">{{ spell.name }}</a></td>
+    <td><a href="{{ spell.school.get_absolute_url }}">{{ spell.school.name }}</a></td>
+    <td>{{ spell.verbal_component|boolean_as_img }}&nbsp;{{ spell.somatic_component|boolean_as_img }}&nbsp;{{ spell.material_component|boolean_as_img }}&nbsp;{{ spell.arcane_focus_component|boolean_as_img }}&nbsp;{{ spell.divine_focus_component|boolean_as_img }}&nbsp;{{ spell.xp_component|boolean_as_img }}</td>
+    <td><a href="{{ spell.rulebook.get_absolute_url }}">{{ spell.rulebook.name }}</a></td>
+    <td><a href="{{ spell.rulebook.dnd_edition.get_absolute_url }}">{{ spell.rulebook.dnd_edition.name }}</a></td>
+</tr>
+{% endfor %}
+</table>
+
+{{ paginator.print_navigation }}

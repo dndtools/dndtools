@@ -1,0 +1,11 @@
+{% extends "dnd/layout.html" %}
+
+{% block menu_rulebooks %} class="selected"{% endblock %}
+
+{% block sidebar %}
+  <h3>Useful Links</h3>
+  <ul>
+  <li><a href="{% url rulebook_list %}">Rulebooks</a></li>
+  <li><a href="{% url edition_list %}">Editions</a></li>
+  </ul>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends "dnd/skill_layout.html" %}
+
+{% block extra_link %}{{ paginator.print_rel_prev_next }}{{ block.super }}{% endblock %}
+{% block extra_meta %}{% include "dnd/meta_noindex.html" %}{% endblock %}
+
+{% block title %}Skills{% endblock %}
+
+{% block breadcrumbs %}
+    &raquo; <a href="{% url skill_list  %}">Skills</a>
+{% endblock %}
+
+{% block content %}
+
+<h2>Skills</h2>
+
+{% include "dnd/filter_form.html" %}
+
+{% include "dnd/skill_table.html" %}
+
+{% endblock %}

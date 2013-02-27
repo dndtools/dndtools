@@ -1,0 +1,19 @@
+{% extends "dnd/index_layout.html" %}
+
+{% block content %}
+
+{% for newsEntry in newsEntries %}
+<h3>{{ newsEntry.title }}</h3>
+<p style="font-size: 11px;">{{ newsEntry.published }}</p>
+
+<div class="nice-textile">
+{{ newsEntry.body_html|safe }}
+</div>
+{% endfor %}
+
+<h3>Disclaimer</h3>
+
+<p>If you, by any chance, wonder on a page from a rulebook you do not OWN (the source material is always referred both in url and in page contents),
+  please, leave that page, buy the book and then return.</p>
+
+{% endblock %}

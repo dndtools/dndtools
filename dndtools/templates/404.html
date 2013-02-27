@@ -1,0 +1,67 @@
+{% load custom_tags %}<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Error 404</title>
+    <link rel="stylesheet" href="{% media "css/error.css" %}" type="text/css">
+
+    <style type="text/css">
+
+        body, html {height: 100%;}
+        #outer {height: 100%; overflow: hidden; position: relative; width: 100%;}
+        #outer[id] {display: table; position: static;}
+
+        #middle {position: absolute; top: 50%; width: 100%; text-align: center;} /* for explorer only*/
+        #middle[id] {display: table-cell; vertical-align: middle; position: static;}
+
+        #inner {position: relative; top: -50%; text-align: left;} /* for explorer only */
+        #inner {width: 980px; margin-left: auto; margin-right: auto;} /* for all browsers*/
+    </style>
+</head>
+
+<body>
+<div id="outer">
+    <div id="middle">
+        <div id="inner">
+
+
+            <div id="content">
+                <h1>Occured, a 404 error has ...</h1>
+
+                <div class="box two-thirds-right" style="vertical-align: middle;">
+
+                    <div class="box-left">
+
+                        <img src="{% media "css/error-yoda.jpg" %}" alt="Yoda">
+
+                    </div>
+
+                    <div class="box-right">
+
+                        <h2>Lost a page I have. How embarrassing ...</h2>
+
+                        <p class="highlight">The dark side I sense in you. Due to a disturbance in the force I couldn't find the page you were looking for.</p>
+
+                        <p>Trust in the force, clear your mind, unlearn what you have learned, and find your missing page you will.</p>
+
+                        <p>
+                            Remember, a Jedi's strength flows from the Force. But beware. Anger, fear, aggression. The dark side are they.
+                            Once you start down the dark path, forever will it dominate your destiny.</p>
+                        <a href="{% url index %}" class="btn-big force" title="Use the force"><span>Home</span></a>
+                    </div>
+
+                    <div class="clr"></div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,10 @@
+{% extends "dnd/layout.html" %}
+
+{% block menu_skills %} class="selected"{% endblock %}
+
+{% block sidebar %}
+    <h3>Useful Links</h3>
+    <ul>
+        <li><a href="{% url feat_category_detail category_slug="skill-trick" %}">Skill tricks</a></li>
+    </ul>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends "dnd/layout.html" %}
+
+{% block content %}
+
+  <form action="{% url inaccurate_content %}" method="post">{% csrf_token %}
+    <div class="form_settings">
+      {% for field in form %}
+        {% if field.name == "url" %}
+          {{ field.as_hidden }}
+        {% else %}
+        <p>
+        {{ field.errors }}
+
+          {% if field.field.required %}
+            <span class="required">{{ field.label_tag }}</span>
+          {% else %}
+            <span>{{ field.label_tag }}</span>
+          {% endif %}
+          {{ field }}
+          {% if field.help_text %} <small>{{ field.help_text }}</small> {% endif %}
+        </p>
+        {% endif %}
+      {% endfor %}
+      <p style="padding-top: 15px">
+        <span>&nbsp;</span><input class="submit" type="submit" name="contact_submitted" value="submit"/>
+      </p>
+    </div>
+  </form>
+
+{% endblock %}

@@ -1,0 +1,197 @@
+{% load custom_tags %}<!DOCTYPE HTML>
+<html>
+<head>
+  <title>{% block title %}Home{% endblock %} &ndash; D&amp;D Tools</title>
+  <link href="{% media "favicon.ico" %}" rel="SHORTCUT ICON"/>
+  <meta name="description" content="Complete list of all D&amp;D spells, rulebooks, feats, classes and more!"/>
+  <meta name="keywords" content="D&amp;D, Spells, Feats, Classes"/>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+  <meta name="google-site-verification" content="T0e3C-V9mijfHz3l51TYGDuvtf14Oz7MWKTxtUbT8Gs" />
+  {% block extra_meta %}{% endblock %}
+  <link rel="stylesheet" type="text/css" href="{% media "css/style.css" %}" title="style"/>
+  <script type="text/javascript" src="{% media "js/jquery-1.7.min.js" "no-timestamp" %}"></script>
+  <script type="text/javascript" src="{% media "js/jquery.cookie.js" "no-timestamp" %}"></script>
+  {# google search engine #}
+  {% if not debug  %}
+  <link rel="stylesheet" href="//www.google.com/cse/style/look/default.css" type="text/css" />
+  {% block extra_link %}{% endblock %}
+  <script type="text/javascript">
+
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-27000767-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  {% endif %}
+  {% if not debug and not disable_social %}
+  <script type="text/javascript">
+      (function() {
+          var s = document.createElement('script'), t = document.getElementsByTagName('script')[0];
+          s.type = 'text/javascript';
+          s.async = true;
+          s.src = 'http://api.flattr.com/js/0.6/load.js?mode=auto';
+          t.parentNode.insertBefore(s, t);
+      })();
+  </script>
+  {% endif %}
+</head>
+
+<body>
+<div id="fb-root"></div>
+{% if not debug and not disable_social %}
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+{% endif %}
+{% comment %}<div class="flash">
+  Please check the home page, I've added some news. Thanks.
+</div>{% endcomment %}
+<div id="main">
+  <div id="header">
+    <div id="logo">
+      <div id="logo_text">
+        <h1>
+          <a href="{% url index %}">D&amp;D<span class="logo_colour">tools</span></a>
+        </h1>
+
+        <h2>Feats. Spells. Prestige Classes. And more!</h2>
+      </div>
+      {# Google search engine  #}
+      {% if not debug %}
+      <div id="google-search-holder">
+        <div id="cse-search-form" style="width: 100%">Loading</div>
+        <script src="http://www.google.com/jsapi" type="text/javascript"></script>
+        <script type="text/javascript">
+          google.load('search', '1', {language : 'en'});
+          google.setOnLoadCallback(function() {
+            var customSearchControl = new google.search.CustomSearchControl('010918785989085430250:jd6tjgonwfu');
+            customSearchControl.setResultSetSize(google.search.Search.FILTERED_CSE_RESULTSET);
+            var options = new google.search.DrawOptions();
+            options.setAutoComplete(true);
+            options.enableSearchboxOnly("http://www.google.com/cse?cx=010918785989085430250:jd6tjgonwfu");
+            customSearchControl.draw('cse-search-form', options);
+          }, true);
+        </script>
+      </div>
+      {% endif %}
+    </div>
+    <div id="menubar">
+      <ul id="menu">
+        <li{% block menu_home %}{% endblock %}>
+          <a href="{% url index %}">Home{% if unreadNewsCount %} (<span class="unread-news-count" title="{{ unreadNewsCount }} unread news">{{ unreadNewsCount }}</span>){% endif %}</a></li>
+
+        <li{% block menu_rulebooks %}{% endblock %}>
+          <a href="{% url rulebook_list %}">Rulebooks</a></li>
+
+        <li{% block menu_feats %}{% endblock %}>
+          <a href="{% url feat_index %}">Feats</a></li>
+
+        <li{% block menu_spells %}{% endblock %}>
+          <a href="{% url spell_index %}">Spells</a></li>
+
+        <li{% block menu_classes %}{% endblock %}>
+          <a href="{% url character_class_list %}">Classes</a></li>
+
+{% comment %}        <li{% block menu_races %}{% endblock %}>
+          <a href="{% url race_index %}">Races</a></li>
+
+        <li{% block menu_monsters %}{% endblock %}>
+          <a href="{% url race_index %}">Monsters</a></li>
+
+        <li{% block menu_items %}{% endblock %}>
+          <a href="{% url race_index %}">Items</a></li>{% endcomment %}
+
+        <li{% block menu_skills %}{% endblock %}>
+          <a href="{% url skill_list %}">Skills</a></li>
+
+        <li{% block menu_contact %}{% endblock %}>
+          <a href="{% url contact %}">Contact Us</a></li>
+
+        <li{% block menu_staff %}{% endblock %}>
+          <a href="{% url staff %}">Staff</a></li>
+      </ul>
+    </div>
+  </div>
+  <div id="site_content">
+    {% if display_3e_warning %}
+      <div id="warning-bar">
+          Warning: This is 3.0 Edition material. It is possible that there is more recent 3.5 Edition version.
+      </div>
+    {% endif %}
+    <div id="breadcrumbs">
+      {% block breadcrumbs %}{% endblock %}
+    </div>
+    <div class="sidebar">
+        <form action="" method="get">
+            <label for="disable_social">
+                <input id="disable_social" name="disable_social" type="checkbox" {% if disable_social %}checked="checked"{% endif %}/> All social disabled (faster)
+            </label>
+        </form>
+        <script type="text/javascript">
+            $("#disable_social").change(function(){
+                        if (this.checked) {
+                            $.cookie("disable_social", 1, { expires : 3650, path : '/'});
+                        } else {
+                            $.cookie("disable_social", null);
+                        }
+                        location.reload();
+                    }
+            );
+        </script>
+      {% if not debug and not disable_social %}
+      ({% if i_like_it_url %}Rank this page{% else %}Rank whole site{% endif %})
+          <ul class="buttons">
+            <li><div class="g-plusone" data-size="tall" data-href="{% if i_like_it_url %}{{ i_like_it_url }}{% else %}http://{{ request.get_host}}/{% endif %}"></div>
+            <script type="text/javascript">
+              (function() {
+                var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+                po.src = 'https://apis.google.com/js/plusone.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+              })();
+            </script></li>
+
+            <li><div class="fb-like" data-href="{% if i_like_it_url %}{{ i_like_it_url }}{% else %}http://{{ request.get_host}}/{% endif %}" data-send="true" data-layout="box_count" data-width="50" data-show-faces="true"></div></li>
+
+            <li><a class="FlattrButton" style="display:none;" href="http://dndtools.eu"></a>
+                <noscript><a href="http://flattr.com/thing/1021848/DnDTools" target="_blank">
+                    <img src="http://api.flattr.com/button/flattr-badge-large.png" alt="Flattr this" title="Flattr this" border="0" /></a></noscript></li>
+          </ul>
+      {% endif %}
+      {% block sidebar %}{% endblock %}
+    </div>
+    <div id="content">
+      {% if inaccurate_url  %}
+        <div id="inaccurate"><a href="{% url inaccurate_content %}?url={{ inaccurate_url|urlencode }}"><img src="{% media "media/inaccurate.png" %}" alt="Inaccurate?"/></a></div>
+      {% endif %}
+      {% if user and user.is_staff and user.is_active %}
+          <span class="edit">{% block admin_edit %}{% endblock %}</span>
+      {% endif %}
+      {% block content %}{% endblock %}
+    </div>
+    {% if not debug and not disable_social %}
+        <div id="fb-comments-holder">
+          <h3>Comments on {% if i_like_it_url %}this single page only{% else %}the whole site{% endif %}</h3>
+          <div class="fb-comments" data-href="{% if i_like_it_url %}{{ i_like_it_url }}{% else %}{{ request.get_host}}{% endif %}" data-num-posts="10" data-width="790"></div>
+        </div>
+    {% endif %}
+  </div>
+  <div id="content_footer"></div>
+  <div id="footer">
+    {% comment %}Copyright &copy; colour_blue |
+    <a href="http://validator.w3.org/check?uri=referer">HTML5</a> |
+    <a href="http://jigsaw.w3.org/css-validator/check/referer">CSS</a> |
+    <a href="http://www.html5webtemplates.co.uk">design from
+      HTML5webtemplates.co.uk</a>{% endcomment %}
+  </div>
+</div>
+</body>
+</html>

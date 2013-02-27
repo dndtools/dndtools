@@ -1,0 +1,11 @@
+{% extends "dnd/staff_layout.html" %}
+
+{% block content %}
+
+<div class="nice-textile">
+{{ page_body.body_html|safe }}
+</div>
+
+    <p>Do you want to be part of this project? Contact us using the <a href="{% url contact %}">contact form</a>!</p>
+
+{% endblock %}

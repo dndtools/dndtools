@@ -1,0 +1,18 @@
+{% load custom_filters %}
+
+<strong>Property:</strong> {{ item.property|empty_as_dash }}<br/>
+
+<strong>Caster Level:</strong> {{ item.caster_level|ordinal_number }}<br/>
+
+<strong>Aura:</strong> {{ item.aura }};
+{% if item.aura_dc %}
+    (DC {{ item.aura_dc }})
+{% endif %}
+{% for aura_school in aura_schools %}
+    <a href="{{ aura_school.get_absolute_url }}">{{ aura_school }}</a>{% if not forloop.last %}, {% endif %}
+{% endfor %}<br/>
+
+<strong>Activation:</strong> {{ item.activation|empty_as_dash }}<br/>
+{% if item.synergy_prerequisite %}
+    <strong>Synergy Prerequisite:</strong> <a href="{{ item.synergy_prerequisite.get_absolute_url }}">{{ item.synergy_prerequisite.name }}</a><br/>
+{% endif %}

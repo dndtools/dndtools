@@ -1,0 +1,34 @@
+{% extends "dnd/character_class_layout.html" %}
+
+{#{% block extra_link %}<link rel="canonical" href="{% url character_class_spells character_class_slug=character_class.slug level=level %}" />{% endblock %}#}
+
+{% block extra_meta %}{% include "dnd/meta_noindex.html" %}{% endblock %}
+
+{% block title %}{{ character_class.name }} &ndash; level {{ level }} spells{% endblock %}
+
+{% block breadcrumbs %}
+    &raquo; <a href="{% url character_class_list  %}">Classes</a>
+    &raquo; <a href="{{ character_class.get_absolute_url }}">{{ character_class.name }}</a>
+    &raquo; <a href="{% url character_class_spells character_class_slug=character_class.slug level=level %}">level {{ level }} spells</a>
+{% endblock %}
+
+
+{% block content %}
+
+<h2>{{ character_class.name }} level {{ level }} spells</h2>
+
+<p>
+More spell levels:
+{% for otherLevel in "0123456789" %}
+    {% if otherLevel != level %}
+        <a href="{% url character_class_spells character_class_slug=character_class.slug level=otherLevel %}">{{ otherLevel }}</a>
+    {% else %}
+        {{ otherLevel }}
+    {% endif %}
+
+{% endfor %}
+</p>
+
+{% include "dnd/spell_table.html" %}
+
+{% endblock %}

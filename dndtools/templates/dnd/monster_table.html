@@ -1,0 +1,18 @@
+{{ paginator.print_navigation }}
+
+<table class="common">
+    <tr>
+        <th>Monster name</th>
+        <th>Rulebook name</th>
+        <th>Edition</th>
+    </tr>
+    {% for monster in monster_list %}
+        <tr>
+            <td><a href="{{ monster.get_absolute_url }}">{{ monster.name }}</a></td>
+            <td><a href="{{ monster.rulebook.get_absolute_url }}">{{ monster.rulebook.name }}</a></td>
+            <td><a href="{{ monster.rulebook.dnd_edition.get_absolute_url }}">{{ monster.rulebook.dnd_edition.name }}</a></td>
+        </tr>
+    {% endfor %}
+</table>
+
+{{ paginator.print_navigation }}

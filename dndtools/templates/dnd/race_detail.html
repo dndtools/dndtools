@@ -1,0 +1,141 @@
+{% extends "dnd/race_layout.html" %}
+
+{% load custom_filters %}
+
+{% block title %}{{ race.name }} &ndash; Race{% endblock %}
+
+{% block breadcrumbs %}
+    &raquo; <a href="{% url race_index  %}">Races</a>
+    &raquo; <a
+        href="{% url races_in_rulebook rulebook_slug=rulebook.slug rulebook_id=rulebook.id  %}">{{ rulebook.name }}</a> (
+    <a href="{{ rulebook.get_absolute_url }}">book</a>)
+    &raquo; <a href="{{ race.get_absolute_url }}">{{ race.name }}</a>
+{% endblock %}
+
+{% block admin_edit %}<a href="{% url admin:dnd_race_change race.id %}">EDIT</a>{% endblock %}
+
+{% block content %}
+
+    <h2>{{ race.name }}</h2>
+    (
+    <a href="{{ rulebook.get_absolute_url }}">{{ rulebook.name }}</a>{% if race.page != None %},  p. {{ race.page }}{% endif %})
+    <br/>
+    <br/>
+
+    <h3>Attributes</h3>
+
+    <table class="race-attributes">
+        <tr>
+            <th>Size:</th>
+            <td>
+                {% if not race.size and race.base_monster.size %}
+                    {{ race.base_monster.size }}
+                {% else %}
+                    {{ race.size }}
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <th>Base speed:</th>
+            <td colspan="3">
+                {% if not race_speeds and base_monster_race_speeds %}
+                    {% for speed in base_monster_race_speeds %}
+                        {% if not forloop.first %}, {% endif %}
+                        {{ speed.type }} {{ speed.speed }}
+                    {% endfor %}
+                {% else %}
+                    {% for speed in race_speeds %}
+                        {% if not forloop.first %}, {% endif %}
+                        {{ speed.type }} {{ speed.speed }}
+                    {% endfor %}
+                {% endif %}
+            </td>
+        </tr>
+        <tr class="separator">
+            <th>Strength:</th>
+            <td> {{ race.str|plus_minus }}</td>
+        </tr>
+        <tr>
+            <th>Intelligence:</th>
+            <td> {{ race.int|plus_minus }}</td>
+        </tr>
+        <tr>
+            <th>Dexterity:</th>
+            <td> {{ race.dex|plus_minus }}</td>
+        </tr>
+        <tr>
+            <th>Wisdom:</th>
+            <td> {{ race.wis|plus_minus }}</td>
+        </tr>
+        <tr>
+            <th>Constitution:</th>
+            <td> {{ race.con|plus_minus }}</td>
+        </tr>
+        <tr>
+            <th>Charisma:</th>
+            <td> {{ race.cha|plus_minus }}</td>
+        </tr>
+        <tr class="separator">
+            <th>Level adjustment:</th>
+            <td> {{ race.level_adjustment|plus_minus }}</td>
+        </tr>
+        <tr class="separator">
+            <th>Space:</th>
+            <td>
+                {% if not race.space and race.base_monster.space %}
+                    {{ race.base_monster.space }}
+                {% else %}
+                    {{ race.space }}
+                {% endif %}
+                feet
+            </td>
+        </tr>
+        <tr>
+            <th>Reach:</th>
+            <td>
+                {% if not race.reach and race.base_monster.reach %}
+                    {{ race.base_monster.reach }}
+                {% else %}
+                    {{ race.space }}
+                {% endif %}
+                feet
+            </td>
+        </tr>
+        <tr class="separator">
+            <th>Favored class:</th>
+            <td colspan="3">
+                {% for favored_class in favored_classes %}
+                    {% if not forloop.first %}, {% endif %}
+                    <a href="{{ favored_class.character_class.get_absolute_url }}">{{ favored_class.character_class.name }}</a>
+                    {% if favored_class.extra %}
+                        ({{ favored_class.extra }})
+                    {% endif %}
+                {% endfor %}
+            </td>
+        </tr>
+    </table>
+
+    <div class="nice-textile">
+        <h3>Description</h3>
+
+
+        {% if not race.description_html and race.base_monster.description_html %}
+            {{ race.base_monster.description_html|safe }}
+        {% else %}
+            {{ race.description_html|safe }}
+        {% endif %}
+
+        <h3>Combat</h3>
+
+        {% if not race.combat_html and race.base_monster.combat_html %}
+            {{ race.base_monster.combat_html|safe }}
+        {% else %}
+            {{ race.combat_html|safe }}
+        {% endif %}
+
+        <h3>Racial Traits</h3>
+
+        {{ race.racial_traits_html|safe }}
+    </div>
+
+{% endblock %}

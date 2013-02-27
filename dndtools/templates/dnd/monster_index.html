@@ -1,0 +1,19 @@
+{% extends "dnd/monster_layout.html" %}
+
+{% block extra_meta %}{% include "dnd/meta_noindex.html" %}{% endblock %}
+
+{% block title %}Monsters{% endblock %}
+
+{% block breadcrumbs %}
+    &raquo; <a href="{% url monster_index %}">Monsters</a>
+{% endblock %}
+
+{% block content %}
+
+    <h2>Monsters</h2>
+
+    {% include "dnd/filter_form.html" %}
+
+    {% include "dnd/monster_table.html" %}
+
+{% endblock %}

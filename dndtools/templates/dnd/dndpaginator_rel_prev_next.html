@@ -1,0 +1,2 @@
+{% if page_obj.has_previous %}<link rel="prev" href="{% if page_obj.previous_page_number > 1 %}?page={{ page_obj.previous_page_number }}{{ get_vars }}{% else %}{{ get_vars_solo }}{% endif %}" />{% endif %}
+{% if page_obj.has_next %}<link rel="next" href="?page={{ page_obj.next_page_number }}{{ get_vars }}" />{% endif %}

@@ -1,0 +1,20 @@
+{% load custom_filters %}
+
+{{ paginator.print_navigation }}
+
+<table class="common">
+    <tr>
+        <th>Item name</th>
+        <th>Rulebook name</th>
+        <th>Edition</th>
+    </tr>
+    {% for item in item_list %}
+        <tr>
+            <td><a href="{{ item.get_absolute_url }}">{{ item.name }}</a></td>
+            <td><a href="{{ item.rulebook.get_absolute_url }}">{{ item.rulebook.name }}</a></td>
+            <td><a href="{{ item.rulebook.dnd_edition.get_absolute_url }}">{{ item.rulebook.dnd_edition.name }}</a></td>
+        </tr>
+    {% endfor %}
+</table>
+
+{{ paginator.print_navigation }}
