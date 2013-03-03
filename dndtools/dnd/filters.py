@@ -26,7 +26,6 @@ def edition_choices():
 
 def spell_level_choices():
     spell_level_choices = [(i, i) for i in range(0, 10)]
-    spell_level_choices.insert(0, ('', 'Unknown'))
 
     return spell_level_choices
 
@@ -110,10 +109,10 @@ class SpellFilter(django_filters2.FilterSet):
         label='Class',
         grouped=True,
     )
-    spellclasslevel__level = django_filters2.ChoiceFilter(
+    spellclasslevel__level = django_filters2.MultipleChoiceFilter(
         choices=spell_level_choices(),
         label='Level for class',
-        help_text='Should work with Class now!!',
+        help_text='Use ctrl to select more levels!',
         grouped=True,
     )
     domain_levels__slug = django_filters2.ChoiceFilter(
@@ -121,10 +120,10 @@ class SpellFilter(django_filters2.FilterSet):
         label='Domain',
         grouped=True,
     )
-    spelldomainlevel__level = django_filters2.ChoiceFilter(
+    spelldomainlevel__level = django_filters2.MultipleChoiceFilter(
         choices=spell_level_choices(),
         label='Level for domain',
-        help_text='Should work with Domain now!!',
+        help_text='Use ctrl to select more levels!',
         grouped=True,
     )
 

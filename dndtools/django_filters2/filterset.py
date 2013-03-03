@@ -2,6 +2,7 @@ from copy import deepcopy
 
 from django import forms
 from django.db import models
+from django.db.models import Q
 from django.db.models.fields import FieldDoesNotExist
 from django.db.models.related import RelatedObject
 from django.db.models.sql.constants import LOOKUP_SEP
@@ -220,6 +221,7 @@ class BaseFilterSet(object):
         if not hasattr(self, '_qs'):
             qs = self.queryset.all()
             grouped_dict = {}
+            grouped_list = []
             for name, filter_ in self.filters.iteritems():
                 try:
                     if self.is_bound:
@@ -228,14 +230,19 @@ class BaseFilterSet(object):
                         data = self.form.initial.get(name, self.form[name].field.initial)
                     val = self.form.fields[name].clean(data)
                     if filter_.grouped:
-                        grouped_dict.update(filter_.filter_grouped(qs, val))
+                        grouped_filter = filter_.filter_grouped(qs, val)
+                        # Q objects are added as non-named parameters.
+                        if isinstance(grouped_filter, Q):
+                            grouped_list.append(grouped_filter)
+                        else:
+                            grouped_dict.update(grouped_filter)
                     else:
                         qs = filter_.filter(qs, val)
                 except forms.ValidationError:
                     pass
 
-            if grouped_dict:
-                qs = qs.filter(**grouped_dict)
+            if grouped_dict or grouped_list:
+                qs = qs.filter(*grouped_list, **grouped_dict)
 
             if self._meta.order_by:
                 try:

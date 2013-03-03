@@ -60,6 +60,7 @@ class Filter(object):
         else:
             lookup = self.lookup_type
         if value:
+            #
             return qs.filter(**{'%s__%s' % (self.name, lookup): value})
         return qs
 
@@ -105,6 +106,18 @@ class MultipleChoiceFilter(Filter):
         for v in value:
             q |= Q(**{self.name: v})
         return qs.filter(q).distinct()
+
+    def filter_grouped(self, qs, value):
+        # copy of self.filter(), but used for grouped filtering. Just returns the Q object that is used later.
+        value = value or ()
+        # TODO: this is a bit of a hack, but ModelChoiceIterator doesn't have a
+        # __len__ method
+        if len(value) == len(list(self.field.choices)):
+            return {}
+        q = Q()
+        for v in value:
+            q |= Q(**{self.name: v})
+        return q
 
 class DateFilter(Filter):
     field_class = forms.DateField
