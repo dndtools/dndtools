@@ -16,10 +16,11 @@ def rulebook_choices():
     return rulebook_choices
 
 
-def edition_choices():
+def edition_choices(unknown_entry = True):
     edition_choices = [(edition.slug, edition.name) for edition in
                                                     DndEdition.objects.all()]
-    edition_choices.insert(0, ('', 'Unknown'))
+    if (unknown_entry):
+        edition_choices.insert(0, ('', 'Unknown'))
 
     return edition_choices
 
@@ -97,6 +98,11 @@ class SpellFilter(django_filters2.FilterSet):
     arcane_focus_component = django_filters2.BooleanFilter()
     divine_focus_component = django_filters2.BooleanFilter()
     xp_component = django_filters2.BooleanFilter()
+    rulebook__dnd_edition__slug = django_filters2.MultipleChoiceFilter(
+        choices=edition_choices(unknown_entry=False),
+        label='Edition',
+        help_text='Use ctrl to select more editions!',
+    )
     rulebook__slug = django_filters2.ChoiceFilter(
         label='Rulebook', choices=rulebook_choices()
     )
@@ -134,7 +140,7 @@ class SpellFilter(django_filters2.FilterSet):
             'school__slug', 'sub_school__slug', 'descriptors__slug',
             'verbal_component', 'somatic_component', 'material_component',
             'arcane_focus_component', 'divine_focus_component',
-            'xp_component', 'rulebook__slug', 'description',
+            'xp_component', 'rulebook__slug', 'rulebook__dnd_edition__slug', 'description',
             'class_levels__slug', 'spellclasslevel__level',
             'domain_levels__slug', 'spelldomainlevel__level', ]
 
@@ -159,6 +165,11 @@ class CharacterClassFilter(django_filters2.FilterSet):
     characterclassvariant__rulebook__slug = django_filters2.ChoiceFilter(
         label='Rulebook', choices=rulebook_choices()
     )
+    characterclassvariant__rulebook__dnd_edition__slug = django_filters2.MultipleChoiceFilter(
+        choices=edition_choices(unknown_entry=False),
+        label='Edition',
+        help_text='Use ctrl to select more editions!',
+    )
     characterclassvariant__required_bab = django_filters2.RangeFilter(
         label='Required Base Attack (range)',
     )
@@ -175,7 +186,7 @@ class CharacterClassFilter(django_filters2.FilterSet):
 
     class Meta:
         model = CharacterClass
-        fields = ['name', 'characterclassvariant__rulebook__slug', 'prestige',
+        fields = ['name', 'characterclassvariant__rulebook__slug', 'characterclassvariant__rulebook__dnd_edition__slug', 'prestige',
                   'characterclassvariant__required_bab', 'characterclassvariant__skill_points',
                   'characterclassvariant__class_features', 'characterclassvariant__hit_die',]
 
@@ -200,6 +211,11 @@ class FeatFilter(django_filters2.FilterSet):
     rulebook__slug = django_filters2.ChoiceFilter(
         label='Rulebook', choices=rulebook_choices()
     )
+    rulebook__dnd_edition__slug = django_filters2.MultipleChoiceFilter(
+        choices=edition_choices(unknown_entry=False),
+        label='Edition',
+        help_text='Use ctrl to select more editions!',
+    )
     description = django_filters2.CharFilter(
         lookup_type='icontains',
     )
@@ -219,7 +235,7 @@ class FeatFilter(django_filters2.FilterSet):
 
     class Meta:
         model = Feat
-        fields = ['name', 'rulebook__slug', 'description', 'benefit', 'special',
+        fields = ['name', 'rulebook__slug', 'rulebook__dnd_edition__slug', 'description', 'benefit', 'special',
                   'normal']
 
 
@@ -275,11 +291,16 @@ class MonsterFilter(django_filters2.FilterSet):
     rulebook__slug = django_filters2.ChoiceFilter(
         label='Rulebook', choices=rulebook_choices()
     )
+    rulebook__dnd_edition__slug = django_filters2.MultipleChoiceFilter(
+        choices=edition_choices(unknown_entry=False),
+        label='Edition',
+        help_text='Use ctrl to select more editions!',
+    )
 
     class Meta:
         model = Spell
         fields = [
-            'name', 'rulebook__slug', ]
+            'name', 'rulebook__slug', 'rulebook__dnd_edition__slug', ]
 
 
 class RaceFilter(django_filters2.FilterSet):
@@ -289,8 +310,13 @@ class RaceFilter(django_filters2.FilterSet):
     rulebook__slug = django_filters2.ChoiceFilter(
         label='Rulebook', choices=rulebook_choices()
     )
+    rulebook__dnd_edition__slug = django_filters2.MultipleChoiceFilter(
+        choices=edition_choices(unknown_entry=False),
+        label='Edition',
+        help_text='Use ctrl to select more editions!',
+    )
 
     class Meta:
         model = Spell
         fields = [
-            'name', 'rulebook__slug', ]
+            'name', 'rulebook__slug', 'rulebook__dnd_edition__slug', ]
