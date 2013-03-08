@@ -1,0 +1,54 @@
+Installation instructions
+=========================
+
+This worked for me on Debian Linux. I expect it can be improved a lot, you're welcome to update this (so long as it works).
+
+Debian installation image
+-------------------------
+I started with debian-6.0.7-amd64-netinst.iso . Whole installation was next, next, next, no special customization.
+
+$ su
+# apt-get install python2.6
+download setuptools setuptools-0.6c11-py2.6.egg from https://pypi.python.org/pypi/setuptools#files
+# sh setuptools-0.6c11-py2.6.egg
+# easy_install pip
+# pip install Django==1.2.7
+# easy_install South
+# easy_install django-pagination
+# easy_install django-debug-toolbar
+# pip textile
+# easy_install recaptcha-client
+# apt-get install python-imaging
+# apt-get install git
+# apt-get install mysql-server mysql-client
+# apt-get install python-mysqldb
+# git clone https://github.com/etianen/django-reversion.git
+# cd django-reversion
+# git checkout release-1.3.3
+# python setup.py install
+# cd ..
+# mysql -u root -p
+> create database dndtools;
+> exit;
+# wget bit.ly/XYFJdV
+# apt-get install p7zip
+# 7za e XYFJdV
+# mysql -u root -p -h localhost dndtools < dndtools_prod_backup_2013_03_02_clear_accounts_no_reversions.sql
+# git clone https://github.com/dndtools/dndtools.git
+# cd dndtools/dndtools
+# cp local.py.sample local.py
+# nano local.py
+# python manage.py runserver
+
+The nano local.py commant requires to at least change database connection info.
+
+Change admin password (since all pwds are blanked)
+--------------------------------------------------
+# python manage.py shell
+>>> users = User.objects.all()
+>>> user = users[0]
+>>> user.set_password('dndtools')
+>>> user.save()
+>>> ^Z
+
+Now you can log in into http://127.0.0.1:8000/admin with username dndtools, password dndtools.
