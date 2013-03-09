@@ -3,17 +3,19 @@ from math import ceil
 from django.contrib.auth.models import User
 from django.core.mail.message import EmailMessage
 from django.core.urlresolvers import reverse
-from django.http import  HttpResponsePermanentRedirect, HttpResponseRedirect
-from django.shortcuts import  get_object_or_404, render_to_response
-from django.template.context import  RequestContext
+from django.http import HttpResponsePermanentRedirect, HttpResponseRedirect
+from django.shortcuts import get_object_or_404, render_to_response
+from django.template.context import RequestContext
 from reversion.revisions import revision
 from dndtools.dnd.dnd_paginator import DndPaginator
-from dndtools.dnd.filters import SpellFilter, CharacterClassFilter, RulebookFilter, FeatFilter, SpellDomainFilter, SpellDescriptorFilter, SkillFilter, RaceFilter, MonsterFilter, ItemFilter
+from dndtools.dnd.filters import (SpellFilter, CharacterClassFilter, RulebookFilter, FeatFilter, SpellDomainFilter,
+                                  SpellDescriptorFilter, SkillFilter, RaceFilter, MonsterFilter, ItemFilter)
 from dndtools.dnd.forms import ContactForm, InaccurateContentForm
 
 from dndtools.dnd.models import (Rulebook, DndEdition, FeatCategory, Feat,
                                  SpellSchool, SpellDescriptor, SpellSubSchool,
-                                 Spell, CharacterClass, Domain, CharacterClassVariant, Skill, Race, SkillVariant, NewsEntry, StaticPage, Monster, Rule, Item)
+                                 Spell, CharacterClass, Domain, CharacterClassVariant, Skill, Race, SkillVariant,
+                                 NewsEntry, StaticPage, Monster, Rule, Item)
 from dndtools.dnd.utilities import int_with_commas
 
 
@@ -27,6 +29,7 @@ def permanent_redirect_view(request, view_name, args=None, kwargs=None):
     return HttpResponsePermanentRedirect(url)
 
 
+# noinspection PyShadowingBuiltins
 def permanent_redirect_object(request, object):
     url = object.get_absolute_url()
     # get parameters
@@ -44,8 +47,11 @@ def is_3e_edition(edition):
 def index(request):
     newsEntries = NewsEntry.objects.filter(enabled=True).order_by('-published')[:15]
 
-    response = render_to_response('dnd/index.html', {'request': request, 'newsEntries': newsEntries, },
-        context_instance=RequestContext(request), )
+    response = render_to_response('dnd/index.html',
+                                  {
+                                      'request': request, 'newsEntries': newsEntries,
+                                  },
+                                  context_instance=RequestContext(request), )
 
     if len(newsEntries):
         response.set_cookie('top_news', newsEntries[0].pk, 10 * 365 * 24 * 60 * 60)
@@ -62,12 +68,13 @@ def rulebook_list(request):
     paginator = DndPaginator(f.qs, request)
 
     return render_to_response('dnd/rulebook_list.html',
-            {'request': request,
-             'rulebook_list': paginator.items(),
-             'paginator': paginator,
-             'filter': f,
-             'form_submitted': form_submitted,
-             }, context_instance=RequestContext(request), )
+                              {
+                                  'request': request,
+                                  'rulebook_list': paginator.items(),
+                                  'paginator': paginator,
+                                  'filter': f,
+                                  'form_submitted': form_submitted,
+                              }, context_instance=RequestContext(request), )
 
 
 def edition_list(request):
@@ -76,40 +83,43 @@ def edition_list(request):
     paginator = DndPaginator(edition_list, request)
 
     return render_to_response('dnd/edition_list.html',
-            {'edition_list': paginator.items(),
-             'paginator': paginator,
-             'request': request,
-             }, context_instance=RequestContext(request), )
+                              {
+                                  'edition_list': paginator.items(),
+                                  'paginator': paginator,
+                                  'request': request,
+                              }, context_instance=RequestContext(request), )
 
 
 def edition_detail(request, edition_slug, edition_id):
     dnd_edition = get_object_or_404(DndEdition, id=edition_id)
     if dnd_edition.slug != edition_slug:
         return permanent_redirect_view(request, 'edition_detail',
-            kwargs={'edition_slug': dnd_edition.slug,
-                    'edition_id': dnd_edition.id, })
+                                       kwargs={
+                                           'edition_slug': dnd_edition.slug,
+                                           'edition_id': dnd_edition.id, })
 
     rulebook_list = dnd_edition.rulebook_set.select_related('dnd_edition').all()
 
     paginator = DndPaginator(rulebook_list, request)
 
     return render_to_response('dnd/edition_detail.html',
-            {'dnd_edition': dnd_edition,
-             'request': request,
-             'rulebook_list': paginator.items(),
-             'paginator': paginator,
-             'i_like_it_url': request.build_absolute_uri(),
-             'inaccurate_url': request.build_absolute_uri(),
-             'display_3e_warning': is_3e_edition(dnd_edition),
-             }, context_instance=RequestContext(request), )
+                              {
+                                  'dnd_edition': dnd_edition,
+                                  'request': request,
+                                  'rulebook_list': paginator.items(),
+                                  'paginator': paginator,
+                                  'i_like_it_url': request.build_absolute_uri(),
+                                  'inaccurate_url': request.build_absolute_uri(),
+                                  'display_3e_warning': is_3e_edition(dnd_edition),
+                              }, context_instance=RequestContext(request), )
 
 
 def rulebook_detail(request, edition_slug, edition_id, rulebook_slug,
                     rulebook_id):
     rulebook = get_object_or_404(Rulebook, id=rulebook_id)
     if (rulebook.slug != rulebook_slug or
-        unicode(rulebook.dnd_edition.id) != edition_id or
-        rulebook.dnd_edition.slug != edition_slug):
+                unicode(rulebook.dnd_edition.id) != edition_id or
+                rulebook.dnd_edition.slug != edition_slug):
         return permanent_redirect_view(
             request, 'rulebook_detail',
             kwargs={
@@ -119,13 +129,14 @@ def rulebook_detail(request, edition_slug, edition_id, rulebook_slug,
                 'rulebook_id': rulebook.id, })
 
     return render_to_response('dnd/rulebook_detail.html',
-            {'rulebook': rulebook,
-             'dnd_edition': rulebook.dnd_edition,
-             'request': request,
-             'i_like_it_url': request.build_absolute_uri(),
-             'inaccurate_url': request.build_absolute_uri(),
-             'display_3e_warning': is_3e_edition(rulebook.dnd_edition),
-             }, context_instance=RequestContext(request), )
+                              {
+                                  'rulebook': rulebook,
+                                  'dnd_edition': rulebook.dnd_edition,
+                                  'request': request,
+                                  'i_like_it_url': request.build_absolute_uri(),
+                                  'inaccurate_url': request.build_absolute_uri(),
+                                  'display_3e_warning': is_3e_edition(rulebook.dnd_edition),
+                              }, context_instance=RequestContext(request), )
 
 
 def feat_index(request):
@@ -137,24 +148,26 @@ def feat_index(request):
     paginator = DndPaginator(f.qs, request)
 
     return render_to_response('dnd/feat_index.html',
-            {'request': request,
-             'feat_list': paginator.items(),
-             'paginator': paginator,
-             'filter': f,
-             'form_submitted': form_submitted,
-             }, context_instance=RequestContext(request), )
+                              {
+                                  'request': request,
+                                  'feat_list': paginator.items(),
+                                  'paginator': paginator,
+                                  'filter': f,
+                                  'form_submitted': form_submitted,
+                              }, context_instance=RequestContext(request), )
 
 
 def feat_list_by_rulebook(request):
     rulebook_list = Rulebook.objects.select_related('rulebook',
-        'dnd_edition').all()
+                                                    'dnd_edition').all()
 
     paginator = DndPaginator(rulebook_list, request)
 
     return render_to_response('dnd/feat_list_by_rulebook.html',
-            {'rulebook_list': paginator.items(),
-             'paginator': paginator,
-             'request': request, }, context_instance=RequestContext(request), )
+                              {
+                                  'rulebook_list': paginator.items(),
+                                  'paginator': paginator,
+                                  'request': request, }, context_instance=RequestContext(request), )
 
 
 def feat_category_list(request):
@@ -163,47 +176,52 @@ def feat_category_list(request):
     paginator = DndPaginator(feat_category_list, request)
 
     return render_to_response('dnd/feat_category_list.html',
-            {'feat_category_list': paginator.items(),
-             'paginator': paginator,
-             'request': request, }, context_instance=RequestContext(request), )
+                              {
+                                  'feat_category_list': paginator.items(),
+                                  'paginator': paginator,
+                                  'request': request, }, context_instance=RequestContext(request), )
 
 
 def feat_category_detail(request, category_slug):
     feat_category = get_object_or_404(FeatCategory, slug=category_slug)
     feat_list = feat_category.feat_set.select_related('rulebook',
-        'rulebook__dnd_edition').all()
+                                                      'rulebook__dnd_edition').all()
 
     paginator = DndPaginator(feat_list, request)
 
     return render_to_response('dnd/feat_category_detail.html',
-            {'feat_category': feat_category,
-             'feat_list': paginator.items(),
-             'paginator': paginator,
-             'request': request,
-             'i_like_it_url': request.build_absolute_uri(),
-             'inaccurate_url': request.build_absolute_uri(), }, context_instance=RequestContext(request), )
+                              {
+                                  'feat_category': feat_category,
+                                  'feat_list': paginator.items(),
+                                  'paginator': paginator,
+                                  'request': request,
+                                  'i_like_it_url': request.build_absolute_uri(),
+                                  'inaccurate_url': request.build_absolute_uri(), },
+                              context_instance=RequestContext(request), )
 
 
 def feats_in_rulebook(request, rulebook_slug, rulebook_id):
     rulebook = get_object_or_404(Rulebook.objects.select_related('dnd_edition'),
-        pk=rulebook_id)
+                                 pk=rulebook_id)
     if not rulebook.slug == rulebook_slug:
         return permanent_redirect_view(request, 'feats_in_rulebook',
-            kwargs={'rulebook_slug': rulebook.slug,
-                    'rulebook_id': rulebook_id, })
+                                       kwargs={
+                                           'rulebook_slug': rulebook.slug,
+                                           'rulebook_id': rulebook_id, })
 
     feat_list = rulebook.feat_set.select_related('rulebook',
-        'rulebook__dnd_edition').all()
+                                                 'rulebook__dnd_edition').all()
 
     paginator = DndPaginator(feat_list, request)
 
     return render_to_response('dnd/feats_in_rulebook.html',
-            {'rulebook': rulebook,
-             'feat_list': paginator.items(),
-             'paginator': paginator,
-             'request': request,
-             'display_3e_warning': is_3e_edition(rulebook.dnd_edition),
-             }, context_instance=RequestContext(request), )
+                              {
+                                  'rulebook': rulebook,
+                                  'feat_list': paginator.items(),
+                                  'paginator': paginator,
+                                  'request': request,
+                                  'display_3e_warning': is_3e_edition(rulebook.dnd_edition),
+                              }, context_instance=RequestContext(request), )
 
 
 def feat_detail(request, rulebook_slug, rulebook_id, feat_slug, feat_id):
@@ -211,41 +229,42 @@ def feat_detail(request, rulebook_slug, rulebook_id, feat_slug, feat_id):
         Feat.objects.select_related('rulebook', 'rulebook__dnd_edition'),
         pk=feat_id)
     if (feat.slug != feat_slug or
-        unicode(feat.rulebook.id) != rulebook_id or
-        feat.rulebook.slug != rulebook_slug):
+                unicode(feat.rulebook.id) != rulebook_id or
+                feat.rulebook.slug != rulebook_slug):
         return permanent_redirect_view(request, 'feat_detail',
-            kwargs={
-                'rulebook_slug': feat.rulebook.slug,
-                'rulebook_id': feat.rulebook.id,
-                'feat_slug': feat.slug,
-                'feat_id': feat.id, })
+                                       kwargs={
+                                           'rulebook_slug': feat.rulebook.slug,
+                                           'rulebook_id': feat.rulebook.id,
+                                           'feat_slug': feat.slug,
+                                           'feat_id': feat.id, })
 
     feat_category_list = feat.feat_categories.select_related().all()
     required_feats = feat.required_feats.select_related('required_feat',
-        'required_feat__rulebook').all()
+                                                        'required_feat__rulebook').all()
     required_by_feats = feat.required_by_feats.select_related('source_feat',
-        'source_feat__rulebook').all()
+                                                              'source_feat__rulebook').all()
     required_skills = feat.required_skills.select_related('skill').all()
     special_prerequisities = feat.featspecialfeatprerequisite_set.select_related(
         'special_feat_prerequisite').all()
     # related feats
-    related_feats = Feat.objects.filter(slug=feat.slug).exclude(rulebook__id=feat.rulebook.id).select_related('rulebook', 'rulebook__dnd_edition').all()
+    related_feats = Feat.objects.filter(slug=feat.slug).exclude(rulebook__id=feat.rulebook.id).select_related(
+        'rulebook', 'rulebook__dnd_edition').all()
 
     return render_to_response('dnd/feat_detail.html',
-            {'feat': feat,
-             'rulebook': feat.rulebook,
-             'feat_category_list': feat_category_list,
-             'required_feats': required_feats,
-             'required_by_feats': required_by_feats,
-             'required_skills': required_skills,
-             'special_prerequisities': special_prerequisities,
-             'request': request,
-             'i_like_it_url': request.build_absolute_uri(),
-             'inaccurate_url': request.build_absolute_uri(),
-             'display_3e_warning': is_3e_edition(feat.rulebook.dnd_edition),
-             'related_feats': related_feats,
-             }, context_instance=RequestContext(request),
-    )
+                              {
+                                  'feat': feat,
+                                  'rulebook': feat.rulebook,
+                                  'feat_category_list': feat_category_list,
+                                  'required_feats': required_feats,
+                                  'required_by_feats': required_by_feats,
+                                  'required_skills': required_skills,
+                                  'special_prerequisities': special_prerequisities,
+                                  'request': request,
+                                  'i_like_it_url': request.build_absolute_uri(),
+                                  'inaccurate_url': request.build_absolute_uri(),
+                                  'display_3e_warning': is_3e_edition(feat.rulebook.dnd_edition),
+                                  'related_feats': related_feats,
+                              }, context_instance=RequestContext(request), )
 
 
 def spell_index(request):
@@ -257,12 +276,13 @@ def spell_index(request):
     form_submitted = 1 if 'name' in request.GET else 0
 
     return render_to_response('dnd/spell_index.html',
-            {'request': request,
-             'spell_list': paginator.items(),
-             'paginator': paginator,
-             'filter': f,
-             'form_submitted': form_submitted,
-             }, context_instance=RequestContext(request), )
+                              {
+                                  'request': request,
+                                  'spell_list': paginator.items(),
+                                  'paginator': paginator,
+                                  'filter': f,
+                                  'form_submitted': form_submitted,
+                              }, context_instance=RequestContext(request), )
 
 
 def spell_list_by_rulebook(request):
@@ -271,44 +291,48 @@ def spell_list_by_rulebook(request):
     paginator = DndPaginator(rulebook_list, request)
 
     return render_to_response('dnd/spell_list_by_rulebook.html',
-            {'request': request,
-             'rulebook_list': paginator.items(),
-             'paginator': paginator,
-             }, context_instance=RequestContext(request), )
+                              {
+                                  'request': request,
+                                  'rulebook_list': paginator.items(),
+                                  'paginator': paginator,
+                              }, context_instance=RequestContext(request), )
 
 
 def spell_descriptor_list(request):
     f = SpellDescriptorFilter(request.GET,
-        queryset=SpellDescriptor.objects.all())
+                              queryset=SpellDescriptor.objects.all())
 
     paginator = DndPaginator(f.qs, request)
 
     form_submitted = 1 if 'name' in request.GET else 0
 
     return render_to_response('dnd/spell_descriptor_list.html',
-            {'request': request,
-             'spell_descriptor_list': paginator.items(),
-             'paginator': paginator,
-             'filter': f,
-             'form_submitted': form_submitted,
-             }, context_instance=RequestContext(request), )
+                              {
+                                  'request': request,
+                                  'spell_descriptor_list': paginator.items(),
+                                  'paginator': paginator,
+                                  'filter': f,
+                                  'form_submitted': form_submitted,
+                              }, context_instance=RequestContext(request), )
 
 
 def spell_school_list(request):
     spell_school_list = SpellSchool.objects.all()
     spell_sub_school_list = SpellSubSchool.objects.all()
     return render_to_response('dnd/spell_school_list.html',
-            {'spell_school_list': spell_school_list,
-             'spell_sub_school_list': spell_sub_school_list,
-             'request': request, }, context_instance=RequestContext(request), )
+                              {
+                                  'spell_school_list': spell_school_list,
+                                  'spell_sub_school_list': spell_sub_school_list,
+                                  'request': request, }, context_instance=RequestContext(request), )
 
 
 def spells_in_rulebook(request, rulebook_slug, rulebook_id):
     rulebook = get_object_or_404(Rulebook, pk=rulebook_id)
     if not rulebook.slug == rulebook_slug:
         return permanent_redirect_view(request, 'spells_in_rulebook',
-            kwargs={'rulebook_slug': rulebook.slug,
-                    'rulebook_id': rulebook_id, })
+                                       kwargs={
+                                           'rulebook_slug': rulebook.slug,
+                                           'rulebook_id': rulebook_id, })
 
     spell_list = rulebook.spell_set.select_related(
         'rulebook', 'rulebook__dnd_edition', 'school').all()
@@ -316,12 +340,13 @@ def spells_in_rulebook(request, rulebook_slug, rulebook_id):
     paginator = DndPaginator(spell_list, request)
 
     return render_to_response('dnd/spells_in_rulebook.html',
-            {'rulebook': rulebook,
-             'spell_list': paginator.items(),
-             'paginator': paginator,
-             'request': request,
-             'display_3e_warning': is_3e_edition(rulebook.dnd_edition),
-             }, context_instance=RequestContext(request), )
+                              {
+                                  'rulebook': rulebook,
+                                  'spell_list': paginator.items(),
+                                  'paginator': paginator,
+                                  'request': request,
+                                  'display_3e_warning': is_3e_edition(rulebook.dnd_edition),
+                              }, context_instance=RequestContext(request), )
 
 
 def spell_detail(request, rulebook_slug, rulebook_id, spell_slug, spell_id):
@@ -331,15 +356,15 @@ def spell_detail(request, rulebook_slug, rulebook_id, spell_slug, spell_id):
     ), pk=spell_id)
 
     if (spell.slug != spell_slug or
-        unicode(spell.rulebook.id) != rulebook_id or
-        spell.rulebook.slug != rulebook_slug):
+                unicode(spell.rulebook.id) != rulebook_id or
+                spell.rulebook.slug != rulebook_slug):
         return permanent_redirect_view(
             request, 'spell_detail', kwargs={
                 'rulebook_slug': spell.rulebook.slug,
                 'rulebook_id': spell.rulebook.id,
                 'spell_slug': spell.slug,
                 'spell_id': spell_id,
-                }
+            }
         )
 
     spell_class_level_set = spell.spellclasslevel_set.select_related(
@@ -350,7 +375,8 @@ def spell_detail(request, rulebook_slug, rulebook_id, spell_slug, spell_id):
     ).all()
 
     # related spells
-    related_spells = Spell.objects.filter(slug=spell.slug).exclude(rulebook__id=spell.rulebook.id).select_related('rulebook').all()
+    related_spells = Spell.objects.filter(slug=spell.slug).exclude(rulebook__id=spell.rulebook.id).select_related(
+        'rulebook').all()
 
     # corrupt component -- will be linked to corrupt rule
     if spell.corrupt_component:
@@ -359,24 +385,24 @@ def spell_detail(request, rulebook_slug, rulebook_id, spell_slug, spell_id):
         corrupt_rule = None
 
     return render_to_response('dnd/spell_detail.html',
-            {'spell': spell,
-             'spellclasslevel_set': spell_class_level_set,
-             'spelldomainlevel_set': spell_domain_level_set,
-             'corrupt_rule': corrupt_rule,
-             'rulebook': spell.rulebook,
-             'request': request,
-             'i_like_it_url': request.build_absolute_uri(),
-             'inaccurate_url': request.build_absolute_uri(),
-             'display_3e_warning': is_3e_edition(spell.rulebook.dnd_edition),
-             'related_spells': related_spells,
-             },
-        context_instance=RequestContext(request),
-    )
+                              {
+                                  'spell': spell,
+                                  'spellclasslevel_set': spell_class_level_set,
+                                  'spelldomainlevel_set': spell_domain_level_set,
+                                  'corrupt_rule': corrupt_rule,
+                                  'rulebook': spell.rulebook,
+                                  'request': request,
+                                  'i_like_it_url': request.build_absolute_uri(),
+                                  'inaccurate_url': request.build_absolute_uri(),
+                                  'display_3e_warning': is_3e_edition(spell.rulebook.dnd_edition),
+                                  'related_spells': related_spells,
+                              },
+                              context_instance=RequestContext(request), )
 
 
 def spell_descriptor_detail(request, spell_descriptor_slug):
     spell_descriptor = get_object_or_404(SpellDescriptor,
-        slug=spell_descriptor_slug)
+                                         slug=spell_descriptor_slug)
 
     spell_list = spell_descriptor.spell_set.select_related(
         'rulebook', 'rulebook__dnd_edition', 'school').all()
@@ -384,12 +410,14 @@ def spell_descriptor_detail(request, spell_descriptor_slug):
     paginator = DndPaginator(spell_list, request)
 
     return render_to_response('dnd/spell_descriptor_detail.html',
-            {'spell_descriptor': spell_descriptor,
-             'spell_list': paginator.items(),
-             'paginator': paginator,
-             'request': request,
-             'i_like_it_url': request.build_absolute_uri(),
-             'inaccurate_url': request.build_absolute_uri(), }, context_instance=RequestContext(request), )
+                              {
+                                  'spell_descriptor': spell_descriptor,
+                                  'spell_list': paginator.items(),
+                                  'paginator': paginator,
+                                  'request': request,
+                                  'i_like_it_url': request.build_absolute_uri(),
+                                  'inaccurate_url': request.build_absolute_uri(), },
+                              context_instance=RequestContext(request), )
 
 
 def spell_school_detail(request, spell_school_slug):
@@ -401,17 +429,19 @@ def spell_school_detail(request, spell_school_slug):
     paginator = DndPaginator(spell_list, request)
 
     return render_to_response('dnd/spell_school_detail.html',
-            {'spell_school': spell_school,
-             'spell_list': paginator.items(),
-             'paginator': paginator,
-             'request': request,
-             'i_like_it_url': request.build_absolute_uri(),
-             'inaccurate_url': request.build_absolute_uri(), }, context_instance=RequestContext(request), )
+                              {
+                                  'spell_school': spell_school,
+                                  'spell_list': paginator.items(),
+                                  'paginator': paginator,
+                                  'request': request,
+                                  'i_like_it_url': request.build_absolute_uri(),
+                                  'inaccurate_url': request.build_absolute_uri(), },
+                              context_instance=RequestContext(request), )
 
 
 def spell_sub_school_detail(request, spell_sub_school_slug):
     spell_sub_school = get_object_or_404(SpellSubSchool,
-        slug=spell_sub_school_slug)
+                                         slug=spell_sub_school_slug)
 
     spell_list = spell_sub_school.spell_set.select_related(
         'rulebook', 'rulebook__dnd_edition', 'school').all()
@@ -419,12 +449,14 @@ def spell_sub_school_detail(request, spell_sub_school_slug):
     paginator = DndPaginator(spell_list, request)
 
     return render_to_response('dnd/spell_sub_school_detail.html',
-            {'spell_sub_school': spell_sub_school,
-             'spell_list': paginator.items(),
-             'paginator': paginator,
-             'request': request,
-             'i_like_it_url': request.build_absolute_uri(),
-             'inaccurate_url': request.build_absolute_uri(), }, context_instance=RequestContext(request), )
+                              {
+                                  'spell_sub_school': spell_sub_school,
+                                  'spell_list': paginator.items(),
+                                  'paginator': paginator,
+                                  'request': request,
+                                  'i_like_it_url': request.build_absolute_uri(),
+                                  'inaccurate_url': request.build_absolute_uri(), },
+                              context_instance=RequestContext(request), )
 
 
 def spell_domain_list(request):
@@ -435,17 +467,18 @@ def spell_domain_list(request):
     form_submitted = 1 if 'name' in request.GET else 0
 
     return render_to_response('dnd/spell_domain_list.html',
-            {'request': request,
-             'spell_domain_list': paginator.items(),
-             'paginator': paginator,
-             'filter': f,
-             'form_submitted': form_submitted,
-             }, context_instance=RequestContext(request), )
+                              {
+                                  'request': request,
+                                  'spell_domain_list': paginator.items(),
+                                  'paginator': paginator,
+                                  'filter': f,
+                                  'form_submitted': form_submitted,
+                              }, context_instance=RequestContext(request), )
 
 
 def spell_domain_detail(request, spell_domain_slug):
     spell_domain = get_object_or_404(Domain,
-        slug=spell_domain_slug)
+                                     slug=spell_domain_slug)
 
     spell_list = spell_domain.spell_set.select_related(
         'rulebook', 'rulebook__dnd_edition', 'school').all()
@@ -453,12 +486,14 @@ def spell_domain_detail(request, spell_domain_slug):
     paginator = DndPaginator(spell_list, request)
 
     return render_to_response('dnd/spell_domain_detail.html',
-            {'spell_domain': spell_domain,
-             'spell_list': paginator.items(),
-             'paginator': paginator,
-             'request': request,
-             'i_like_it_url': request.build_absolute_uri(),
-             'inaccurate_url': request.build_absolute_uri(), }, context_instance=RequestContext(request), )
+                              {
+                                  'spell_domain': spell_domain,
+                                  'spell_list': paginator.items(),
+                                  'paginator': paginator,
+                                  'request': request,
+                                  'i_like_it_url': request.build_absolute_uri(),
+                                  'inaccurate_url': request.build_absolute_uri(), },
+                              context_instance=RequestContext(request), )
 
 
 def character_class_list(request):
@@ -473,19 +508,20 @@ def character_class_list(request):
     paginator = DndPaginator(f.qs, request)
 
     return render_to_response('dnd/character_class_list.html',
-            {'character_class_list': paginator.items(),
-             'paginator': paginator,
-             'request': request,
-             'filter': f,
-             'form_submitted': form_submitted,
-             }, context_instance=RequestContext(request), )
+                              {
+                                  'character_class_list': paginator.items(),
+                                  'paginator': paginator,
+                                  'request': request,
+                                  'filter': f,
+                                  'form_submitted': form_submitted,
+                              }, context_instance=RequestContext(request), )
 
 
 def character_class_detail(request, character_class_slug, rulebook_slug=None,
                            rulebook_id=None):
     # fetch the class
-    character_class = get_object_or_404(CharacterClass.objects.select_related(
-        'character_class_variant', 'character_class_variant__rulebook'),
+    character_class = get_object_or_404(
+        CharacterClass.objects.select_related('character_class_variant', 'character_class_variant__rulebook'),
         slug=character_class_slug)
 
     assert isinstance(character_class, CharacterClass)
@@ -526,11 +562,11 @@ def character_class_detail(request, character_class_slug, rulebook_slug=None,
         selected_variant = primary_variant
 
     other_variants = [
-    variant
-    for variant
-    in character_class .characterclassvariant_set.select_related(
-        'rulebook', 'rulebook__dnd_edition', 'character_class') .all()
-    if variant != selected_variant
+        variant
+        for variant
+        in character_class.characterclassvariant_set.select_related(
+            'rulebook', 'rulebook__dnd_edition', 'character_class').all()
+        if variant != selected_variant
     ]
 
     if selected_variant:
@@ -545,24 +581,24 @@ def character_class_detail(request, character_class_slug, rulebook_slug=None,
         display_3e_warning = False
 
     return render_to_response('dnd/character_class_detail.html',
-            {'character_class': character_class,
-             'request': request,
-             'i_like_it_url': request.build_absolute_uri(),
-             'inaccurate_url': request.build_absolute_uri(),
-             'selected_variant': selected_variant,
-             'required_races': required_races,
-             'required_skills': required_skills,
-             'required_feats': required_feats,
-             'other_variants': other_variants,
-             'use_canonical_link': use_canonical_link,
-             'display_3e_warning': display_3e_warning,
-             }, context_instance=RequestContext(request),
-    )
+                              {
+                                  'character_class': character_class,
+                                  'request': request,
+                                  'i_like_it_url': request.build_absolute_uri(),
+                                  'inaccurate_url': request.build_absolute_uri(),
+                                  'selected_variant': selected_variant,
+                                  'required_races': required_races,
+                                  'required_skills': required_skills,
+                                  'required_feats': required_feats,
+                                  'other_variants': other_variants,
+                                  'use_canonical_link': use_canonical_link,
+                                  'display_3e_warning': display_3e_warning,
+                              }, context_instance=RequestContext(request), )
 
 
 def character_class_spells(request, character_class_slug, level):
     character_class = get_object_or_404(CharacterClass,
-        slug=character_class_slug)
+                                        slug=character_class_slug)
 
     spell_list = Spell.objects.filter(
         spellclasslevel__character_class=character_class.id,
@@ -574,11 +610,12 @@ def character_class_spells(request, character_class_slug, level):
     paginator = DndPaginator(spell_list, request)
 
     return render_to_response('dnd/character_class_spells.html',
-            {'character_class': character_class,
-             'spell_list': paginator.items(),
-             'paginator': paginator,
-             'level': level,
-             'request': request, }, context_instance=RequestContext(request),
+                              {
+                                  'character_class': character_class,
+                                  'spell_list': paginator.items(),
+                                  'paginator': paginator,
+                                  'level': level,
+                                  'request': request, }, context_instance=RequestContext(request),
     )
 
 
@@ -586,21 +623,23 @@ def character_classes_in_rulebook(request, rulebook_slug, rulebook_id):
     rulebook = get_object_or_404(Rulebook, pk=rulebook_id)
     if not rulebook.slug == rulebook_slug:
         return permanent_redirect_view(request, 'character_classes_in_rulebook',
-            kwargs={'rulebook_slug': rulebook.slug,
-                    'rulebook_id': rulebook_id, })
+                                       kwargs={
+                                           'rulebook_slug': rulebook.slug,
+                                           'rulebook_id': rulebook_id, })
 
     class_list = [
-    character_class_variant.character_class
-    for character_class_variant
-    in rulebook.characterclassvariant_set.select_related('character_class').all()
+        character_class_variant.character_class
+        for character_class_variant
+        in rulebook.characterclassvariant_set.select_related('character_class').all()
     ]
 
     return render_to_response('dnd/character_classes_in_rulebook.html',
-            {'rulebook': rulebook,
-             'class_list': class_list,
-             'request': request,
-             'display_3e_warning': is_3e_edition(rulebook.dnd_edition),
-             }, context_instance=RequestContext(request), )
+                              {
+                                  'rulebook': rulebook,
+                                  'class_list': class_list,
+                                  'request': request,
+                                  'display_3e_warning': is_3e_edition(rulebook.dnd_edition),
+                              }, context_instance=RequestContext(request), )
 
 
 def skill_list(request):
@@ -611,20 +650,20 @@ def skill_list(request):
     paginator = DndPaginator(f.qs, request)
 
     return render_to_response('dnd/skill_list.html',
-            {'request': request,
-             'skill_list': paginator.items(),
-             'paginator': paginator,
-             'filter': f,
-             'form_submitted': form_submitted,
-             }, context_instance=RequestContext(request), )
+                              {
+                                  'request': request,
+                                  'skill_list': paginator.items(),
+                                  'paginator': paginator,
+                                  'filter': f,
+                                  'form_submitted': form_submitted,
+                              }, context_instance=RequestContext(request), )
 
 
 def skill_detail(request, skill_slug, rulebook_slug=None,
                  rulebook_id=None):
     # fetch the class
     skill = get_object_or_404(Skill.objects.select_related(
-        'skill_variant', 'skill_variant__rulebook'),
-        slug=skill_slug)
+        'skill_variant', 'skill_variant__rulebook'), slug=skill_slug)
 
     # fetch primary variant, this is independent of rulebook selected
     try:
@@ -662,11 +701,11 @@ def skill_detail(request, skill_slug, rulebook_slug=None,
         selected_variant = primary_variant
 
     other_variants = [
-    variant
-    for variant
-    in skill .skillvariant_set.select_related(
-        'rulebook', 'rulebook__dnd_edition', 'skill') .all()
-    if variant != selected_variant
+        variant
+        for variant
+        in skill.skillvariant_set.select_related(
+            'rulebook', 'rulebook__dnd_edition', 'skill').all()
+        if variant != selected_variant
     ]
 
     if selected_variant:
@@ -678,39 +717,41 @@ def skill_detail(request, skill_slug, rulebook_slug=None,
     feat_paginator = DndPaginator(feat_list, request)
 
     return render_to_response('dnd/skill_detail.html',
-            {'skill': skill,
-             'feat_list': feat_paginator.items(),
-             'feat_paginator': feat_paginator,
-             'request': request,
-             'i_like_it_url': request.build_absolute_uri(),
-             'inaccurate_url': request.build_absolute_uri(),
-             'selected_variant': selected_variant,
-             'other_variants': other_variants,
-             'use_canonical_link': use_canonical_link,
-             'display_3e_warning': display_3e_warning,
-             }, context_instance=RequestContext(request),
-    )
+                              {
+                                  'skill': skill,
+                                  'feat_list': feat_paginator.items(),
+                                  'feat_paginator': feat_paginator,
+                                  'request': request,
+                                  'i_like_it_url': request.build_absolute_uri(),
+                                  'inaccurate_url': request.build_absolute_uri(),
+                                  'selected_variant': selected_variant,
+                                  'other_variants': other_variants,
+                                  'use_canonical_link': use_canonical_link,
+                                  'display_3e_warning': display_3e_warning,
+                              }, context_instance=RequestContext(request),)
 
 
 def skills_in_rulebook(request, rulebook_slug, rulebook_id):
     rulebook = get_object_or_404(Rulebook, pk=rulebook_id)
     if not rulebook.slug == rulebook_slug:
         return permanent_redirect_view(request, 'skills_in_rulebook',
-            kwargs={'rulebook_slug': rulebook.slug,
-                    'rulebook_id': rulebook_id, })
+                                       kwargs={
+                                           'rulebook_slug': rulebook.slug,
+                                           'rulebook_id': rulebook_id,})
 
     skill_list = [
-    skill_variant.skill
-    for skill_variant
-    in rulebook.skillvariant_set.all()
+        skill_variant.skill
+        for skill_variant
+        in rulebook.skillvariant_set.all()
     ]
 
     return render_to_response('dnd/skill_in_rulebook.html',
-            {'rulebook': rulebook,
-             'skill_list': skill_list,
-             'request': request,
-             'display_3e_warning': is_3e_edition(rulebook.dnd_edition),
-             }, context_instance=RequestContext(request), )
+                              {
+                                  'rulebook': rulebook,
+                                  'skill_list': skill_list,
+                                  'request': request,
+                                  'display_3e_warning': is_3e_edition(rulebook.dnd_edition),
+                              }, context_instance=RequestContext(request), )
 
 
 def monster_index(request):
@@ -722,12 +763,13 @@ def monster_index(request):
     form_submitted = 1 if 'name' in request.GET else 0
 
     return render_to_response('dnd/monster_index.html',
-            {'request': request,
-             'monster_list': paginator.items(),
-             'paginator': paginator,
-             'filter': f,
-             'form_submitted': form_submitted,
-             }, context_instance=RequestContext(request), )
+                              {
+                                  'request': request,
+                                  'monster_list': paginator.items(),
+                                  'paginator': paginator,
+                                  'filter': f,
+                                  'form_submitted': form_submitted,
+                              }, context_instance=RequestContext(request), )
 
 
 def monster_list_by_rulebook(request):
@@ -736,18 +778,20 @@ def monster_list_by_rulebook(request):
     paginator = DndPaginator(rulebook_list, request)
 
     return render_to_response('dnd/monster_list_by_rulebook.html',
-            {'request': request,
-             'rulebook_list': paginator.items(),
-             'paginator': paginator,
-             }, context_instance=RequestContext(request), )
+                              {
+                                  'request': request,
+                                  'rulebook_list': paginator.items(),
+                                  'paginator': paginator,
+                              }, context_instance=RequestContext(request), )
 
 
 def monsters_in_rulebook(request, rulebook_slug, rulebook_id):
     rulebook = get_object_or_404(Rulebook, pk=rulebook_id)
     if not rulebook.slug == rulebook_slug:
         return permanent_redirect_view(request, 'monsters_in_rulebook',
-            kwargs={'rulebook_slug': rulebook.slug,
-                    'rulebook_id': rulebook_id, })
+                                       kwargs={
+                                           'rulebook_slug': rulebook.slug,
+                                           'rulebook_id': rulebook_id, })
 
     monster_list = rulebook.monster_set.select_related(
         'rulebook', 'rulebook__dnd_edition', 'school').all()
@@ -755,28 +799,29 @@ def monsters_in_rulebook(request, rulebook_slug, rulebook_id):
     paginator = DndPaginator(monster_list, request)
 
     return render_to_response('dnd/monsters_in_rulebook.html',
-            {'rulebook': rulebook,
-             'monster_list': paginator.items(),
-             'paginator': paginator,
-             'request': request,
-             'display_3e_warning': is_3e_edition(rulebook.dnd_edition),
-             }, context_instance=RequestContext(request), )
+                              {
+                                  'rulebook': rulebook,
+                                  'monster_list': paginator.items(),
+                                  'paginator': paginator,
+                                  'request': request,
+                                  'display_3e_warning': is_3e_edition(rulebook.dnd_edition),
+                              }, context_instance=RequestContext(request), )
 
 
 def monster_detail(request, rulebook_slug, rulebook_id, monster_slug, monster_id):
     monster = get_object_or_404(
         Monster.objects.select_related('rulebook', 'rulebook__dnd_edition', 'size',
-            'type', ),
+                                       'type', ),
         pk=monster_id)
     if (monster.slug != monster_slug or
-        unicode(monster.rulebook.id) != rulebook_id or
-        monster.rulebook.slug != rulebook_slug):
+                unicode(monster.rulebook.id) != rulebook_id or
+                monster.rulebook.slug != rulebook_slug):
         return permanent_redirect_view(request, 'monster_detail',
-            kwargs={
-                'rulebook_slug': monster.rulebook.slug,
-                'rulebook_id': monster.rulebook.id,
-                'monster_slug': monster.slug,
-                'monster_id': monster.id, })
+                                       kwargs={
+                                           'rulebook_slug': monster.rulebook.slug,
+                                           'rulebook_id': monster.rulebook.id,
+                                           'monster_slug': monster.slug,
+                                           'monster_id': monster.id, })
 
     if False:
         monster = Monster()
@@ -787,18 +832,18 @@ def monster_detail(request, rulebook_slug, rulebook_id, monster_slug, monster_id
     monster_feats = monster.feats.select_related('feat', 'feat__rulebook').all()
 
     return render_to_response('dnd/monster_detail.html',
-            {'monster': monster,
-             'rulebook': monster.rulebook,
-             'request': request,
-             'monster_speeds': monster_speeds,
-             'monster_subtypes': monster_subtypes,
-             'monster_skills': monster_skills,
-             'monster_feats': monster_feats,
-             'i_like_it_url': request.build_absolute_uri(),
-             'inaccurate_url': request.build_absolute_uri(),
-             'display_3e_warning': is_3e_edition(monster.rulebook.dnd_edition),
-             }, context_instance=RequestContext(request),
-    )
+                              {
+                                  'monster': monster,
+                                  'rulebook': monster.rulebook,
+                                  'request': request,
+                                  'monster_speeds': monster_speeds,
+                                  'monster_subtypes': monster_subtypes,
+                                  'monster_skills': monster_skills,
+                                  'monster_feats': monster_feats,
+                                  'i_like_it_url': request.build_absolute_uri(),
+                                  'inaccurate_url': request.build_absolute_uri(),
+                                  'display_3e_warning': is_3e_edition(monster.rulebook.dnd_edition),
+                              }, context_instance=RequestContext(request),)
 
 
 def race_index(request):
@@ -810,12 +855,13 @@ def race_index(request):
     form_submitted = 1 if 'name' in request.GET else 0
 
     return render_to_response('dnd/race_index.html',
-            {'request': request,
-             'race_list': paginator.items(),
-             'paginator': paginator,
-             'filter': f,
-             'form_submitted': form_submitted,
-             }, context_instance=RequestContext(request), )
+                              {
+                                  'request': request,
+                                  'race_list': paginator.items(),
+                                  'paginator': paginator,
+                                  'filter': f,
+                                  'form_submitted': form_submitted,
+                              }, context_instance=RequestContext(request), )
 
 
 def race_list_by_rulebook(request):
@@ -824,18 +870,20 @@ def race_list_by_rulebook(request):
     paginator = DndPaginator(rulebook_list, request)
 
     return render_to_response('dnd/race_list_by_rulebook.html',
-            {'request': request,
-             'rulebook_list': paginator.items(),
-             'paginator': paginator,
-             }, context_instance=RequestContext(request), )
+                              {
+                                  'request': request,
+                                  'rulebook_list': paginator.items(),
+                                  'paginator': paginator,
+                              }, context_instance=RequestContext(request), )
 
 
 def races_in_rulebook(request, rulebook_slug, rulebook_id):
     rulebook = get_object_or_404(Rulebook, pk=rulebook_id)
     if not rulebook.slug == rulebook_slug:
         return permanent_redirect_view(request, 'races_in_rulebook',
-            kwargs={'rulebook_slug': rulebook.slug,
-                    'rulebook_id': rulebook_id, })
+                                       kwargs={
+                                           'rulebook_slug': rulebook.slug,
+                                           'rulebook_id': rulebook_id, })
 
     race_list = rulebook.race_set.select_related(
         'rulebook', 'rulebook__dnd_edition', 'school').all()
@@ -843,12 +891,13 @@ def races_in_rulebook(request, rulebook_slug, rulebook_id):
     paginator = DndPaginator(race_list, request)
 
     return render_to_response('dnd/races_in_rulebook.html',
-            {'rulebook': rulebook,
-             'race_list': paginator.items(),
-             'paginator': paginator,
-             'request': request,
-             'display_3e_warning': is_3e_edition(rulebook.dnd_edition),
-             }, context_instance=RequestContext(request), )
+                              {
+                                  'rulebook': rulebook,
+                                  'race_list': paginator.items(),
+                                  'paginator': paginator,
+                                  'request': request,
+                                  'display_3e_warning': is_3e_edition(rulebook.dnd_edition),
+                              }, context_instance=RequestContext(request), )
 
 
 def race_detail(request, rulebook_slug, rulebook_id, race_slug, race_id):
@@ -857,14 +906,14 @@ def race_detail(request, rulebook_slug, rulebook_id, race_slug, race_id):
         pk=race_id)
 
     if (race.slug != race_slug or
-        unicode(race.rulebook.id) != rulebook_id or
-        race.rulebook.slug != rulebook_slug):
+                unicode(race.rulebook.id) != rulebook_id or
+                race.rulebook.slug != rulebook_slug):
         return permanent_redirect_view(request, 'race_detail',
-            kwargs={
-                'rulebook_slug': race.rulebook.slug,
-                'rulebook_id': race.rulebook.id,
-                'race_slug': race.slug,
-                'race_id': race.id, })
+                                       kwargs={
+                                           'rulebook_slug': race.rulebook.slug,
+                                           'rulebook_id': race.rulebook.id,
+                                           'race_slug': race.slug,
+                                           'race_id': race.id, })
 
     race_speeds = race.racespeed_set.select_related('type', ).all()
     if not race_speeds and race.base_monster:
@@ -875,17 +924,17 @@ def race_detail(request, rulebook_slug, rulebook_id, race_slug, race_id):
     favored_classes = race.favored_classes.select_related('character_class', ).all()
 
     return render_to_response('dnd/race_detail.html',
-            {'race': race,
-             'rulebook': race.rulebook,
-             'request': request,
-             'race_speeds': race_speeds,
-             'base_monster_race_speeds': base_monster_race_speeds,
-             'favored_classes': favored_classes,
-             'i_like_it_url': request.build_absolute_uri(),
-             'inaccurate_url': request.build_absolute_uri(),
-             'display_3e_warning': is_3e_edition(race.rulebook.dnd_edition),
-             }, context_instance=RequestContext(request),
-    )
+                              {
+                                  'race': race,
+                                  'rulebook': race.rulebook,
+                                  'request': request,
+                                  'race_speeds': race_speeds,
+                                  'base_monster_race_speeds': base_monster_race_speeds,
+                                  'favored_classes': favored_classes,
+                                  'i_like_it_url': request.build_absolute_uri(),
+                                  'inaccurate_url': request.build_absolute_uri(),
+                                  'display_3e_warning': is_3e_edition(race.rulebook.dnd_edition),
+                              }, context_instance=RequestContext(request),)
 
 
 def item_index(request):
@@ -897,12 +946,13 @@ def item_index(request):
     form_submitted = 1 if 'name' in request.GET else 0
 
     return render_to_response('dnd/item_index.html',
-        {'request': request,
-         'item_list': paginator.items(),
-         'paginator': paginator,
-         'filter': f,
-         'form_submitted': form_submitted,
-         }, context_instance=RequestContext(request), )
+                              {
+                                  'request': request,
+                                  'item_list': paginator.items(),
+                                  'paginator': paginator,
+                                  'filter': f,
+                                  'form_submitted': form_submitted,
+                              }, context_instance=RequestContext(request), )
 
 
 def item_detail(request, rulebook_slug, rulebook_id, item_slug, item_id):
@@ -913,15 +963,15 @@ def item_detail(request, rulebook_slug, rulebook_id, item_slug, item_id):
     assert isinstance(item, Item)
 
     if (item.slug != item_slug or
-        unicode(item.rulebook.id) != rulebook_id or
-        item.rulebook.slug != rulebook_slug):
+                unicode(item.rulebook.id) != rulebook_id or
+                item.rulebook.slug != rulebook_slug):
         return permanent_redirect_view(
             request, 'item_detail', kwargs={
                 'rulebook_slug': item.rulebook.slug,
                 'rulebook_id': item.rulebook.id,
                 'item_slug': item.slug,
                 'item_id': item_id,
-                }
+            }
         )
 
     required_feats = item.required_feats.select_related('rulebook').all()
@@ -931,36 +981,39 @@ def item_detail(request, rulebook_slug, rulebook_id, item_slug, item_id):
     # calculate CTC
     if not cost_to_create:
         if item.price_gp and not item.price_bonus:
-            cost_to_create = "%s gp, %s XP, %d day(s)" % (int_with_commas(ceil(item.price_gp / 2.0)), int_with_commas(ceil(item.price_gp / 25.0)), ceil(item.price_gp / 1000.0))
+            cost_to_create = "%s gp, %s XP, %d day(s)" % (
+                int_with_commas(ceil(item.price_gp / 2.0)), int_with_commas(ceil(item.price_gp / 25.0)),
+                ceil(item.price_gp / 1000.0))
         elif not item.price_gp and item.price_bonus:
             cost_to_create = "Varies"
 
     return render_to_response('dnd/item_detail.html',
-        {'item': item,
-         'aura_schools': item.aura_schools.all(),
-         'required_feats': required_feats,
-         'required_spells': required_spells,
-         'cost_to_create': cost_to_create,
-         'rulebook': item.rulebook,
-         'request': request,
-         # enum
-         'ItemType': Item.ItemType,
-         'i_like_it_url': request.build_absolute_uri(),
-         'inaccurate_url': request.build_absolute_uri(),
-         'display_3e_warning': is_3e_edition(item.rulebook.dnd_edition),
-         },
-        context_instance=RequestContext(request),
-    )
-
+                              {
+                                  'item': item,
+                                  'aura_schools': item.aura_schools.all(),
+                                  'required_feats': required_feats,
+                                  'required_spells': required_spells,
+                                  'cost_to_create': cost_to_create,
+                                  'rulebook': item.rulebook,
+                                  'request': request,
+                                  # enum
+                                  'ItemType': Item.ItemType,
+                                  'i_like_it_url': request.build_absolute_uri(),
+                                  'inaccurate_url': request.build_absolute_uri(),
+                                  'display_3e_warning': is_3e_edition(item.rulebook.dnd_edition),
+                              },
+                              context_instance=RequestContext(request),)
 
 
 def contact(request):
     if request.method == 'POST':
         form = ContactForm(request.POST,
-            initial={'captcha': request.META['REMOTE_ADDR']})
+                           initial={
+                               'captcha': request.META['REMOTE_ADDR']})
         if form.is_valid():
             if form.cleaned_data['sender']:
-                headers = {'Reply-To': form.cleaned_data['sender']}
+                headers = {
+                    'Reply-To': form.cleaned_data['sender']}
             else:
                 headers = {}
 
@@ -979,19 +1032,20 @@ def contact(request):
             return HttpResponseRedirect(reverse('contact_sent'))
 
     else:
-        form = ContactForm() # An unbound form
-
+        form = ContactForm()  # An unbound form
 
     # request context required for CSRF
     return render_to_response('dnd/contact.html',
-            {'request': request,
-             'form': form, }, context_instance=RequestContext(request), )
+                              {
+                                  'request': request,
+                                  'form': form, }, context_instance=RequestContext(request), )
 
 
 def contact_sent(request):
     return render_to_response('dnd/contact_sent.html',
-            {'request': request,
-             }, context_instance=RequestContext(request), )
+                              {
+                                  'request': request,
+                              }, context_instance=RequestContext(request), )
 
 
 def inaccurate_content(request):
@@ -1000,7 +1054,8 @@ def inaccurate_content(request):
             'captcha': request.META['REMOTE_ADDR']})
         if form.is_valid():
             if form.cleaned_data['sender']:
-                headers = {'Reply-To': form.cleaned_data['sender']}
+                headers = {
+                    'Reply-To': form.cleaned_data['sender']}
             else:
                 headers = {}
 
@@ -1022,27 +1077,31 @@ def inaccurate_content(request):
 
     else:
         form = InaccurateContentForm(
-            initial={'url': request.GET.get('url', ''),
-                     })
+            initial={
+                'url': request.GET.get('url', ''),
+            })
 
     return render_to_response('dnd/inaccurate_content.html',
-            {'request': request,
-             'form': form, }, context_instance=RequestContext(request), )
+                              {
+                                  'request': request,
+                                  'form': form, }, context_instance=RequestContext(request), )
 
 
 def inaccurate_content_sent(request):
     return render_to_response('dnd/inaccurate_content_sent.html',
-            {'request': request,
-             }, context_instance=RequestContext(request), )
+                              {
+                                  'request': request,
+                              }, context_instance=RequestContext(request), )
 
 
 def staff(request):
     page_body = StaticPage.objects.filter(name='staff')[0]
 
     return render_to_response('dnd/staff.html',
-            {'request': request,
-             'page_body': page_body,
-             }, context_instance=RequestContext(request), )
+                              {
+                                  'request': request,
+                                  'page_body': page_body,
+                              }, context_instance=RequestContext(request), )
 
 
 @revision.create_on_success
@@ -1080,9 +1139,10 @@ def very_secret_url(request):
     #                counter += 1
 
     return render_to_response('dnd/very_secret_url.html',
-            {'request': request,
-             'log': log,
-             }, context_instance=RequestContext(request), )
+                              {
+                                  'request': request,
+                                  'log': log,
+                              }, context_instance=RequestContext(request), )
 
 
 def rule_detail(request, rulebook_slug, rulebook_id, rule_slug, rule_id):
@@ -1090,21 +1150,22 @@ def rule_detail(request, rulebook_slug, rulebook_id, rule_slug, rule_id):
         Rule.objects.select_related('rulebook', 'rulebook__dnd_edition'),
         pk=rule_id)
     if (rule.slug != rule_slug or
-        unicode(rule.rulebook.id) != rulebook_id or
-        rule.rulebook.slug != rulebook_slug):
+                unicode(rule.rulebook.id) != rulebook_id or
+                rule.rulebook.slug != rulebook_slug):
         return permanent_redirect_view(request, 'rule_detail',
-            kwargs={
-                'rulebook_slug': rule.rulebook.slug,
-                'rulebook_id': rule.rulebook.id,
-                'rule_slug': rule.slug,
-                'rule_id': rule.id, })
+                                       kwargs={
+                                           'rulebook_slug': rule.rulebook.slug,
+                                           'rulebook_id': rule.rulebook.id,
+                                           'rule_slug': rule.slug,
+                                           'rule_id': rule.id, })
 
     return render_to_response('dnd/rule_detail.html',
-            {'rule': rule,
-             'rulebook': rule.rulebook,
-             'request': request,
-             'i_like_it_url': request.build_absolute_uri(),
-             'inaccurate_url': request.build_absolute_uri(),
-             'display_3e_warning': is_3e_edition(rule.rulebook.dnd_edition),
-             }, context_instance=RequestContext(request),
+                              {
+                                  'rule': rule,
+                                  'rulebook': rule.rulebook,
+                                  'request': request,
+                                  'i_like_it_url': request.build_absolute_uri(),
+                                  'inaccurate_url': request.build_absolute_uri(),
+                                  'display_3e_warning': is_3e_edition(rule.rulebook.dnd_edition),
+                              }, context_instance=RequestContext(request),
     )
