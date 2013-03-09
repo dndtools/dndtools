@@ -82,6 +82,7 @@
                 feet
             </td>
         </tr>
+        {% if automatic_languages %}
         <tr class="separator">
             <th>Automatic languages:</th>
             <td colspan="3">
@@ -91,7 +92,9 @@
                 {% endfor %}
             </td>
         </tr>
-        <tr class="separator">
+        {% endif %}
+        {% if bonus_languages %}
+        <tr{% if not automatic_languages %} class="separator"{% endif %}>
             <th>Bonus Languages:</th>
             <td colspan="3">
                 {% for language in bonus_languages %}
@@ -100,6 +103,7 @@
                 {% endfor %}
             </td>
         </tr>
+        {% endif %}
     </table>
 
     <div class="nice-textile">
