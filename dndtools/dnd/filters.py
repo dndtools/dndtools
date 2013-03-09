@@ -5,21 +5,22 @@ from dndtools.dnd.models import (
     Spell, DndEdition, SpellSchool, SpellSubSchool, SpellDescriptor,
     CharacterClass, Rulebook, Domain, Feat, Skill, Item)
 
+
 def rulebook_choices():
     rulebook_choices = [
-    (edition.name,
-     [(rulebook.slug, rulebook.name)
-     for rulebook in edition.rulebook_set.all()])
-    for edition in DndEdition.objects.all()]
+        (edition.name,
+         [(rulebook.slug, rulebook.name)
+          for rulebook in edition.rulebook_set.all()])
+        for edition in DndEdition.objects.all()]
     rulebook_choices.insert(0, ('', 'Unknown'))
 
     return rulebook_choices
 
 
-def edition_choices(unknown_entry = True):
+def edition_choices(unknown_entry=True):
     edition_choices = [(edition.slug, edition.name) for edition in
-                                                    DndEdition.objects.all()]
-    if (unknown_entry):
+                       DndEdition.objects.all()]
+    if unknown_entry:
         edition_choices.insert(0, ('', 'Unknown'))
 
     return edition_choices
@@ -33,7 +34,7 @@ def spell_level_choices():
 
 def character_class_choices():
     character_class_choices = [
-    (clazz.slug, clazz.name) for clazz in CharacterClass.objects.all()
+        (clazz.slug, clazz.name) for clazz in CharacterClass.objects.all()
     ]
     character_class_choices.insert(0, ('', 'Unknown'))
 
@@ -42,7 +43,8 @@ def character_class_choices():
 
 def character_class_casting_choices():
     character_class_choices = [
-    (clazz.slug, clazz.name) for clazz in CharacterClass.objects.filter(spellclasslevel__id__isnull=False).distinct()
+        (clazz.slug, clazz.name) for clazz in
+        CharacterClass.objects.filter(spellclasslevel__id__isnull=False).distinct()
     ]
     character_class_choices.insert(0, ('', 'Unknown'))
 
@@ -51,7 +53,7 @@ def character_class_casting_choices():
 
 def domain_choices():
     domain_choices = [
-    (domain.slug, domain.name) for domain in Domain.objects.all()
+        (domain.slug, domain.name) for domain in Domain.objects.all()
     ]
     domain_choices.insert(0, ('', 'Unknown'))
 
@@ -60,20 +62,21 @@ def domain_choices():
 
 class SpellFilter(django_filters2.FilterSet):
     school_choices = [(school.slug, school.name)
-    for school in SpellSchool.objects.all()]
+                      for school in SpellSchool.objects.all()]
     school_choices.insert(0, ('', 'Unknown'))
 
     sub_school_choices = [(sub_school.slug, sub_school.name)
-    for sub_school in SpellSubSchool.objects.all()]
+                          for sub_school in SpellSubSchool.objects.all()]
     sub_school_choices.insert(0, ('', 'Unknown'))
 
     descriptor_choices = [(descriptor.slug, descriptor.name)
-    for descriptor in SpellDescriptor.objects.all()]
+                          for descriptor in SpellDescriptor.objects.all()]
     descriptor_choices.insert(0, ('', 'Unknown'))
 
     name = django_filters2.CharFilter(
         lookup_type='icontains', label='Spell name'
     )
+    # noinspection PyShadowingBuiltins
     range = django_filters2.CharFilter(
         lookup_type='icontains',
     )
@@ -145,8 +148,6 @@ class SpellFilter(django_filters2.FilterSet):
             'domain_levels__slug', 'spelldomainlevel__level', ]
 
 
-
-
 class ItemFilter(django_filters2.FilterSet):
     name = django_filters2.CharFilter(
         lookup_type='icontains', label='Spell name'
@@ -186,9 +187,10 @@ class CharacterClassFilter(django_filters2.FilterSet):
 
     class Meta:
         model = CharacterClass
-        fields = ['name', 'characterclassvariant__rulebook__slug', 'characterclassvariant__rulebook__dnd_edition__slug', 'prestige',
+        fields = ['name', 'characterclassvariant__rulebook__slug', 'characterclassvariant__rulebook__dnd_edition__slug',
+                  'prestige',
                   'characterclassvariant__required_bab', 'characterclassvariant__skill_points',
-                  'characterclassvariant__class_features', 'characterclassvariant__hit_die',]
+                  'characterclassvariant__class_features', 'characterclassvariant__hit_die', ]
 
 
 class RulebookFilter(django_filters2.FilterSet):
@@ -275,9 +277,8 @@ class SkillFilter(django_filters2.FilterSet):
             ('WIS', 'WIS'),
             ('CHA', 'CHA'),
             ('None', 'None'),
-            )
+        )
     )
-
 
     class Meta:
         model = Skill
