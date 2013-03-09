@@ -11,7 +11,8 @@ urlpatterns = patterns(
     (r'^robots\.txt$', direct_to_template,
      {'template': 'robots.txt', 'mimetype': 'text/plain'}),
     # index
-    url(r'^$',
+    url(
+        r'^$',
         'index',
         name='index',
     ),
@@ -35,8 +36,7 @@ urlpatterns = patterns(
     ),
     # rulebooks > edition > rulebook (rulebook detail, links to spells/feats)
     url(
-        r'^rulebooks/(?P<edition_slug>[^/]+)--(?P<edition_id>\d+)/(?P<rulebook_slug>[^/]+)--(?P<rulebook_id>\d+)/$'
-        ,
+        r'^rulebooks/(?P<edition_slug>[^/]+)--(?P<edition_id>\d+)/(?P<rulebook_slug>[^/]+)--(?P<rulebook_id>\d+)/$',
         'rulebook_detail',
         name='rulebook_detail',
     ),
@@ -72,8 +72,7 @@ urlpatterns = patterns(
     ),
     # feats > rulebook > feat
     url(
-        r'^feats/(?P<rulebook_slug>[^/]+)--(?P<rulebook_id>\d+)/(?P<feat_slug>[^/]+)--(?P<feat_id>\d+)/$'
-        ,
+        r'^feats/(?P<rulebook_slug>[^/]+)--(?P<rulebook_id>\d+)/(?P<feat_slug>[^/]+)--(?P<feat_id>\d+)/$',
         'feat_detail',
         name='feat_detail',
     ),
@@ -97,8 +96,7 @@ urlpatterns = patterns(
     ),
     # spells > rulebook > spell
     url(
-        r'^spells/(?P<rulebook_slug>[^/]+)--(?P<rulebook_id>\d+)/(?P<spell_slug>[^/]+)--(?P<spell_id>\d+)/$'
-        ,
+        r'^spells/(?P<rulebook_slug>[^/]+)--(?P<rulebook_id>\d+)/(?P<spell_slug>[^/]+)--(?P<spell_id>\d+)/$',
         'spell_detail',
         name='spell_detail',
     ),
@@ -164,8 +162,7 @@ urlpatterns = patterns(
     ),
     # classes > detail > spells by level
     url(
-        r'^classes/(?P<character_class_slug>[^/]+)/spells-level-(?P<level>\d)/$'
-        ,
+        r'^classes/(?P<character_class_slug>[^/]+)/spells-level-(?P<level>\d)/$',
         'character_class_spells',
         name='character_class_spells',
     ),
@@ -263,8 +260,7 @@ urlpatterns = patterns(
     ),
     # spells > rulebook > item
     url(
-        r'^items/(?P<rulebook_slug>[^/]+)--(?P<rulebook_id>\d+)/(?P<item_slug>[^/]+)--(?P<item_id>\d+)/$'
-        ,
+        r'^items/(?P<rulebook_slug>[^/]+)--(?P<rulebook_id>\d+)/(?P<item_slug>[^/]+)--(?P<item_id>\d+)/$',
         'item_detail',
         name='item_detail',
     ),
