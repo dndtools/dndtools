@@ -1193,7 +1193,7 @@ def language_detail(request, language_slug):
     assert isinstance(language, Language)
 
     race_list = Race.objects.filter(Q(automatic_languages=language) | Q(bonus_languages=language)).select_related(
-        'rulebook').all()
+        'rulebook').distinct().all()
 
     paginator = DndPaginator(race_list, request)
 
