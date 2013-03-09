@@ -1372,6 +1372,12 @@ class Race(models.Model):
         null=True,
     )
 
+    natural_armor = models.SmallIntegerField(
+        blank=True,
+        null=True,
+        help_text='Only if there is any bonus! Omit for no bonus (do not write "0")',
+    )
+
     automatic_languages = models.ManyToManyField(
         Language,
         blank=True,

@@ -82,6 +82,14 @@
                 feet
             </td>
         </tr>
+        {% if race.natural_armor %}
+            <tr>
+                <th>Natural armor:</th>
+                <td>
+                    {{ race.natural_armor|plus_minus }}
+                </td>
+            </tr>
+        {% endif %}
         {% if automatic_languages %}
         <tr class="separator">
             <th>Automatic languages:</th>
