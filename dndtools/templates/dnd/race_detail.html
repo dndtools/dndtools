@@ -1,6 +1,7 @@
 {% extends "dnd/race_layout.html" %}
 
 {% load custom_filters %}
+{% load custom_tags %}
 
 {% block title %}{{ race.name }} &ndash; Race{% endblock %}
 
@@ -15,6 +16,9 @@
 {% block admin_edit %}<a href="{% url admin:dnd_race_change race.id %}">EDIT</a>{% endblock %}
 
 {% block content %}
+    {% if race.image %}
+        <span class="right" style="clear: right"><img src="{% media race.image.name "timestamp" %}" alt="{{ race.name }}" /></span>
+    {% endif %}
 
     <h2>{{ race.name }}</h2>
     (

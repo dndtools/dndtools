@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from PIL import Image
 from django.db import models
 from dndtools.dnd.utilities import update_html_cache_attributes
 
@@ -1416,9 +1417,28 @@ class Race(models.Model):
         blank=True,
     )
 
+    # noinspection PyMethodParameters
+    def image_filename(instance, filename):
+        return 'media/race/%d.jpg' % instance.id
+
+    image = models.ImageField(
+        upload_to=image_filename,
+        blank=True,
+        null=True,
+        help_text='auto-resized to 500px * 500px max, jpeg only plz.',
+    )
+
     def save(self, *args, **kwargs):
         update_html_cache_attributes(self, 'description', 'combat', 'racial_traits')
         super(Race, self).save(*args, **kwargs)
+
+        # resize
+        if self.image:
+            filename = self.image.path
+            image = Image.open(filename)
+            assert isinstance(image, Image.Image)
+            image.thumbnail((500, 500), Image.ANTIALIAS)
+            image.save(filename)
 
     class Meta:
         unique_together = (("name", "rulebook",))
