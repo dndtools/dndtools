@@ -945,6 +945,19 @@ class Language(models.Model):
         unique=True,
     )
 
+    description = models.TextField(
+        blank=True,
+        help_text='Textile enabled!',
+    )
+    description_html = models.TextField(
+        editable=False,
+        blank=True,
+    )
+
+    def save(self, *args, **kwargs):
+        update_html_cache_attributes(self, 'description')
+        super(Language, self).save(*args, **kwargs)
+
     class Meta:
         ordering = ['name', ]
 

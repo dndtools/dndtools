@@ -3,13 +3,14 @@ from math import ceil
 from django.contrib.auth.models import User
 from django.core.mail.message import EmailMessage
 from django.core.urlresolvers import reverse
+from django.db.models import Q
 from django.http import HttpResponsePermanentRedirect, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render_to_response
 from django.template.context import RequestContext
 from reversion.revisions import revision
 from dndtools.dnd.dnd_paginator import DndPaginator
 from dndtools.dnd.filters import (SpellFilter, CharacterClassFilter, RulebookFilter, FeatFilter, SpellDomainFilter,
-                                  SpellDescriptorFilter, SkillFilter, RaceFilter, MonsterFilter, ItemFilter)
+                                  SpellDescriptorFilter, SkillFilter, RaceFilter, MonsterFilter, ItemFilter, LanguageFilter)
 from dndtools.dnd.forms import ContactForm, InaccurateContentForm
 
 from dndtools.dnd.models import (Rulebook, DndEdition, FeatCategory, Feat,
@@ -728,7 +729,7 @@ def skill_detail(request, skill_slug, rulebook_slug=None,
                                   'other_variants': other_variants,
                                   'use_canonical_link': use_canonical_link,
                                   'display_3e_warning': display_3e_warning,
-                              }, context_instance=RequestContext(request),)
+                              }, context_instance=RequestContext(request), )
 
 
 def skills_in_rulebook(request, rulebook_slug, rulebook_id):
@@ -737,7 +738,7 @@ def skills_in_rulebook(request, rulebook_slug, rulebook_id):
         return permanent_redirect_view(request, 'skills_in_rulebook',
                                        kwargs={
                                            'rulebook_slug': rulebook.slug,
-                                           'rulebook_id': rulebook_id,})
+                                           'rulebook_id': rulebook_id, })
 
     skill_list = [
         skill_variant.skill
@@ -843,7 +844,7 @@ def monster_detail(request, rulebook_slug, rulebook_id, monster_slug, monster_id
                                   'i_like_it_url': request.build_absolute_uri(),
                                   'inaccurate_url': request.build_absolute_uri(),
                                   'display_3e_warning': is_3e_edition(monster.rulebook.dnd_edition),
-                              }, context_instance=RequestContext(request),)
+                              }, context_instance=RequestContext(request), )
 
 
 def race_index(request):
@@ -932,7 +933,7 @@ def race_detail(request, rulebook_slug, rulebook_id, race_slug, race_id):
                                   'i_like_it_url': request.build_absolute_uri(),
                                   'inaccurate_url': request.build_absolute_uri(),
                                   'display_3e_warning': is_3e_edition(race.rulebook.dnd_edition),
-                              }, context_instance=RequestContext(request),)
+                              }, context_instance=RequestContext(request), )
 
 
 def item_index(request):
@@ -1000,7 +1001,7 @@ def item_detail(request, rulebook_slug, rulebook_id, item_slug, item_id):
                                   'inaccurate_url': request.build_absolute_uri(),
                                   'display_3e_warning': is_3e_edition(item.rulebook.dnd_edition),
                               },
-                              context_instance=RequestContext(request),)
+                              context_instance=RequestContext(request), )
 
 
 def contact(request):
@@ -1165,7 +1166,24 @@ def rule_detail(request, rulebook_slug, rulebook_id, rule_slug, rule_id):
                                   'i_like_it_url': request.build_absolute_uri(),
                                   'inaccurate_url': request.build_absolute_uri(),
                                   'display_3e_warning': is_3e_edition(rule.rulebook.dnd_edition),
-                              }, context_instance=RequestContext(request),)
+                              }, context_instance=RequestContext(request), )
+
+
+def language_index(request):
+    f = LanguageFilter(request.GET, queryset=Language.objects.distinct())
+
+    paginator = DndPaginator(f.qs, request)
+
+    form_submitted = 1 if 'name' in request.GET else 0
+
+    return render_to_response('dnd/language_index.html',
+                              {
+                                  'request': request,
+                                  'language_list': paginator.items(),
+                                  'paginator': paginator,
+                                  'filter': f,
+                                  'form_submitted': form_submitted,
+                              }, context_instance=RequestContext(request), )
 
 
 def language_detail(request, language_slug):
@@ -1174,9 +1192,16 @@ def language_detail(request, language_slug):
     )
     assert isinstance(language, Language)
 
+    race_list = Race.objects.filter(Q(automatic_languages=language) | Q(bonus_languages=language)).select_related(
+        'rulebook').all()
+
+    paginator = DndPaginator(race_list, request)
+
     return render_to_response('dnd/language_detail.html',
                               {
                                   'language': language,
+                                  'paginator': paginator,
+                                  'race_list': race_list,
                                   'i_like_it_url': request.build_absolute_uri(),
                                   'inaccurate_url': request.build_absolute_uri(),
-                                  }, context_instance=RequestContext(request),)
+                              }, context_instance=RequestContext(request), )

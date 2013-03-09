@@ -5,6 +5,7 @@
 {% block title %}{{ language.name }} &ndash; Language{% endblock %}
 
 {% block breadcrumbs %}
+    &raquo; <a href="{% url language_index %}">Languages</a>
     &raquo; <a href="{{ language.get_absolute_url }}">{{ language.name }}</a>
 {% endblock %}
 
@@ -13,5 +14,14 @@
 {% block content %}
 
 <h2>{{ language.name }}</h2>
+
+
+<div class="nice-textile">
+    {{ language.description_html|safe }}
+</div>
+
+<h3>Races with this language</h3>
+
+{% include "dnd/race_table.html" %}
 
 {% endblock %}

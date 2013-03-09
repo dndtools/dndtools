@@ -3,7 +3,7 @@
 from dndtools import django_filters2
 from dndtools.dnd.models import (
     Spell, DndEdition, SpellSchool, SpellSubSchool, SpellDescriptor,
-    CharacterClass, Rulebook, Domain, Feat, Skill, Item)
+    CharacterClass, Rulebook, Domain, Feat, Skill, Item, Language)
 
 
 def rulebook_choices():
@@ -155,6 +155,16 @@ class ItemFilter(django_filters2.FilterSet):
 
     class Meta:
         model = Item
+        fields = ['name', ]
+
+
+class LanguageFilter(django_filters2.FilterSet):
+    name = django_filters2.CharFilter(
+        lookup_type='icontains', label='Language name'
+    )
+
+    class Meta:
+        model = Language
         fields = ['name', ]
 
 
