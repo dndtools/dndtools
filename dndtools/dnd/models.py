@@ -28,10 +28,11 @@ class DndEdition(models.Model):
     def get_absolute_url(self):
         return (
             'dndtools.dnd.views.edition_detail', (),
-                {'edition_slug': self.slug,
-                 'edition_id': self.id,
-                 }
-            )
+            {
+                'edition_slug': self.slug,
+                'edition_id': self.id,
+            }
+        )
 
 
 class Rulebook(models.Model):
@@ -83,12 +84,13 @@ class Rulebook(models.Model):
     def get_absolute_url(self):
         return (
             'dndtools.dnd.views.rulebook_detail', (),
-                {'edition_slug': self.dnd_edition.slug,
-                 'edition_id': self.dnd_edition.id,
-                 'rulebook_slug': self.slug,
-                 'rulebook_id': self.id,
-                 }
-            )
+            {
+                'edition_slug': self.dnd_edition.slug,
+                'edition_id': self.dnd_edition.id,
+                'rulebook_slug': self.slug,
+                'rulebook_id': self.id,
+            }
+        )
 
 
 class CharacterClass(models.Model):
@@ -125,9 +127,10 @@ class CharacterClass(models.Model):
     def get_absolute_url(self):
         return (
             'dndtools.dnd.views.character_class_detail', (),
-                {'character_class_slug': self.slug,
-                 }
-            )
+            {
+                'character_class_slug': self.slug,
+            }
+        )
 
 
 class CharacterClassVariant(models.Model):
@@ -183,7 +186,8 @@ class CharacterClassVariant(models.Model):
     starting_gold = models.CharField(
         blank=True,
         max_length=32,
-        help_text='Do NOT use gold from Starting package! That amount is reduced by other equipment used. Check p. 111 in PHB for more info. Do not put in Average gold amount.'
+        help_text='Do NOT use gold from Starting package! That amount is reduced by other equipment used. Check p. 111 '
+                  'in PHB for more info. Do not put in Average gold amount.'
     )
 
     advancement = models.TextField(
@@ -210,11 +214,12 @@ class CharacterClassVariant(models.Model):
     def get_absolute_url(self):
         return (
             'character_class_variant_detail', (),
-                {'rulebook_slug': self.rulebook.slug,
-                 'rulebook_id': self.rulebook.id,
-                 'character_class_slug': self.character_class.slug
+            {
+                'rulebook_slug': self.rulebook.slug,
+                'rulebook_id': self.rulebook.id,
+                'character_class_slug': self.character_class.slug
             }
-            )
+        )
 
 
 class CharacterClassVariantRequiresRace(models.Model):
@@ -322,9 +327,10 @@ class Domain(models.Model):
     def get_absolute_url(self):
         return (
             'dndtools.dnd.views.spell_domain_detail', (),
-                {'spell_domain_slug': self.slug,
-                 }
-            )
+            {
+                'spell_domain_slug': self.slug,
+            }
+        )
 
 
 class SpellDescriptor(models.Model):
@@ -348,9 +354,10 @@ class SpellDescriptor(models.Model):
     def get_absolute_url(self):
         return (
             'dndtools.dnd.views.spell_descriptor_detail', (),
-                {'spell_descriptor_slug': self.slug,
-                 }
-            )
+            {
+                'spell_descriptor_slug': self.slug,
+            }
+        )
 
 
 class SpellSchool(models.Model):
@@ -373,9 +380,10 @@ class SpellSchool(models.Model):
     def get_absolute_url(self):
         return (
             'dndtools.dnd.views.spell_school_detail', (),
-                {'spell_school_slug': self.slug,
-                 }
-            )
+            {
+                'spell_school_slug': self.slug,
+            }
+        )
 
 
 class SpellSubSchool(models.Model):
@@ -398,9 +406,10 @@ class SpellSubSchool(models.Model):
     def get_absolute_url(self):
         return (
             'dndtools.dnd.views.spell_sub_school_detail', (),
-                {'spell_sub_school_slug': self.slug,
-                 }
-            )
+            {
+                'spell_sub_school_slug': self.slug,
+            }
+        )
 
 
 class Spell(models.Model):
@@ -454,8 +463,7 @@ class Spell(models.Model):
         max_length=256,
         null=True,
         blank=True,
-        help_text='Extra obscure components like Archon, Eldarin etc. Comma separated.'
-        ,
+        help_text='Extra obscure components like Archon, Eldarin etc. Comma separated.',
     )
 
     casting_time = models.CharField(
@@ -463,6 +471,7 @@ class Spell(models.Model):
         null=True,
         blank=True,
     )
+    # noinspection PyShadowingBuiltins
     range = models.CharField(
         max_length=256,
         null=True,
@@ -532,12 +541,13 @@ class Spell(models.Model):
     def get_absolute_url(self):
         return (
             'dndtools.dnd.views.spell_detail', (),
-                {'spell_slug': self.slug,
-                 'spell_id': self.id,
-                 'rulebook_slug': self.rulebook.slug,
-                 'rulebook_id': self.rulebook.id,
-                 }
-            )
+            {
+                'spell_slug': self.slug,
+                'spell_id': self.id,
+                'rulebook_slug': self.rulebook.slug,
+                'rulebook_id': self.rulebook.id,
+            }
+        )
 
 
 class SpellClassLevel(models.Model):
@@ -593,14 +603,14 @@ class FeatCategory(models.Model):
     def __unicode__(self):
         return self.name
 
-
     @models.permalink
     def get_absolute_url(self):
         return (
             'dndtools.dnd.views.feat_category_detail', (),
-                {'category_slug': self.slug,
-                 }
-            )
+            {
+                'category_slug': self.slug,
+            }
+        )
 
 
 class Skill(models.Model):
@@ -635,9 +645,10 @@ class Skill(models.Model):
     def get_absolute_url(self):
         return (
             'dndtools.dnd.views.skill_detail', (),
-                {'skill_slug': self.slug,
-                 }
-            )
+            {
+                'skill_slug': self.slug,
+            }
+        )
 
 
 class SkillVariant(models.Model):
@@ -729,7 +740,7 @@ class SkillVariant(models.Model):
 
     def save(self, *args, **kwargs):
         update_html_cache_attributes(self, 'description', 'check', 'action',
-            'try_again', 'special', 'synergy', 'restriction', 'untrained')
+                                     'try_again', 'special', 'synergy', 'restriction', 'untrained')
         super(SkillVariant, self).save(*args, **kwargs)
 
     def __unicode__(self):
@@ -739,11 +750,12 @@ class SkillVariant(models.Model):
     def get_absolute_url(self):
         return (
             'skill_variant_detail', (),
-                {'rulebook_slug': self.rulebook.slug,
-                 'rulebook_id': self.rulebook.id,
-                 'skill_slug': self.skill.slug
+            {
+                'rulebook_slug': self.rulebook.slug,
+                'rulebook_id': self.rulebook.id,
+                'skill_slug': self.skill.slug
             }
-            )
+        )
 
 
 class SpecialFeatPrerequisite(models.Model):
@@ -839,12 +851,13 @@ class Feat(models.Model):
     def get_absolute_url(self):
         return (
             'dndtools.dnd.views.feat_detail', (),
-                {'feat_slug': self.slug,
-                 'feat_id': self.id,
-                 'rulebook_slug': self.rulebook.slug,
-                 'rulebook_id': self.rulebook.id,
-                 }
-            )
+            {
+                'feat_slug': self.slug,
+                'feat_id': self.id,
+                'rulebook_slug': self.rulebook.slug,
+                'rulebook_id': self.rulebook.id,
+            }
+        )
 
 
 class TextFeatPrerequisite(models.Model):
@@ -938,6 +951,7 @@ class RaceSize(models.Model):
     def __unicode__(self):
         return self.name
 
+
 SPACE_REACH_CHOICES = (
     (0, 0),
     (5, 5),
@@ -952,7 +966,8 @@ SPACE_REACH_CHOICES = (
     (50, 50),
     (55, 55),
     (60, 60),
-    )
+)
+
 
 class RaceSpeedType(models.Model):
     name = models.CharField(
@@ -994,9 +1009,10 @@ class MonsterType(models.Model):
     def get_absolute_url(self):
         return (
             'dndtools.dnd.views.monster_type_detail', (),
-                {'slug': self.slug,
-                 }
-            )
+            {
+                'slug': self.slug,
+            }
+        )
 
 
 class MonsterSubtype(models.Model):
@@ -1019,9 +1035,10 @@ class MonsterSubtype(models.Model):
     def get_absolute_url(self):
         return (
             'dndtools.dnd.views.monster_subtype_detail', (),
-                {'slug': self.slug,
-                 }
-            )
+            {
+                'slug': self.slug,
+            }
+        )
 
 
 class Monster(models.Model):
@@ -1044,6 +1061,7 @@ class Monster(models.Model):
         RaceSize,
         null=True,
     )
+    # noinspection PyShadowingBuiltins
     type = models.ForeignKey(
         MonsterType,
         help_text='Subtypes at the bottom of page',
@@ -1097,8 +1115,9 @@ class Monster(models.Model):
     special_qualities = models.CharField(
         max_length=512,
         blank=True,
-        help_text='Eg. "Damage reduction 10/evil, darkvision 60 ft., low-light vision, immunity to acid, cold, and petrification, protective aura, regeneration 10, resistance to electricity 10 and fire 10, spell resistance 30, tongues"'
-        ,
+        help_text='Eg. "Damage reduction 10/evil, darkvision 60 ft., low-light vision, immunity to acid, cold, and '
+                  'petrification, protective aura, regeneration 10, resistance to electricity 10 and fire 10, spell '
+                  'resistance 30, tongues"',
     )
     fort_save = models.SmallIntegerField(
     )
@@ -1122,6 +1141,7 @@ class Monster(models.Model):
         help_text='Eg. "+18 against illusions"',
     )
 
+    # noinspection PyShadowingBuiltins
     str = models.SmallIntegerField(
     )
     dex = models.SmallIntegerField(
@@ -1131,6 +1151,7 @@ class Monster(models.Model):
         null=True,
         help_text='Leave blank for undeads',
     )
+    # noinspection PyShadowingBuiltins
     int = models.SmallIntegerField(
     )
     wis = models.SmallIntegerField(
@@ -1192,7 +1213,6 @@ class Monster(models.Model):
         update_html_cache_attributes(self, 'description', 'combat')
         super(Monster, self).save(*args, **kwargs)
 
-
     class Meta:
         unique_together = (("name", "rulebook",))
         ordering = ['name', ]
@@ -1204,12 +1224,13 @@ class Monster(models.Model):
     def get_absolute_url(self):
         return (
             'dndtools.dnd.views.monster_detail', (),
-                {'monster_slug': self.slug,
-                 'monster_id': self.id,
-                 'rulebook_slug': self.rulebook.slug,
-                 'rulebook_id': self.rulebook.id,
-                 }
-            )
+            {
+                'monster_slug': self.slug,
+                'monster_id': self.id,
+                'rulebook_slug': self.rulebook.slug,
+                'rulebook_id': self.rulebook.id,
+            }
+        )
 
 
 class MonsterHasFeat(models.Model):
@@ -1247,6 +1268,7 @@ class MonsterSpeed(models.Model):
     race = models.ForeignKey(
         Monster,
     )
+    # noinspection PyShadowingBuiltins
     type = models.ForeignKey(
         RaceSpeedType,
         related_name='+',
@@ -1283,6 +1305,7 @@ class Race(models.Model):
         blank=True,
         help_text='Leave empty if inherited from Base Monster!',
     )
+    # noinspection PyShadowingBuiltins
     str = models.SmallIntegerField(
         default=0,
     )
@@ -1294,6 +1317,7 @@ class Race(models.Model):
         blank=True,
         null=True,
     )
+    # noinspection PyShadowingBuiltins
     int = models.SmallIntegerField(
         default=0,
     )
@@ -1349,7 +1373,6 @@ class Race(models.Model):
         update_html_cache_attributes(self, 'description', 'combat', 'racial_traits')
         super(Race, self).save(*args, **kwargs)
 
-
     class Meta:
         unique_together = (("name", "rulebook",))
         ordering = ['name', ]
@@ -1361,18 +1384,20 @@ class Race(models.Model):
     def get_absolute_url(self):
         return (
             'dndtools.dnd.views.race_detail', (),
-                {'race_slug': self.slug,
-                 'race_id': self.id,
-                 'rulebook_slug': self.rulebook.slug,
-                 'rulebook_id': self.rulebook.id,
-                 }
-            )
+            {
+                'race_slug': self.slug,
+                'race_id': self.id,
+                'rulebook_slug': self.rulebook.slug,
+                'rulebook_id': self.rulebook.id,
+            }
+        )
 
 
 class RaceSpeed(models.Model):
     race = models.ForeignKey(
         Race,
     )
+    # noinspection PyShadowingBuiltins
     type = models.ForeignKey(
         RaceSpeedType,
         related_name='+',
@@ -1393,6 +1418,7 @@ class RaceFavoredCharacterClass(models.Model):
         max_length=32,
     )
 
+
 class ItemSlot(models.Model):
     name = models.CharField(
         max_length=64,
@@ -1408,6 +1434,7 @@ class ItemSlot(models.Model):
 
     def __unicode__(self):
         return self.name
+
 
 class ItemProperty(models.Model):
     name = models.CharField(
@@ -1425,6 +1452,7 @@ class ItemProperty(models.Model):
     def __unicode__(self):
         return self.name
 
+
 class ItemAuraType(models.Model):
     name = models.CharField(
         max_length=64,
@@ -1440,6 +1468,7 @@ class ItemAuraType(models.Model):
 
     def __unicode__(self):
         return self.name
+
 
 class ItemActivationType(models.Model):
     name = models.CharField(
@@ -1457,6 +1486,7 @@ class ItemActivationType(models.Model):
     def __unicode__(self):
         return self.name
 
+
 class Item(models.Model):
     class ItemType:
         MUNDANE = 'MUN'
@@ -1469,6 +1499,7 @@ class Item(models.Model):
         (ItemType.ENHANCEMENT, u'Enhancement'),
     )
 
+    # noinspection PyShadowingBuiltins
     type = models.CharField(
         max_length=3,
         blank=False,
@@ -1514,6 +1545,7 @@ class Item(models.Model):
         null=True,
         help_text='Only Mundane and Magic Items.',
     )
+    # noinspection PyShadowingBuiltins
     property = models.ForeignKey(
         ItemProperty,
         blank=True,
@@ -1569,7 +1601,8 @@ class Item(models.Model):
     cost_to_create = models.CharField(
         max_length=128,
         blank=True,
-        help_text='Fill ONLY if you don\'t want cost to be calculated! (50% gold, 1/25 xp, 1/1000 days for regular, "varies" for +x items). Use dash (-) to surpress this field.',
+        help_text='Fill ONLY if you don\'t want cost to be calculated! (50% gold, 1/25 xp, 1/1000 days for regular, '
+                  '"varies" for +x items). Use dash (-) to surpress this field.',
     )
 
     required_extra = models.CharField(
@@ -1613,12 +1646,13 @@ class Item(models.Model):
     def get_absolute_url(self):
         return (
             'dndtools.dnd.views.item_detail', (),
-            {'item_slug': self.slug,
-             'item_id': self.id,
-             'rulebook_slug': self.rulebook.slug,
-             'rulebook_id': self.rulebook.id,
-             }
-            )
+            {
+                'item_slug': self.slug,
+                'item_id': self.id,
+                'rulebook_slug': self.rulebook.slug,
+                'rulebook_id': self.rulebook.id,
+            }
+        )
 
 
 class NewsEntry(models.Model):
@@ -1650,7 +1684,6 @@ class NewsEntry(models.Model):
     class Meta:
         verbose_name_plural = "news entries"
         ordering = ['-published', ]
-
 
     def __unicode__(self):
         return "%s (%s)" % (self.title, self.published)
@@ -1715,7 +1748,6 @@ class Rule(models.Model):
         null=True,
     )
 
-
     def __unicode__(self):
         return "%s (%s)" % (self.name, self.rulebook.name)
 
@@ -1727,9 +1759,9 @@ class Rule(models.Model):
     def get_absolute_url(self):
         return (
             'dndtools.dnd.views.rule_detail', (),
-                {'rule_slug': self.slug,
-                 'rule_id': self.id,
-                 'rulebook_slug': self.rulebook.slug,
-                 'rulebook_id': self.rulebook.id,
-                 }
-            )
+            {'rule_slug': self.slug,
+             'rule_id': self.id,
+             'rulebook_slug': self.rulebook.slug,
+             'rulebook_id': self.rulebook.id,
+            }
+        )
