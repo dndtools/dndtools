@@ -9,7 +9,7 @@ from dndtools.dnd.models import (FeatCategory, Skill, SpecialFeatPrerequisite, T
                                  RaceSpeedType, SkillVariant, NewsEntry, StaticPage, CharacterClassVariantRequiresFeat,
                                  CharacterClassVariantRequiresRace, CharacterClassVariantRequiresSkill, MonsterHasFeat,
                                  MonsterHasSkill, MonsterSpeed, Monster, MonsterSubtype, MonsterType, Rule, Item,
-                                 ItemSlot, ItemAuraType, ItemActivationType, ItemProperty)
+                                 ItemSlot, ItemAuraType, ItemActivationType, ItemProperty, Language)
 from dndtools.dnd.models import (DndEdition, Rulebook, CharacterClass, SpellDescriptor,
                                  SpellSchool, SpellSubSchool, Spell, SpellClassLevel,
                                  Domain, SpellDomainLevel)
@@ -294,6 +294,7 @@ class RaceAdmin(VersionAdmin):
     inlines = (
         RaceFavoredCharacterClassInline, RaceSpeedInline
     )
+    filter_horizontal = ('automatic_languages', 'bonus_languages', )
 
 
 class RaceSizeAdmin(VersionAdmin):
@@ -331,6 +332,14 @@ class RuleAdmin(VersionAdmin):
     )
 
 
+class LanguageAdmin(VersionAdmin):
+    prepopulated_fields = {"slug": ("name",)}
+    list_display = (
+        'name',
+    )
+    list_display_links = ('name', )
+    search_fields = ('name', )
+
 admin.site.register(DndEdition, DndEditionAdmin)
 admin.site.register(Rulebook, RulebookAdmin)
 admin.site.register(CharacterClass, CharacterClassAdmin)
@@ -345,6 +354,7 @@ admin.site.register(Skill, SkillAdmin)
 admin.site.register(SkillVariant, SkillVariantAdmin)
 admin.site.register(SpecialFeatPrerequisite, SpecialFeatPrerequisiteAdmin)
 admin.site.register(Feat, FeatAdmin)
+admin.site.register(Language, LanguageAdmin)
 admin.site.register(MonsterType, MonsterTypeAdmin)
 admin.site.register(MonsterSubtype, MonsterSubtypeAdmin)
 admin.site.register(Monster, MonsterAdmin)

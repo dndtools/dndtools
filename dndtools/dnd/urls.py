@@ -265,6 +265,13 @@ urlpatterns = patterns(
         name='item_detail',
     ),
 
+    # languages > detail
+    url (
+        r'languages/(?P<language_slug>[^/]+)/$',
+        'language_detail',
+        name='language_detail'
+    ),
+
     # OTHERS
 
     # contact

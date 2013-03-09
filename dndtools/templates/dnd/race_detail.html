@@ -28,27 +28,16 @@
         <tr>
             <th>Size:</th>
             <td>
-                {% if not race.size and race.base_monster.size %}
-                    {{ race.base_monster.size }}
-                {% else %}
-                    {{ race.size }}
-                {% endif %}
+                {{ race.size }}
             </td>
         </tr>
         <tr>
             <th>Base speed:</th>
             <td colspan="3">
-                {% if not race_speeds and base_monster_race_speeds %}
-                    {% for speed in base_monster_race_speeds %}
-                        {% if not forloop.first %}, {% endif %}
-                        {{ speed.type }} {{ speed.speed }}
-                    {% endfor %}
-                {% else %}
-                    {% for speed in race_speeds %}
-                        {% if not forloop.first %}, {% endif %}
-                        {{ speed.type }} {{ speed.speed }}
-                    {% endfor %}
-                {% endif %}
+                {% for speed in race_speeds %}
+                    {% if not forloop.first %}, {% endif %}
+                    {{ speed.type }} {{ speed.speed }}
+                {% endfor %}
             </td>
         </tr>
         <tr class="separator">
@@ -82,34 +71,32 @@
         <tr class="separator">
             <th>Space:</th>
             <td>
-                {% if not race.space and race.base_monster.space %}
-                    {{ race.base_monster.space }}
-                {% else %}
-                    {{ race.space }}
-                {% endif %}
+                {{ race.space }}
                 feet
             </td>
         </tr>
         <tr>
             <th>Reach:</th>
             <td>
-                {% if not race.reach and race.base_monster.reach %}
-                    {{ race.base_monster.reach }}
-                {% else %}
-                    {{ race.space }}
-                {% endif %}
+                {{ race.space }}
                 feet
             </td>
         </tr>
         <tr class="separator">
-            <th>Favored class:</th>
+            <th>Automatic languages:</th>
             <td colspan="3">
-                {% for favored_class in favored_classes %}
+                {% for language in automatic_languages %}
                     {% if not forloop.first %}, {% endif %}
-                    <a href="{{ favored_class.character_class.get_absolute_url }}">{{ favored_class.character_class.name }}</a>
-                    {% if favored_class.extra %}
-                        ({{ favored_class.extra }})
-                    {% endif %}
+                    <a href="{{ language.get_absolute_url }}">{{ language.name }}</a>
+                {% endfor %}
+            </td>
+        </tr>
+        <tr class="separator">
+            <th>Bonus Languages:</th>
+            <td colspan="3">
+                {% for language in bonus_languages %}
+                    {% if not forloop.first %}, {% endif %}
+                    <a href="{{ language.get_absolute_url }}">{{ language.name }}</a>
                 {% endfor %}
             </td>
         </tr>
@@ -118,20 +105,11 @@
     <div class="nice-textile">
         <h3>Description</h3>
 
-
-        {% if not race.description_html and race.base_monster.description_html %}
-            {{ race.base_monster.description_html|safe }}
-        {% else %}
-            {{ race.description_html|safe }}
-        {% endif %}
+        {{ race.description_html|safe }}
 
         <h3>Combat</h3>
 
-        {% if not race.combat_html and race.base_monster.combat_html %}
-            {{ race.base_monster.combat_html|safe }}
-        {% else %}
-            {{ race.combat_html|safe }}
-        {% endif %}
+        {{ race.combat_html|safe }}
 
         <h3>Racial Traits</h3>
 

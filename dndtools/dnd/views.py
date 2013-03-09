@@ -15,7 +15,7 @@ from dndtools.dnd.forms import ContactForm, InaccurateContentForm
 from dndtools.dnd.models import (Rulebook, DndEdition, FeatCategory, Feat,
                                  SpellSchool, SpellDescriptor, SpellSubSchool,
                                  Spell, CharacterClass, Domain, CharacterClassVariant, Skill, Race, SkillVariant,
-                                 NewsEntry, StaticPage, Monster, Rule, Item)
+                                 NewsEntry, StaticPage, Monster, Rule, Item, Language)
 from dndtools.dnd.utilities import int_with_commas
 
 
@@ -902,8 +902,10 @@ def races_in_rulebook(request, rulebook_slug, rulebook_id):
 
 def race_detail(request, rulebook_slug, rulebook_id, race_slug, race_id):
     race = get_object_or_404(
-        Race.objects.select_related('rulebook', 'rulebook__dnd_edition', 'size', 'base_monster'),
+        Race.objects.select_related('rulebook', 'rulebook__dnd_edition', 'size', 'automatic_languages',
+                                    'bonus_languages'),
         pk=race_id)
+    assert isinstance(race, Race)
 
     if (race.slug != race_slug or
                 unicode(race.rulebook.id) != rulebook_id or
@@ -916,11 +918,6 @@ def race_detail(request, rulebook_slug, rulebook_id, race_slug, race_id):
                                            'race_id': race.id, })
 
     race_speeds = race.racespeed_set.select_related('type', ).all()
-    if not race_speeds and race.base_monster:
-        base_monster_race_speeds = race.base_monster.monsterspeed_set.select_related('type', ).all()
-    else:
-        base_monster_race_speeds = None
-
     favored_classes = race.favored_classes.select_related('character_class', ).all()
 
     return render_to_response('dnd/race_detail.html',
@@ -929,8 +926,9 @@ def race_detail(request, rulebook_slug, rulebook_id, race_slug, race_id):
                                   'rulebook': race.rulebook,
                                   'request': request,
                                   'race_speeds': race_speeds,
-                                  'base_monster_race_speeds': base_monster_race_speeds,
                                   'favored_classes': favored_classes,
+                                  'automatic_languages': race.automatic_languages.all(),
+                                  'bonus_languages': race.bonus_languages.all(),
                                   'i_like_it_url': request.build_absolute_uri(),
                                   'inaccurate_url': request.build_absolute_uri(),
                                   'display_3e_warning': is_3e_edition(race.rulebook.dnd_edition),
@@ -1167,5 +1165,18 @@ def rule_detail(request, rulebook_slug, rulebook_id, rule_slug, rule_id):
                                   'i_like_it_url': request.build_absolute_uri(),
                                   'inaccurate_url': request.build_absolute_uri(),
                                   'display_3e_warning': is_3e_edition(rule.rulebook.dnd_edition),
-                              }, context_instance=RequestContext(request),
+                              }, context_instance=RequestContext(request),)
+
+
+def language_detail(request, language_slug):
+    language = get_object_or_404(
+        Language.objects, slug=language_slug,
     )
+    assert isinstance(language, Language)
+
+    return render_to_response('dnd/language_detail.html',
+                              {
+                                  'language': language,
+                                  'i_like_it_url': request.build_absolute_uri(),
+                                  'inaccurate_url': request.build_absolute_uri(),
+                                  }, context_instance=RequestContext(request),)

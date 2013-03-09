@@ -935,6 +935,32 @@ class FeatRequiresSkill(models.Model):
     min_rank = models.PositiveSmallIntegerField()
 
 
+class Language(models.Model):
+    name = models.CharField(
+        max_length=64,
+    )
+
+    slug = models.SlugField(
+        max_length=32,
+        unique=True,
+    )
+
+    class Meta:
+        ordering = ['name', ]
+
+    def __unicode__(self):
+        return self.name
+
+    @models.permalink
+    def get_absolute_url(self):
+        return (
+            'dndtools.dnd.views.language_detail', (),
+            {
+                'language_slug': self.slug,
+            }
+        )
+
+
 class RaceSize(models.Model):
     name = models.CharField(
         max_length=32,
@@ -1292,18 +1318,10 @@ class Race(models.Model):
         blank=True,
     )
 
-    base_monster = models.ForeignKey(
-        Monster,
-        blank=True,
-        null=True,
-        help_text='Base monster. Can inherit Description, Combat, Space, Reach, Size and Speed from it.',
-    )
-
     size = models.ForeignKey(
         RaceSize,
         null=True,
         blank=True,
-        help_text='Leave empty if inherited from Base Monster!',
     )
     # noinspection PyShadowingBuiltins
     str = models.SmallIntegerField(
@@ -1334,17 +1352,27 @@ class Race(models.Model):
         choices=SPACE_REACH_CHOICES,
         blank=True,
         null=True,
-        help_text='Leave empty if inherited from Base Monster!',
     )
     reach = models.PositiveSmallIntegerField(
         choices=SPACE_REACH_CHOICES,
         blank=True,
         null=True,
-        help_text='Leave empty if inherited from Base Monster!',
     )
+
+    automatic_languages = models.ManyToManyField(
+        Language,
+        blank=True,
+        related_name='races_with_automatic',
+    )
+    bonus_languages = models.ManyToManyField(
+        Language,
+        blank=True,
+        related_name='races_with_bonus',
+    )
+
     description = models.TextField(
         blank=True,
-        help_text='Textile enabled! Leave empty if inherited from Base Monster!',
+        help_text='Textile enabled!',
     )
     description_html = models.TextField(
         editable=False,
@@ -1353,7 +1381,7 @@ class Race(models.Model):
 
     combat = models.TextField(
         blank=True,
-        help_text='Textile enabled! Leave empty if inherited from Base Monster!',
+        help_text='Textile enabled!',
     )
     combat_html = models.TextField(
         editable=False,

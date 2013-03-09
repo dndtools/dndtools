@@ -1,0 +1,17 @@
+{% extends "dnd/language_layout.html" %}
+
+{% load custom_filters %}
+
+{% block title %}{{ language.name }} &ndash; Language{% endblock %}
+
+{% block breadcrumbs %}
+    &raquo; <a href="{{ language.get_absolute_url }}">{{ language.name }}</a>
+{% endblock %}
+
+{% block admin_edit %}<a href="{% url admin:dnd_language_change language.id %}">EDIT</a>{% endblock %}
+
+{% block content %}
+
+<h2>{{ language.name }}</h2>
+
+{% endblock %}
