@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
-from dnd.models import RaceType
 
 from dndtools import django_filters2
 from dndtools.dnd.models import (
     Spell, DndEdition, SpellSchool, SpellSubSchool, SpellDescriptor,
-    CharacterClass, Rulebook, Domain, Feat, Skill, Item, Language)
+    CharacterClass, Rulebook, Domain, Feat, Skill, Item, Language, RaceType)
 
 
 def rulebook_choices():
