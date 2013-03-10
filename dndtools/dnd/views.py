@@ -10,13 +10,13 @@ from django.template.context import RequestContext
 from reversion.revisions import revision
 from dndtools.dnd.dnd_paginator import DndPaginator
 from dndtools.dnd.filters import (SpellFilter, CharacterClassFilter, RulebookFilter, FeatFilter, SpellDomainFilter,
-                                  SpellDescriptorFilter, SkillFilter, RaceFilter, MonsterFilter, ItemFilter, LanguageFilter)
+                                  SpellDescriptorFilter, SkillFilter, RaceFilter, MonsterFilter, ItemFilter, LanguageFilter, RaceTypeFilter)
 from dndtools.dnd.forms import ContactForm, InaccurateContentForm
 
 from dndtools.dnd.models import (Rulebook, DndEdition, FeatCategory, Feat,
                                  SpellSchool, SpellDescriptor, SpellSubSchool,
                                  Spell, CharacterClass, Domain, CharacterClassVariant, Skill, Race, SkillVariant,
-                                 NewsEntry, StaticPage, Monster, Rule, Item, Language)
+                                 NewsEntry, StaticPage, Monster, Rule, Item, Language, RaceType)
 from dndtools.dnd.utilities import int_with_commas
 
 
@@ -904,7 +904,7 @@ def races_in_rulebook(request, rulebook_slug, rulebook_id):
 def race_detail(request, rulebook_slug, rulebook_id, race_slug, race_id):
     race = get_object_or_404(
         Race.objects.select_related('rulebook', 'rulebook__dnd_edition', 'size', 'automatic_languages',
-                                    'bonus_languages'),
+                                    'bonus_languages', 'race_type'),
         pk=race_id)
     assert isinstance(race, Race)
 
@@ -933,6 +933,47 @@ def race_detail(request, rulebook_slug, rulebook_id, race_slug, race_id):
                                   'i_like_it_url': request.build_absolute_uri(),
                                   'inaccurate_url': request.build_absolute_uri(),
                                   'display_3e_warning': is_3e_edition(race.rulebook.dnd_edition),
+                              }, context_instance=RequestContext(request), )
+
+
+def race_type_index(request):
+    f = RaceTypeFilter(request.GET, queryset=RaceType.objects.distinct())
+
+    paginator = DndPaginator(f.qs, request)
+
+    form_submitted = 1 if 'name' in request.GET else 0
+
+    return render_to_response('dnd/race_type_index.html',
+                              {
+                                  'request': request,
+                                  'race_type_list': paginator.items(),
+                                  'paginator': paginator,
+                                  'filter': f,
+                                  'BaseSaveType': RaceType.BaseSaveType,  # enums
+                                  'BaseAttackType': RaceType.BaseAttackType,  # enums
+                                  'form_submitted': form_submitted,
+                              }, context_instance=RequestContext(request), )
+
+
+def race_type_detail(request, race_type_slug):
+    race_type = get_object_or_404(
+        RaceType.objects, slug=race_type_slug,
+    )
+    assert isinstance(race_type, RaceType)
+
+    race_list = race_type.race_set.all()
+
+    paginator = DndPaginator(race_list, request)
+
+    return render_to_response('dnd/race_type_detail.html',
+                              {
+                                  'race_type': race_type,
+                                  'paginator': paginator,
+                                  'race_list': race_list,
+                                  'BaseSaveType': RaceType.BaseSaveType,  # enums
+                                  'BaseAttackType': RaceType.BaseAttackType,  # enums
+                                  'i_like_it_url': request.build_absolute_uri(),
+                                  'inaccurate_url': request.build_absolute_uri(),
                               }, context_instance=RequestContext(request), )
 
 

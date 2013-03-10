@@ -1,0 +1,34 @@
+{% load custom_filters %}
+
+{{ paginator.print_navigation }}
+
+<table class="common">
+    <tr>
+        <th>Race type name</th>
+        <th>Hit Die</th>
+        <th>Attack Bonus</th>
+        <th>Good Fort Save</th>
+        <th>Good Reflex Save</th>
+        <th>Good Will Save</th>
+    </tr>
+    {% for race_type in race_type_list %}
+        <tr>
+            <td><a href="{{ race_type.get_absolute_url }}">{{ race_type.name }}</a></td>
+            <td>d{{ race_type.hit_die_size }}</td>
+            <td>{% if race_type.base_attack_type == BaseAttackType.FIGHTER %}
+                Fighter (as HD)
+            {% endif %}
+                {% if race_type.base_attack_type == BaseAttackType.CLERIC %}
+                    Cleric (HD x 3/4)
+                {% endif %}
+                {% if race_type.base_attack_type == BaseAttackType.WIZARD %}
+                    Wizard (HD x 1/2)
+                {% endif %}</td>
+            <td>{% if race_type.base_fort_save_type == BaseSaveType.GOOD %}{{ 1|boolean_as_img }}{% else %}{{ 0|boolean_as_img }}{% endif %} </td>
+            <td>{% if race_type.base_reflex_save_type == BaseSaveType.GOOD %}{{ 1|boolean_as_img }}{% else %}{{ 0|boolean_as_img }}{% endif %} </td>
+            <td>{% if race_type.base_will_save_type == BaseSaveType.GOOD %}{{ 1|boolean_as_img }}{% else %}{{ 0|boolean_as_img }}{% endif %} </td>
+        </tr>
+    {% endfor %}
+</table>
+
+{{ paginator.print_navigation }}

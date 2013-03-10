@@ -37,7 +37,7 @@
         </tr>
         <tr>
             <th>Base speed:</th>
-            <td colspan="3">
+            <td>
                 {% for speed in race_speeds %}
                     {% if not forloop.first %}, {% endif %}
                     {{ speed.type }} {{ speed.speed }}
@@ -97,7 +97,7 @@
         {% if automatic_languages %}
         <tr class="separator">
             <th>Automatic languages:</th>
-            <td colspan="3">
+            <td>
                 {% for language in automatic_languages %}
                     {% if not forloop.first %}, {% endif %}
                     <a href="{{ language.get_absolute_url }}">{{ language.name }}</a>
@@ -108,13 +108,38 @@
         {% if bonus_languages %}
         <tr{% if not automatic_languages %} class="separator"{% endif %}>
             <th>Bonus Languages:</th>
-            <td colspan="3">
+            <td>
                 {% for language in bonus_languages %}
                     {% if not forloop.first %}, {% endif %}
                     <a href="{{ language.get_absolute_url }}">{{ language.name }}</a>
                 {% endfor %}
             </td>
         </tr>
+        {% endif %}
+
+        {% if race.racial_hit_dice_count and race.race_type %}
+
+        <tr class="separator">
+            <th>Racial Hit Dice:</th>
+            <td>
+                {{ race.racial_hit_dice_count }}d{{ race.race_type.hit_die_size }} (<a href="{{ race.race_type.get_absolute_url }}">{{ race.race_type.name }}</a>)
+            </td>
+        </tr>
+        <tr>
+            <th>Racial Base Attack:</th>
+            <td>
+                +{{ race.racialBaseAttack }}
+            </td>
+        </tr>
+        <tr>
+            <th>Racial Base Saves:</th>
+            <td>
+                Fort +{{ race.racialBaseFortSave }},
+                Reflex +{{ race.racialBaseReflexSave }},
+                Will +{{ race.racialBaseWillSave }}
+            </td>
+        </tr>
+
         {% endif %}
     </table>
 

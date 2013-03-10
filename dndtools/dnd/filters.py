@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from dnd.models import RaceType
 
 from dndtools import django_filters2
 from dndtools.dnd.models import (
@@ -331,3 +332,36 @@ class RaceFilter(django_filters2.FilterSet):
         model = Spell
         fields = [
             'name', 'rulebook__slug', 'rulebook__dnd_edition__slug', ]
+
+
+class RaceTypeFilter(django_filters2.FilterSet):
+
+    save_type_choices = [raceTypePair for raceTypePair in RaceType.BASE_SAVE_TYPE_CHOICES]
+    save_type_choices.insert(0, ('', 'Unknown'))
+
+    base_attack_type_choices = [raceTypePair for raceTypePair in RaceType.BASE_ATTACK_TYPE_CHOICES]
+    base_attack_type_choices.insert(0, ('', 'Unknown'))
+
+    name = django_filters2.CharFilter(
+        lookup_type='icontains', label='Race type name'
+    )
+    hit_die_size = django_filters2.RangeFilter(
+        label='Hit Die Size',
+        help_text='(range from-to)',
+    )
+    base_fort_save_type = django_filters2.ChoiceFilter(
+        label='Base Attack Type', choices=base_attack_type_choices
+    )
+    base_fort_save_type = django_filters2.ChoiceFilter(
+        label='Fort Save Type', choices=save_type_choices
+    )
+    base_reflex_save_type = django_filters2.ChoiceFilter(
+        label='Reflex Save Type', choices=save_type_choices
+    )
+    base_will_save_type = django_filters2.ChoiceFilter(
+        label='Will Save Type', choices=save_type_choices
+    )
+
+    class Meta:
+        model = RaceType
+        fields = ['name', 'hit_die_size', 'base_fort_save_type', 'base_reflex_save_type', 'base_will_save_type']

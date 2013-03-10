@@ -249,6 +249,21 @@ urlpatterns = patterns(
         name='race_detail',
     ),
 
+
+    # radial types
+    url(
+        r'races/types/$',
+        'race_type_index',
+        name='race_type_index'
+    ),
+    # languages > detail
+    url(
+        r'races/types/(?P<race_type_slug>[^/]+)/$',
+        'race_type_detail',
+        name='race_type_detail'
+    ),
+
+
     # ITEMS
 
 

@@ -2,6 +2,7 @@
 
 from PIL import Image
 from django.db import models
+
 from dndtools.dnd.utilities import update_html_cache_attributes
 
 
@@ -1316,6 +1317,93 @@ class MonsterSpeed(models.Model):
     speed = models.PositiveSmallIntegerField()
 
 
+class RaceType(models.Model):
+    class BaseAttackType:
+        FIGHTER = 'FIG'
+        CLERIC = 'CLR'
+        WIZARD = 'WIZ'
+
+    BASE_ATTACK_TYPE_CHOICES = (
+        (BaseAttackType.FIGHTER, u'Fighter'),
+        (BaseAttackType.CLERIC, u'Cleric'),
+        (BaseAttackType.WIZARD, u'Wizard'),
+    )
+
+    class BaseSaveType:
+        GOOD = 'GOOD'
+        BAD = 'BAD'
+
+    BASE_SAVE_TYPE_CHOICES = (
+        (BaseSaveType.GOOD, u'Good'),
+        (BaseSaveType.BAD, u'Bad'),
+    )
+
+    name = models.CharField(
+        max_length=32,
+        db_index=True,
+    )
+    slug = models.SlugField(
+        max_length=32,
+        unique=True,
+    )
+
+    hit_die_size = models.PositiveSmallIntegerField(
+    )
+    base_attack_type = models.CharField(
+        max_length=3,
+        blank=False,
+        null=False,
+        choices=BASE_ATTACK_TYPE_CHOICES,
+    )
+    base_fort_save_type = models.CharField(
+        max_length=4,
+        blank=False,
+        null=False,
+        choices=BASE_SAVE_TYPE_CHOICES,
+    )
+    base_reflex_save_type = models.CharField(
+        max_length=4,
+        blank=False,
+        null=False,
+        choices=BASE_SAVE_TYPE_CHOICES,
+    )
+    base_will_save_type = models.CharField(
+        max_length=4,
+        blank=False,
+        null=False,
+        choices=BASE_SAVE_TYPE_CHOICES,
+    )
+
+    class Meta:
+        ordering = ['name', ]
+
+    def __unicode__(self):
+        return self.name
+
+    @models.permalink
+    def get_absolute_url(self):
+        return (
+            'dndtools.dnd.views.race_type_detail', (),
+            {
+                'race_type_slug': self.slug,
+            }
+        )
+
+    def baseAttack(self, level):
+        if self.base_attack_type == RaceType.BaseAttackType.FIGHTER:
+            return level
+        if self.base_attack_type == RaceType.BaseAttackType.CLERIC:
+            return int(level * 3 / 4.0)
+        if self.base_attack_type == RaceType.BaseAttackType.WIZARD:
+            return int(level / 2.0)
+
+    def baseSave(self, level, saveType):
+        if saveType == RaceType.BaseSaveType.GOOD:
+            return 2 + int(level / 2.0)
+        if saveType == RaceType.BaseSaveType.BAD:
+            return int(level / 3.0)
+
+
 class Race(models.Model):
     rulebook = models.ForeignKey(
         Rulebook,
@@ -1390,9 +1478,21 @@ class Race(models.Model):
         related_name='races_with_bonus',
     )
 
+    race_type = models.ForeignKey(
+        to=RaceType,
+        blank=True,
+        null=True,
+        help_text='Select from list. Hit Die, Attack bonus and Saves are calculated automatically',
+    )
+    racial_hit_dice_count = models.PositiveSmallIntegerField(
+        blank=True,
+        null=True,
+        help_text='Number of hit dice, for "6d8 Hit Dice" enter 6',
+    )
+
     description = models.TextField(
         blank=True,
-        help_text='Textile enabled!',
+        help_text='Textile enabled! Do not enter Natural AC, Racial Feats, Racial HD nor Languages.',
     )
     description_html = models.TextField(
         editable=False,
@@ -1417,7 +1517,7 @@ class Race(models.Model):
         blank=True,
     )
 
-    # noinspection PyMethodParameters
+    # noinspection PyMethodParameters,PyUnusedLocal
     def image_filename(instance, filename):
         return 'media/race/%d.jpg' % instance.id
 
@@ -1458,6 +1558,26 @@ class Race(models.Model):
                 'rulebook_id': self.rulebook.id,
             }
         )
+
+    def racialBaseAttack(self):
+        if self.race_type:
+            return self.race_type.baseAttack(self.racial_hit_dice_count)
+        return None
+
+    def racialBaseFortSave(self):
+        if self.race_type:
+            return self.race_type.baseSave(self.racial_hit_dice_count, self.race_type.base_fort_save_type)
+        return None
+
+    def racialBaseReflexSave(self):
+        if self.race_type:
+            return self.race_type.baseSave(self.racial_hit_dice_count, self.race_type.base_reflex_save_type)
+        return None
+
+    def racialBaseWillSave(self):
+        if self.race_type:
+            return self.race_type.baseSave(self.racial_hit_dice_count, self.race_type.base_will_save_type)
+        return None
 
 
 class RaceSpeed(models.Model):
