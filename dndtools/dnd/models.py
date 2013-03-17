@@ -1422,8 +1422,6 @@ class Race(models.Model):
 
     size = models.ForeignKey(
         RaceSize,
-        null=True,
-        blank=True,
     )
     # noinspection PyShadowingBuiltins
     str = models.SmallIntegerField(
@@ -1436,6 +1434,7 @@ class Race(models.Model):
         default=0,
         blank=True,
         null=True,
+        help_text='Leave blank for ---',
     )
     # noinspection PyShadowingBuiltins
     int = models.SmallIntegerField(
@@ -1452,13 +1451,9 @@ class Race(models.Model):
     )
     space = models.PositiveSmallIntegerField(
         choices=SPACE_REACH_CHOICES,
-        blank=True,
-        null=True,
     )
     reach = models.PositiveSmallIntegerField(
         choices=SPACE_REACH_CHOICES,
-        blank=True,
-        null=True,
     )
 
     natural_armor = models.SmallIntegerField(
