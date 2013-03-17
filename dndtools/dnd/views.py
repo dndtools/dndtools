@@ -921,6 +921,9 @@ def race_detail(request, rulebook_slug, rulebook_id, race_slug, race_id):
     race_speeds = race.racespeed_set.select_related('type', ).all()
     favored_classes = race.favored_classes.select_related('character_class', ).all()
 
+    related_races = Race.objects.filter(slug=race.slug).exclude(rulebook__id=race.rulebook.id).select_related(
+        'rulebook', 'rulebook__dnd_edition').all()
+
     return render_to_response('dnd/race_detail.html',
                               {
                                   'race': race,
@@ -930,6 +933,7 @@ def race_detail(request, rulebook_slug, rulebook_id, race_slug, race_id):
                                   'favored_classes': favored_classes,
                                   'automatic_languages': race.automatic_languages.all(),
                                   'bonus_languages': race.bonus_languages.all(),
+                                  'related_races': related_races,
                                   'i_like_it_url': request.build_absolute_uri(),
                                   'inaccurate_url': request.build_absolute_uri(),
                                   'display_3e_warning': is_3e_edition(race.rulebook.dnd_edition),
@@ -949,8 +953,8 @@ def race_type_index(request):
                                   'race_type_list': paginator.items(),
                                   'paginator': paginator,
                                   'filter': f,
-                                  'BaseSaveType': RaceType.BaseSaveType,  # enums
-                                  'BaseAttackType': RaceType.BaseAttackType,  # enums
+                                  'BaseSaveType': RaceType.BaseSaveType, # enums
+                                  'BaseAttackType': RaceType.BaseAttackType, # enums
                                   'form_submitted': form_submitted,
                               }, context_instance=RequestContext(request), )
 
@@ -970,8 +974,8 @@ def race_type_detail(request, race_type_slug):
                                   'race_type': race_type,
                                   'paginator': paginator,
                                   'race_list': race_list,
-                                  'BaseSaveType': RaceType.BaseSaveType,  # enums
-                                  'BaseAttackType': RaceType.BaseAttackType,  # enums
+                                  'BaseSaveType': RaceType.BaseSaveType, # enums
+                                  'BaseAttackType': RaceType.BaseAttackType, # enums
                                   'i_like_it_url': request.build_absolute_uri(),
                                   'inaccurate_url': request.build_absolute_uri(),
                               }, context_instance=RequestContext(request), )

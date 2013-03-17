@@ -157,4 +157,13 @@
         {{ race.racial_traits_html|safe }}
     </div>
 
+    {% if related_races %}
+        <h3>Also appears in</h3>
+        <ol>
+            {% for related_race in related_races %}
+                <li><a href="{{ related_race.get_absolute_url }}">{{ related_race.rulebook.name }}</a></li>
+            {% endfor %}
+        </ol>
+    {% endif %}
+
 {% endblock %}
