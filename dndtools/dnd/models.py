@@ -843,7 +843,6 @@ class Feat(models.Model):
         super(Feat, self).save(*args, **kwargs)
 
     class Meta:
-        unique_together = (("name", "rulebook",))
         ordering = ['name', ]
 
     def __unicode__(self):
