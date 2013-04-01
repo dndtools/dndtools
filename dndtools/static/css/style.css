@@ -426,4 +426,4 @@ div.close-paragraphs p {
     padding: 0;
 }
 
-table.common td.align-right {text-align: right;}
+table.common td.align-right, table.common th.align-right {text-align: right;}

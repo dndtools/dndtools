@@ -4,11 +4,10 @@
 
 <table class="common">
     <tr>
-        <th>Item name</th>
-        <th>Item level</th>
+        <th>Name</th>
+        <th>Level</th>
         <th class="align-right">Cost</th>
-        <th>Body Slot</th>
-        <th>Property</th>
+        <th>Slot/Property</th>
         <th>Rulebook name</th>
         <th>Edition</th>
     </tr>
@@ -27,10 +26,16 @@
                 {% endif %}
             </td>
             <td>
-                {{ item.body_slot|empty_as_dash }}
-            </td>
-            <td>
-                {{ item.property|empty_as_dash }}
+               {# both? Well, display both #}
+                {% if item.body_slot and item.property %}
+                    {{ item.body_slot }}/{{ item.property }}
+                {% else %}
+                    {% if item.body_slot %}
+                        {{ item.body_slot }}
+                    {% else %}
+                        {{ item.property|empty_as_dash }}
+                    {% endif %}
+                {% endif %}
             </td>
             <td><a href="{{ item.rulebook.get_absolute_url }}">{{ item.rulebook.name }}</a></td>
             <td><a href="{{ item.rulebook.dnd_edition.get_absolute_url }}">{{ item.rulebook.dnd_edition.name }}</a></td>
