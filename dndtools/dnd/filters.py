@@ -3,7 +3,7 @@
 from dndtools import django_filters2
 from dndtools.dnd.models import (
     Spell, DndEdition, SpellSchool, SpellSubSchool, SpellDescriptor,
-    CharacterClass, Rulebook, Domain, Feat, Skill, Item, Language, RaceType)
+    CharacterClass, Rulebook, Domain, Feat, Skill, Item, Language, RaceType, ItemSlot, ItemProperty)
 
 
 def rulebook_choices():
@@ -149,13 +149,47 @@ class SpellFilter(django_filters2.FilterSet):
 
 
 class ItemFilter(django_filters2.FilterSet):
+    type_choices = [itemType for itemType in Item.ITEM_TYPE]
+    type_choices.insert(0, ('', 'Unknown'))
+
+    item_slot_choices = [
+        (itemSlot.slug, itemSlot.name) for itemSlot in
+        ItemSlot.objects.all()
+    ]
+    item_slot_choices.insert(0, ('', 'Unknown'))
+
+    property_choices = [
+        (property.slug, property.name) for property in ItemProperty.objects.all()
+    ]
+
     name = django_filters2.CharFilter(
-        lookup_type='icontains', label='Spell name'
+        lookup_type='icontains', label='Item name'
+    )
+    rulebook__dnd_edition__slug = django_filters2.MultipleChoiceFilter(
+        choices=edition_choices(unknown_entry=False),
+        label='Edition',
+        help_text='Use ctrl to select more editions!',
+    )
+    rulebook__slug = django_filters2.ChoiceFilter(
+        label='Rulebook', choices=rulebook_choices()
+    )
+    type = django_filters2.ChoiceFilter(
+        label='Item Type', choices=type_choices
+    )
+    body_slot__slug = django_filters2.ChoiceFilter(
+        label='Body Slot', choices=item_slot_choices
+    )
+    price_bonus = django_filters2.NumberFilter(
+        label='Price bonus'
+    )
+    property__slug = django_filters2.MultipleChoiceFilter(
+        label='Property', choices=property_choices
     )
 
     class Meta:
         model = Item
-        fields = ['name', ]
+        fields = ['name', 'rulebook__dnd_edition__slug', 'rulebook__slug', 'type', 'body_slot__slug', 'price_bonus',
+                  'property__slug']
 
 
 class LanguageFilter(django_filters2.FilterSet):
@@ -334,7 +368,6 @@ class RaceFilter(django_filters2.FilterSet):
 
 
 class RaceTypeFilter(django_filters2.FilterSet):
-
     save_type_choices = [raceTypePair for raceTypePair in RaceType.BASE_SAVE_TYPE_CHOICES]
     save_type_choices.insert(0, ('', 'Unknown'))
 

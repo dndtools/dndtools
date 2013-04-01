@@ -40,6 +40,9 @@ def _ordinal_number(value):
     if not value:
         return value
 
+    if not isinstance(value, int):
+        return value
+
     if value == 11:
         return '%d%s' % (value, 'th')
     if value % 10 == 1:

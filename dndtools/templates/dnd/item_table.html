@@ -5,16 +5,38 @@
 <table class="common">
     <tr>
         <th>Item name</th>
+        <th>Item level</th>
+        <th class="align-right">Cost</th>
+        <th>Body Slot</th>
+        <th>Property</th>
         <th>Rulebook name</th>
         <th>Edition</th>
     </tr>
     {% for item in item_list %}
         <tr>
             <td><a href="{{ item.get_absolute_url }}">{{ item.name }}</a></td>
+            <td>
+                {{ item.item_level|empty_as_dash|ordinal_number }}
+            </td>
+            <td class="align-right">
+                {% if item.price_gp %}
+                    {% if item.type == ItemType.ENHANCEMENT %}+{% endif %}{{ item.price_gp|thousands_separator }} gp<br/>
+                {% endif %}
+                {% if item.price_bonus %}
+                    +{{ item.price_bonus }} bonus
+                {% endif %}
+            </td>
+            <td>
+                {{ item.body_slot|empty_as_dash }}
+            </td>
+            <td>
+                {{ item.property|empty_as_dash }}
+            </td>
             <td><a href="{{ item.rulebook.get_absolute_url }}">{{ item.rulebook.name }}</a></td>
             <td><a href="{{ item.rulebook.dnd_edition.get_absolute_url }}">{{ item.rulebook.dnd_edition.name }}</a></td>
         </tr>
     {% endfor %}
 </table>
+
 
 {{ paginator.print_navigation }}

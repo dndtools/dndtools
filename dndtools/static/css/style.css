@@ -425,3 +425,5 @@ table.race-attributes tr.separator, table.race-attributes tr.separator td, table
 div.close-paragraphs p {
     padding: 0;
 }
+
+table.common td.align-right {text-align: right;}

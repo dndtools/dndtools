@@ -983,7 +983,7 @@ def race_type_detail(request, race_type_slug):
 
 def item_index(request):
     f = ItemFilter(request.GET, queryset=Item.objects.select_related(
-        'rulebook', 'rulebook__dnd_edition').distinct())
+        'rulebook', 'rulebook__dnd_edition', 'body_slot', 'property').distinct())
 
     paginator = DndPaginator(f.qs, request)
 
