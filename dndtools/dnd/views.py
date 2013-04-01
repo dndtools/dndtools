@@ -999,6 +999,42 @@ def item_index(request):
                               }, context_instance=RequestContext(request), )
 
 
+def item_list_by_rulebook(request):
+    rulebook_list = Rulebook.objects.select_related('dnd_edition').all()
+
+    paginator = DndPaginator(rulebook_list, request)
+
+    return render_to_response('dnd/item_list_by_rulebook.html',
+                              {
+                                  'request': request,
+                                  'rulebook_list': paginator.items(),
+                                  'paginator': paginator,
+                                  }, context_instance=RequestContext(request), )
+
+
+def items_in_rulebook(request, rulebook_slug, rulebook_id):
+    rulebook = get_object_or_404(Rulebook, pk=rulebook_id)
+    if not rulebook.slug == rulebook_slug:
+        return permanent_redirect_view(request, 'items_in_rulebook',
+                                       kwargs={
+                                           'rulebook_slug': rulebook.slug,
+                                           'rulebook_id': rulebook_id, })
+
+    item_list = rulebook.item_set.select_related(
+        'rulebook', 'rulebook__dnd_edition', 'school').all()
+
+    paginator = DndPaginator(item_list, request)
+
+    return render_to_response('dnd/items_in_rulebook.html',
+                              {
+                                  'rulebook': rulebook,
+                                  'item_list': paginator.items(),
+                                  'paginator': paginator,
+                                  'request': request,
+                                  'display_3e_warning': is_3e_edition(rulebook.dnd_edition),
+                                  }, context_instance=RequestContext(request), )
+
+
 def item_detail(request, rulebook_slug, rulebook_id, item_slug, item_id):
     item = get_object_or_404(Item.objects.select_related(
         'rulebook', 'rulebook__dnd_edition', 'body_slot', 'aura', 'spellschool_set',

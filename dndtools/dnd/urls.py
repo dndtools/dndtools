@@ -273,7 +273,19 @@ urlpatterns = patterns(
         'item_index',
         name='item_index',
     ),
-    # spells > rulebook > item
+    # items > by rulebooks
+    url(
+        r'^items/by-rulebooks/$',
+        'item_list_by_rulebook',
+        name='item_list_by_rulebook',
+        ),
+    # items > rulebook
+    url(
+        r'^items/(?P<rulebook_slug>[^/]+)--(?P<rulebook_id>\d+)/$',
+        'items_in_rulebook',
+        name='items_in_rulebook',
+        ),
+    # items > rulebook > item
     url(
         r'^items/(?P<rulebook_slug>[^/]+)--(?P<rulebook_id>\d+)/(?P<item_slug>[^/]+)--(?P<item_id>\d+)/$',
         'item_detail',
