@@ -182,14 +182,19 @@ class ItemFilter(django_filters2.FilterSet):
     price_bonus = django_filters2.NumberFilter(
         label='Price bonus'
     )
+    price_gp = django_filters2.RangeFilter(
+        label='Price in GP (range)',
+    )
     property__slug = django_filters2.MultipleChoiceFilter(
         label='Property', choices=property_choices
     )
 
     class Meta:
         model = Item
-        fields = ['name', 'rulebook__dnd_edition__slug', 'rulebook__slug', 'type', 'body_slot__slug', 'price_bonus',
-                  'property__slug']
+        fields = ['name', 'rulebook__dnd_edition__slug', 'rulebook__slug',
+
+                  'price_bonus', 'price_gp',
+                  'type', 'body_slot__slug', 'property__slug']
 
 
 class LanguageFilter(django_filters2.FilterSet):
