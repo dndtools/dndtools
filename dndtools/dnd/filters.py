@@ -2,7 +2,7 @@
 
 from dndtools import django_filters2
 from dndtools.dnd.models import (
-    Spell, DndEdition, SpellSchool, SpellSubSchool, SpellDescriptor,
+    Spell, DndEdition, SpellSchool, SpellSubSchool, SpellDescriptor, FeatCategory,
     CharacterClass, Rulebook, Domain, Feat, Skill, Item, Language, RaceType, ItemSlot, ItemProperty)
 
 
@@ -256,8 +256,16 @@ class RulebookFilter(django_filters2.FilterSet):
 
 
 class FeatFilter(django_filters2.FilterSet):
+    feat_category_choices = [(feat_category.slug, feat_category.name)
+                          for feat_category in FeatCategory.objects.all()]
+    feat_category_choices.insert(0, ('', 'Unknown'))
+
     name = django_filters2.CharFilter(
         lookup_type='icontains', label='Feat name'
+    )
+    feat_categories__slug = django_filters2.ChoiceFilter(
+        choices=feat_category_choices,
+        label='Feat category'
     )
     rulebook__slug = django_filters2.ChoiceFilter(
         label='Rulebook', choices=rulebook_choices()
@@ -286,8 +294,8 @@ class FeatFilter(django_filters2.FilterSet):
 
     class Meta:
         model = Feat
-        fields = ['name', 'rulebook__slug', 'rulebook__dnd_edition__slug', 'description', 'benefit', 'special',
-                  'normal']
+        fields = ['name', 'feat_categories__slug', 'rulebook__slug', 'rulebook__dnd_edition__slug', 'description', 'benefit', 'special',
+                  'normal', ]
 
 
 class SpellDomainFilter(django_filters2.FilterSet):
