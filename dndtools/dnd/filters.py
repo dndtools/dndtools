@@ -86,6 +86,16 @@ class SpellFilter(django_filters2.FilterSet):
     spell_resistance = django_filters2.CharFilter(
         lookup_type='icontains',
     )
+    area = django_filters2.CharFilter(
+        lookup_type='icontains'
+    )
+    duration = django_filters2.CharFilter(
+        lookup_type='icontains'
+    )
+    saving_throw = django_filters2.CharFilter(
+        lookup_type='icontains'
+    )
+
     school__slug = django_filters2.ChoiceFilter(
         choices=school_choices, label='School'
     )
@@ -101,6 +111,7 @@ class SpellFilter(django_filters2.FilterSet):
     arcane_focus_component = django_filters2.BooleanFilter()
     divine_focus_component = django_filters2.BooleanFilter()
     xp_component = django_filters2.BooleanFilter()
+
     rulebook__dnd_edition__slug = django_filters2.MultipleChoiceFilter(
         choices=edition_choices(unknown_entry=False),
         label='Edition',
@@ -139,7 +150,7 @@ class SpellFilter(django_filters2.FilterSet):
     class Meta:
         model = Spell
         fields = [
-            'name', 'range', 'spell_resistance', 'casting_time',
+            'name', 'range', 'spell_resistance', 'area', 'duration', 'saving_throw', 'casting_time',
             'school__slug', 'sub_school__slug', 'descriptors__slug',
             'verbal_component', 'somatic_component', 'material_component',
             'arcane_focus_component', 'divine_focus_component',
