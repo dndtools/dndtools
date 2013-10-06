@@ -219,38 +219,38 @@ class LanguageFilter(django_filters2.FilterSet):
 
 
 class CharacterClassFilter(django_filters2.FilterSet):
-    name = django_filters2.CharFilter(
+    character_class__name = django_filters2.CharFilter(
         lookup_type='icontains', label='Class name'
     )
-    prestige = django_filters2.BooleanFilter()
-    characterclassvariant__rulebook__slug = django_filters2.ChoiceFilter(
+    character_class__prestige = django_filters2.BooleanFilter()
+    rulebook__slug = django_filters2.ChoiceFilter(
         label='Rulebook', choices=rulebook_choices()
     )
-    characterclassvariant__rulebook__dnd_edition__slug = django_filters2.MultipleChoiceFilter(
+    rulebook__dnd_edition__slug = django_filters2.MultipleChoiceFilter(
         choices=edition_choices(unknown_entry=False),
         label='Edition',
         help_text='Use ctrl to select more editions!',
     )
-    characterclassvariant__required_bab = django_filters2.RangeFilter(
+    required_bab = django_filters2.RangeFilter(
         label='Required Base Attack (range)',
     )
-    characterclassvariant__skill_points = django_filters2.RangeFilter(
+    skill_points = django_filters2.RangeFilter(
         label='Skill points/level (range)',
     )
-    characterclassvariant__class_features = django_filters2.CharFilter(
+    class_features = django_filters2.CharFilter(
         label='Class feature',
         lookup_type='icontains',
     )
-    characterclassvariant__hit_die = django_filters2.RangeFilter(
+    hit_die = django_filters2.RangeFilter(
         label='Hit die (range)',
     )
 
     class Meta:
         model = CharacterClass
-        fields = ['name', 'characterclassvariant__rulebook__slug', 'characterclassvariant__rulebook__dnd_edition__slug',
-                  'prestige',
-                  'characterclassvariant__required_bab', 'characterclassvariant__skill_points',
-                  'characterclassvariant__class_features', 'characterclassvariant__hit_die', ]
+        fields = ['character_class__name', 'rulebook__slug', 'rulebook__dnd_edition__slug',
+                  'character_class__prestige',
+                  'required_bab', 'skill_points',
+                  'class_features', 'hit_die', ]
 
 
 class RulebookFilter(django_filters2.FilterSet):

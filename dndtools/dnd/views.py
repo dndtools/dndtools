@@ -500,8 +500,8 @@ def spell_domain_detail(request, spell_domain_slug):
 def character_class_list(request):
     f = CharacterClassFilter(
         request.GET,
-        queryset=CharacterClass.objects.select_related(
-            'rulebook', 'rulebook__dnd_edition')
+        queryset=CharacterClassVariant.objects.select_related(
+            'rulebook', 'rulebook__dnd_edition', 'character_class')
     )
 
     form_submitted = 1 if 'name' in request.GET else 0

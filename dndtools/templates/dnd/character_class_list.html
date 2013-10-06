@@ -24,11 +24,13 @@
 <tr>
   <th>Class name</th>
   <th>Prestige</th>
+  <th>Rulebook</th>
 </tr>
-    {% for character_class in character_class_list %}
+    {% for character_class_variant in character_class_list %}
         <tr>
-            <td><a href="{{ character_class.get_absolute_url }}">{{ character_class.name }}</a></td>
-            <td>{{ character_class.prestige|boolean_as_img  }}</td>
+            <td><a href="{{ character_class_variant.character_class.get_absolute_url }}">{{ character_class_variant.character_class.name }}</a></td>
+            <td>{{ character_class_variant.character_class.prestige|boolean_as_img  }}</td>
+            <td><a href="{{ character_class_variant.rulebook.get_absolute_url }}">{{ character_class_variant.rulebook.name }}</a></td>
         </tr>
     {% endfor %}
 </table>
