@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from django import forms
 
 from reversion.admin import VersionAdmin
 from django.contrib import admin
@@ -260,7 +261,15 @@ class MonsterSubtypeInline(admin.TabularInline):
     extra = 3
 
 
+class MonsterForm(forms.ModelForm):
+    special_qualities = forms.CharField(widget=forms.Textarea)
+
+    class Meta:
+        model = Monster
+
+
 class MonsterAdmin(VersionAdmin):
+    form = MonsterForm
     prepopulated_fields = {"slug": ("name",)}
     list_display = ('id', 'name', 'rulebook', )
     list_display_links = ('name', )
