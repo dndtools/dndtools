@@ -4,6 +4,7 @@ from dndtools import django_filters2
 from dndtools.dnd.models import (
     Spell, DndEdition, SpellSchool, SpellSubSchool, SpellDescriptor, FeatCategory,
     CharacterClass, Rulebook, Domain, Feat, Skill, Item, Language, RaceType, ItemSlot, ItemProperty)
+from dndtools.dnd.filters_fields import FeatMultiPrerequisiteFieldFilter
 
 
 def rulebook_choices():
@@ -268,7 +269,7 @@ class RulebookFilter(django_filters2.FilterSet):
 
 class FeatFilter(django_filters2.FilterSet):
     feat_category_choices = [(feat_category.slug, feat_category.name)
-                          for feat_category in FeatCategory.objects.all()]
+                             for feat_category in FeatCategory.objects.all()]
     feat_category_choices.insert(0, ('', 'Unknown'))
 
     name = django_filters2.CharFilter(
@@ -298,14 +299,14 @@ class FeatFilter(django_filters2.FilterSet):
     normal = django_filters2.CharFilter(
         lookup_type='icontains',
     )
-    required_feats__required_feat__name = django_filters2.CharFilter(
-        label='Required feat (name)',
-        lookup_type='icontains',
+    prerequisite = FeatMultiPrerequisiteFieldFilter(
+        label='Prerequisites',
     )
 
     class Meta:
         model = Feat
-        fields = ['name', 'feat_categories__slug', 'rulebook__slug', 'rulebook__dnd_edition__slug', 'description', 'benefit', 'special',
+        fields = ['name', 'feat_categories__slug', 'rulebook__slug', 'rulebook__dnd_edition__slug', 'description',
+                  'benefit', 'special',
                   'normal', ]
 
 
@@ -405,7 +406,7 @@ class RaceTypeFilter(django_filters2.FilterSet):
         label='Hit Die Size',
         help_text='(range from-to)',
     )
-    base_fort_save_type = django_filters2.ChoiceFilter(
+    base_attack_type = django_filters2.ChoiceFilter(
         label='Base Attack Type', choices=base_attack_type_choices
     )
     base_fort_save_type = django_filters2.ChoiceFilter(
