@@ -1,0 +1,517 @@
+/*
+	Author Details
+	==============
+
+	Author: Mobifreaks
+	Author URL: http://mobifreaks.com
+
+	Attribution( is must on every page, where this work is used. should be visible to naked eye and Search engine bot[ means should not use noindex, nofollow relations ]):
+
+	// a healty attribution looks like following
+	<a href="http://mobifreaks.com" target="_blank">Design by Mobifreaks</a>
+
+	License: Creative Commons Attribution 3.0 Unported
+	License URL: http://creativecommons.org/licenses/by/3.0/
+
+	if any regards of infringement, may lead to lawsuit under Digital Millennium Copyright Act (DMCA)
+
+	For Attribution removal request. please consider contacting us through http://mobifreaks.com/feedback/ or mail us at support[at]mobifreaks.com
+ */
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,dl,dt,dd,ol,nav ul,nav li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,output,ruby,section,summary,time,mark,audio,video{margin:0;padding:0;border:0;font-size:100%;font:inherit;vertical-align:baseline;}
+article, aside, details, figcaption, figure,footer, header, hgroup, menu, nav, section {display: block;}
+ol,ul{list-style:none;}
+blockquote,q{quotes:none;}
+blockquote:before,blockquote:after,q:before,q:after{content:'';content:none;}
+table{border-collapse:collapse;border-spacing:0;}
+/* start editing from here */
+a{text-decoration:none;}
+.txt-rt{text-align:right;}/* text align right */
+.txt-lt{text-align:left;}/* text align left */
+.txt-center{text-align:center;}/* text align center */
+.float-rt{float:right;}/* float right */
+.float-lt{float:left;}/* float left */
+.clear{clear:both;}/* clear float */
+.pos-relative{position:relative;}/* Position Relative */
+.pos-absolute{position:absolute;}/* Position Absolute */
+.vertical-base{	vertical-align:baseline;}/* vertical align baseline */
+.vertical-top{	vertical-align:top;}/* vertical align top */
+.underline{	padding-bottom:5px;	border-bottom: 1px solid #ddd; margin:0 0 20px 0;}/* Add 5px bottom padding and a underline */
+nav.vertical ul li{	display:block;}/* vertical menu */
+nav.horizontal ul li{	display: inline-block;}/* horizontal menu */
+img{max-width:96%;}
+/*img[width],img[height]{width:auto;height:auto;} wordpress hack to reset the attributes (while making responsive) */
+body{
+	font-family:Arial, Helvetica, sans-serif;
+}
+.wrap{
+	width:100%;
+}
+article{
+	font-size:14px;
+	color:#565656;
+}
+article,
+article.underline{
+	padding:20px 0;
+	margin-bottom:0;
+}
+.underline:last-child{border-bottom:none;}
+article img{
+	margin:10px 0;
+	padding:5px;
+	border:1px solid #eee;
+	background:#fff;
+}
+a{ color:#b31a00;}
+a:hover{ color:#2d2d2d;}
+/* headings */
+h1, h2, h3, h4, h5, h6{
+	font-weight:bold;
+	color:#767676;
+}
+h1,h2{line-height:24px;}
+h1{
+	font-size: 24px;
+	margin:0 0 .2em 0;
+}
+h2{
+	font-size: 18px;
+	margin:0 0 .3em 0;
+}
+h3{
+	font-size: 16px;
+	margin:0 0 .4em 0;
+}
+h4{
+	font-size: 14px;
+}
+h5, h6{
+	font-size: 12px;
+}
+h4, h5, h6{
+	margin:0 0 .6em 0;	
+}
+/* paragraph */
+p{
+	line-height:26px;
+	margin:0 0 16px 0;
+}
+/* TextFormatting */
+strong, b {
+	font-weight: bold;
+}
+i, cite, em, var, address, dfn {
+	font-style: italic;
+}
+small {
+	font-size: smaller;
+}
+del {
+	text-decoration: line-through;
+}
+ins {
+	text-decoration: underline;
+}
+sup {
+	vertical-align: super;
+}
+sub {
+	vertical-align: sub;
+}
+sub, sup{
+	font-size: smaller;	
+}
+code, kbd, samp, pre, .pre-text {
+font-family: monospace;
+}
+q{
+	display:inline;
+}
+q:before {
+content: open-quote;
+}
+q:after {
+content: close-quote;
+}
+address{
+	line-height: 22px;
+	margin:0 0 16px 0;
+}
+abbr[title]{
+	border-bottom:1px dotted #565656;
+}
+/* blcokquote */
+blockquote{
+	margin:16px 0 16px 40px;
+}
+/* pre */
+pre, .pre-text{
+	display: block;
+	white-space: pre;
+	margin: 1em 0px;
+word-wrap: break-word;
+}
+/* HTMl lists */
+ul,ol,dl{
+	display: block;
+	margin:1em 0 1em 0;
+}
+ul, ol{
+	padding-left: 40px;	
+}
+ul{
+	list-style-type: disc;
+}
+ol{
+	list-style-type: decimal;
+}
+dt, dd{
+	display: block;	
+	margin:0 0 0.5em 0;
+}
+dt{
+	font-weight: bold;
+}
+dd {
+	margin-left: 2em;
+}
+form label{
+	font-size:12px;
+	margin-bottom: 0.4em;
+}
+form input[type=text],
+form input[type=password]{
+	//width:180px;
+	
+}
+form input[type=text],
+form input[type=password],textarea{
+	-webkit-appearance:none;
+	-moz-appearance:none;
+}
+form input[type="radio"]{
+	position:relative;
+	top:1px;
+}
+form div{
+	margin:0 0 0.8em 0;
+}
+form textarea{
+	height:80px;
+}
+.label-top label{
+	display:block;
+}
+label.inline{
+	display:inline-block;
+}
+form label span.red{
+	color:#ff0000;
+}
+form input[type=submit]{
+	cursor: pointer;	
+}
+form input[type=submit],
+form input[type=text],
+form input[type=password],
+form textarea{
+	padding:5px;
+}
+form input,
+form textarea,
+form input[type=submit]{
+	background:#fff;
+	border:1px solid #aaa;
+	width:90%;
+}
+form input[type=submit]{
+	width:94%;
+	background:#ff7c67;
+	color:#2d2d2d;
+	padding:10px;
+}
+body{
+	font-family: Arial, Helvetica, sans-serif;
+	background:#f9f9f9;
+}
+header{
+	border-bottom:1px solid #ccc;
+}
+header,
+footer{
+	background:#fff;
+}
+footer{
+	border-top:1px solid ##ddd;
+	padding:10px 20px 10px 20px;
+	color:#777;
+	font-size:12px;
+}
+footer p{
+	margin:0;
+}
+.logo{
+	float:left;
+	padding:10px 0;
+}
+.logo img{
+	display:block;
+}
+.options{
+	float:right;
+}
+.options ul{
+	margin:0;
+	padding:0;
+}
+.options li{
+	float:left;
+	background:url('images/options.png') no-repeat;
+	width:60px;
+	height:60px;
+	display:inline-block;
+	cursor:pointer;
+	border-left:1px solid #ccc;
+	text-indent:-1000em;
+}
+.options li.active,
+.active{
+	background-color:#f2f2f2;
+}
+.options li:first-child{
+	background-position: 22px 20px;
+}
+.options li:last-child{
+	background-position: -17px 20px;
+}
+
+.search-box{
+	background:#eee;
+	padding:5px;
+}
+.search-box input[type=text],
+.search-box input[type=text]:focus{
+	width:84%;
+	background:#f9f9f9;
+	color:#767676;
+	border:none;
+	-webkit-appearance: none;
+	-webkit-border-radius:0;
+	-moz-border-radius:0;
+	border-radius:0;
+	-moz-box-shadow:inset 0 0 2px 0 rgba(0,0,0,0.3);
+	-webkit-box-shadow:inset 0 0 2px 0 rgba(0,0,0,0.3);
+	box-shadow:inset 0 0 2px 0 rgba(0,0,0,0.3);
+}
+.search-box input[type=text],
+.search-box input[type=submit]{
+	float:left;
+	height:20px;
+	display:block;
+	-webkit-appearance: none;
+	-webkit-border-radius:0;
+	-moz-border-radius:0;
+	border-radius:0;	
+}
+
+.search-box input[type=submit]{
+	width:40px;
+	background: #ff664d; /* Old browsers */
+background: -moz-linear-gradient(top,  #ff664d 0%, #fc492d 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ff664d), color-stop(100%,#fc492d)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top,  #ff664d 0%,#fc492d 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top,  #ff664d 0%,#fc492d 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top,  #ff664d 0%,#fc492d 100%); /* IE10+ */
+background: linear-gradient(to bottom,  #ff664d 0%,#fc492d 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff664d', endColorstr='#fc492d',GradientType=0 ); /* IE6-9 */
+	border:none;
+	-webkit-appearance: none;
+	color:#fff;
+	font-size:12px;
+	position:relative;
+	height:30px;
+	padding:0;
+}
+.search-box input[type=submit]:hover{
+	background:rgba(0,0,0,0.6);
+}
+.content{
+	padding:20px;
+}
+
+article h2 a{ font-weight:bold; color:#2d2d2d;}
+article h2 a:hover{color:#ff3b1a;}
+/* nav */
+.menu{
+	border-top:1px solid #eee;
+	background:#f2f2f2;
+	z-index:100;
+}
+.menu a{
+	color:#666666;
+	font-size:14px;
+	font-weight:bold;
+	line-height:50px;
+	display:block;
+	padding:0 20px;
+}
+.menu a:hover{
+	background:#fff;
+	color:#ff664d;
+}
+.menu li{
+	border-bottom:1px solid #ddd;
+}
+.menu li:last-child{
+	border:none;
+}
+
+/* article */
+/* Date */
+.date{
+	font-size:10px;
+}
+.date span{
+	display:inline-block;
+	padding:0 5px;
+	background:#ff7c67;
+	color:#333;
+	-webkit-border-radius:.3em;
+	   -moz-border-radius:.3em;
+			border-radius:.3em;
+	margin:0 10px 0 0;
+	line-height:18px;
+}
+
+/* post content and preview styling */
+.post-preview{
+	float:left;
+	width:58px;
+	height:58px;
+	padding:0 10px 0 0;
+	border-right:1px solid #eee;
+}
+.post-preview a,
+.post-preview img{
+display:block;
+}
+.post-preview img{
+	margin:0;
+	padding:5px;
+	border:1px solid #333;
+	background:#2d2d2d;
+}
+.post-content{
+	float:left;
+	width:72%;
+	padding:0 0 0 10px;
+}
+.comments li{
+	padding-bottom:30px;
+}
+.comments li p{
+	margin-bottom:5px;
+}
+@media all and (min-width:640px) and (max-width:720px){
+}
+@media all and (min-width:480px) and (max-width:639px){	
+	.post-content{
+		width:84%;
+	}
+	.search-box input[type=text],
+	.search-box input[type=text]:focus{
+		width:90%;
+	}
+}
+@media all and (min-width:320px) and (max-width:479px){
+	.post-content{
+		width:72%;
+	}
+}
+@media all and (min-width:220px) and (max-width:319px){
+	header{
+		zoom:.8;
+	}
+	.content{
+		padding:10px;
+	}
+	.post-content{
+		width:68%;
+	}
+}
+
+.paginate{
+
+	margin:20px 0 0 0;
+
+}
+
+.paginate ul{
+	margin:0;
+	padding:0;
+}
+.paginate ul li{
+	display:inline-block;
+	margin:0 5px 0 0;
+	line-height: normal;
+	font-size:0;
+}
+.paginate ul li:first-child{
+	padding:0;	
+}
+.paginate ul li a,
+.paginate ul li span.current{
+	-moz-border-radius:3px;
+	-webkit-border-radius:3px;
+	border-radius:3px;
+	font-size:10px;
+	position:relative;
+	padding:8px 10px;
+	display: block;
+	-moz-box-shadow:0 0 3px #ccc;
+	-webkit-box-shadow:0 0 3px #ccc;
+	box-shadow:0 0 3px #ccc;
+	background: #f9fcf7; /* Old browsers */
+background: -moz-linear-gradient(top,  #f9fcf7 0%, #f5f9f0 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f9fcf7), color-stop(100%,#f5f9f0)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top,  #f9fcf7 0%,#f5f9f0 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top,  #f9fcf7 0%,#f5f9f0 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top,  #f9fcf7 0%,#f5f9f0 100%); /* IE10+ */
+background: linear-gradient(to bottom,  #f9fcf7 0%,#f5f9f0 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f9fcf7', endColorstr='#f5f9f0',GradientType=0 ); /* IE6-9 */
+
+	font-size:12px;
+	color:#767676;
+}
+.paginate ul li a:hover,
+.paginate ul li span.current{
+	color:#fff;
+	background: #ff664d; /* Old browsers */
+background: -moz-linear-gradient(top,  #ff664d 0%, #fc492d 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ff664d), color-stop(100%,#fc492d)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top,  #ff664d 0%,#fc492d 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top,  #ff664d 0%,#fc492d 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top,  #ff664d 0%,#fc492d 100%); /* IE10+ */
+background: linear-gradient(to bottom,  #ff664d 0%,#fc492d 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff664d', endColorstr='#fc492d',GradientType=0 ); /* IE6-9 */
+
+}
+/*
+	Author Details
+	==============
+
+	Author: Mobifreaks
+	Author URL: http://mobifreaks.com
+
+	Attribution( is must on every page, where this work is used. should be visible to naked eye and Search engine bot[ means should not use noindex, nofollow relations ]):
+
+	// a healty attribution looks like following
+	<a href="http://mobifreaks.com" target="_blank">Design by Mobifreaks</a>
+
+	License: Creative Commons Attribution 3.0 Unported
+	License URL: http://creativecommons.org/licenses/by/3.0/
+
+	if any regards of infringement, may lead to lawsuit under Digital Millennium Copyright Act (DMCA)
+
+	For Attribution removal request. please consider contacting us through http://mobifreaks.com/feedback/ or mail us at support[at]mobifreaks.com
+ */
