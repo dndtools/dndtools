@@ -1,0 +1,94 @@
+{% extends "dnd/mobile/feat/feat_layout.html" %}
+
+{% block title %}{{ feat.name }} &ndash; Feat{% endblock %}
+
+{% block content %}
+
+<h2>{{ feat.name }}</h2>
+(
+<a href="{{ rulebook.get_absolute_url }}">{{ rulebook.name }}</a>{% if feat.page != None %},  p. {{ feat.page }}{% endif %})
+<br/>
+<br/>
+
+{% if feat_category_list.count > 0 %}
+    [{% for feat_category in feat_category_list %}{% if not forloop.first %}, {% endif %}<a href="{% url feat_category_detail_mobile category_slug=feat_category.slug %}">{{ feat_category.name }}</a>{% endfor %}]
+{% endif %}
+<br/>
+<br/>
+
+
+{% if feat.description_html %}
+    {{ feat.description_html|safe }}
+{% else %}
+    <p>{{ feat.description|linebreaksbr }}</p>
+{% endif %}
+
+<h4>Prerequisite</h4>
+    <p>
+
+    {% for req_feat in required_feats %}
+        <a href="{% url feat_detail_mobile feat_slug=req_feat.required_feat.slug feat_id=req_feat.required_feat.id rulebook_slug=req_feat.required_feat.rulebook.slug rulebook_id=req_feat.required_feat.rulebook.id %}">{{ req_feat.required_feat.name }}</a> (<abbr title="{{ req_feat.required_feat.rulebook.name }}">{{ req_feat.required_feat.rulebook.abbr }}</abbr>)
+        {% if req_feat.additional_text %}
+            ({{ req_feat.additional_text }})
+        {% endif %},
+    {% endfor %}
+    {% for req_skill in required_skills %}
+        <a href="{{ req_skill.skill.get_absolute_url }}">{{ req_skill.skill.name }}</a> {% if req_skill.extra %}({{ req_skill.extra }}){% endif %} {{ req_skill.min_rank }} ranks,
+    {% endfor %}
+    {% for req_special in special_prerequisities %}
+        {{ req_special.format_value }},
+    {% endfor %}
+    {% for req_text in feat.textfeatprerequisite_set.all %}
+        {{ req_text.text }},
+    {% endfor %}
+</p>
+{% if required_by_feats %}
+
+<h4>Required for</h4>
+    <p>
+    {% for req_by_feat in required_by_feats %}
+        <a href="{% url feat_detail_mobile feat_slug=req_by_feat.source_feat.slug feat_id=req_by_feat.source_feat.id rulebook_slug=req_by_feat.source_feat.rulebook.slug rulebook_id=req_by_feat.source_feat.rulebook.id %}">{{ req_by_feat.source_feat.name }}</a> (<abbr title="{{ req_by_feat.source_feat.rulebook.name }}">{{ req_by_feat.source_feat.rulebook.abbr }}</abbr>)
+        ,
+    {% endfor %}
+</p>
+{% endif %}
+
+<div class="nice-textile">
+    {% if feat.benefit_html or feat.benefit %}
+        <h4>Benefit </h4>
+        {% if feat.benefit_html %}
+        {{ feat.benefit_html|safe }}
+        {% else %}
+            <p>{{ feat.benefit|linebreaksbr }}</p>
+        {% endif %}
+    {% endif %}
+
+    {% if feat.special_html or feat.special %}
+        <h4>Special </h4>
+        {% if feat.special_html %}
+            {{ feat.special_html|safe }}
+        {% else %}
+            <p>{{ feat.special|linebreaksbr }}</p>
+        {% endif %}
+    {% endif %}
+
+    {% if feat.normal_html or feat.normal %}
+        <h4>Normal </h4>
+        {% if feat.normal_html %}
+            {{ feat.normal_html|safe }}
+        {% else %}
+            <p>{{ feat.normal|linebreaksbr }}</p>
+        {% endif %}
+    {% endif %}
+</div>
+
+{% if related_feats %}
+    <h3>Also appears in</h3>
+    <ol>
+        {% for related_feat in related_feats %}
+            <li><a href="{% url feat_detail_mobile feat_slug=related_feat.slug feat_id=related_feat.id rulebook_slug=related_feat.rulebook.slug rulebook_id=related_feat.rulebook.id %}">{{ related_feat.rulebook.name }}</a></li>
+        {% endfor %}
+    </ol>
+{% endif %}
+
+{% endblock %}

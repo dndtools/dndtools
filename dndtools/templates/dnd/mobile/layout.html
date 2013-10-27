@@ -1,0 +1,90 @@
+{% load custom_tags %}<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>{% block title %}Home{% endblock %} &ndash; D&amp;D Tools (mobile)</title>
+    <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0"/>
+    <meta name="robots" content="noindex, nofollow">
+    <link href="{% media "favicon.ico" %}" rel="SHORTCUT ICON"/>
+    <link rel="stylesheet" media="all" href="{% media "css/mobile/style.css" %}" type="text/css">
+    <script type="text/javascript" src="{% media "js/jquery-1.7.min.js" "no-timestamp" %}"></script>
+</head>
+
+<body>
+<div class="wrap">
+    <header>
+        <div class="logo">
+            <a href="{% url index %}">
+                <img src="{% media "images/mobile/logo.png" %}" alt="D&ampD Tools (mobile)"/>
+            </a>
+        </div>
+        <div class="options">
+            <ul>
+                <li>Search</li>
+                <li>Menu</li>
+            </ul>
+        </div>
+        <div class="clear"></div>
+        <div class="search-box">
+            <form action="http://www.google.com/cse" id="cse-search-box">
+                <input name="cx" type="hidden" value="010918785989085430250:jd6tjgonwfu"/>
+                <input name="ie" type="hidden" value="UTF-8"/>
+                <input type="text" placeholder="Search D&amp;D Tools" name="q"/>
+                <input type="submit" value="Go"/>
+            </form>
+            <div class="clear"></div>
+        </div>
+        <nav class="vertical menu">
+            <ul>
+                <li{% block menu_home %}{% endblock %}><a href="{% url index %}">Home</a></li>
+                <li{% block menu_rulebooks %}{% endblock %}><a href="{% url rulebook_list %}">Rulebooks</a></li>
+                <li{% block menu_feats %}{% endblock %}><a href="{% url feat_index_mobile %}">Feats</a></li>
+                <li{% block menu_spells %}{% endblock %}><a href="{% url spell_index %}">Spells</a></li>
+                <li{% block menu_classes %}{% endblock %}><a href="{% url character_class_list %}">Classes</a></li>
+                <li{% block menu_skills %}{% endblock %}><a href="{% url skill_list %}">Skills</a></li>
+                <li{% block menu_contact %}{% endblock %}><a href="{% url contact %}">Contact Us</a></li>
+                <li{% block menu_staff %}{% endblock %}><a href="{% url staff %}">Staff</a></li>
+            </ul>
+        </nav>
+    </header>
+
+
+    <div class="content">
+        <article>
+            {% block content %}{% endblock %}
+        </article>
+    </div>
+    <footer>
+        <p>&copy; dndtools.eu 2013. Design by <a href="http://mobifreaks.com">Mobifreaks</a>
+        </p>
+    </footer>
+</div>
+
+<script type="text/javascript">
+    window.addEventListener("load", function () {
+        // Set a timeout...
+        setTimeout(function () {
+            // Hide the address bar!
+            window.scrollTo(0, 1);
+        }, 0);
+    });
+    $('.search-box,.menu').hide();
+    $('.options li:first-child').click(function () {
+        $(this).toggleClass('active');
+        $('.search-box').toggle();
+        $('.menu').hide();
+        $('.options li:last-child').removeClass('active');
+    });
+    $('.options li:last-child').click(function () {
+        $(this).toggleClass('active');
+        $('.menu').toggle();
+        $('.search-box').hide();
+        $('.options li:first-child').removeClass('active');
+    });
+    $('.content').click(function () {
+        $('.search-box,.menu').hide();
+        $('.options li:last-child, .options li:first-child').removeClass('active');
+    });
+</script>
+</body>
+</html>

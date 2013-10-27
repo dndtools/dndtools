@@ -836,14 +836,11 @@ class Feat(models.Model):
     )
 
     class Meta:
-        unique_together = (("character_class", "rulebook",))
+        ordering = ['name', ]
 
     def save(self, *args, **kwargs):
         update_html_cache_attributes(self, 'description', 'benefit', 'special', 'normal')
         super(Feat, self).save(*args, **kwargs)
-
-    class Meta:
-        ordering = ['name', ]
 
     def __unicode__(self):
         return self.name
@@ -1476,7 +1473,7 @@ class Race(models.Model):
         to=RaceType,
         blank=True,
         null=True,
-        help_text='Select from list. Hit Die, Attack bonus and Saves are calculated automatically',
+        help_text='Pick from list. Hit Die, Attack bonus and Saves are calculated automatically.',
     )
     racial_hit_dice_count = models.PositiveSmallIntegerField(
         blank=True,

@@ -1,0 +1,15 @@
+<p id="filter"><a href="javascript:void(0)">Filter: [+]</a></p>
+<form action="{{ request.path }}" method="get">
+  <div class="form_settings" id="form"{% if not form_submitted %} style="display:none;"{% endif %}>
+{{ filter.form.as_p }}
+  <p style="padding-top: 15px">
+    <span>&nbsp;</span><input class="submit" type="submit" value="Filter"/>
+  </p>
+</div>
+</form>
+
+<script>
+    $("#filter").click(function () {
+      $("#form").toggle();
+    });
+</script>

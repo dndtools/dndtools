@@ -252,13 +252,13 @@ urlpatterns = patterns(
 
     # radial types
     url(
-        r'races/types/$',
+        r'^races/types/$',
         'race_type_index',
         name='race_type_index'
     ),
     # languages > detail
     url(
-        r'races/types/(?P<race_type_slug>[^/]+)/$',
+        r'^races/types/(?P<race_type_slug>[^/]+)/$',
         'race_type_detail',
         name='race_type_detail'
     ),
@@ -296,13 +296,13 @@ urlpatterns = patterns(
 
     # languages
     url(
-        r'languages/$',
+        r'^languages/$',
         'language_index',
         name='language_index'
     ),
     # languages > detail
     url(
-        r'languages/(?P<language_slug>[^/]+)/$',
+        r'^languages/(?P<language_slug>[^/]+)/$',
         'language_detail',
         name='language_detail'
     ),
@@ -353,4 +353,16 @@ urlpatterns = patterns(
         name='very_secret_url',
     ),
 
+    # mobile patterns
+    (r'^m/', include('dndtools.dnd.mobile.urls')),
 )
+
+# key: FUNC name, value: URL name!
+desktop_to_mobile = {
+    'feat_index': 'feat_index_mobile',
+    'feat_list_by_rulebook': 'feat_list_by_rulebook_mobile',
+    'feat_category_list': 'feat_category_list_mobile',
+    'feat_category_detail': 'feat_category_detail_mobile',
+    'feats_in_rulebook': 'feats_in_rulebook_mobile',
+    'feat_detail': 'feat_detail_mobile',
+}
