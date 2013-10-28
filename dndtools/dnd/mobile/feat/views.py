@@ -68,15 +68,9 @@ def feat_category_detail_mobile(request, category_slug):
                               context_instance=RequestContext(request), )
 
 
-def feats_in_rulebook_mobile(request, rulebook_slug, rulebook_id):
+def feats_in_rulebook_mobile(request, rulebook_id):
     rulebook = get_object_or_404(Rulebook.objects.select_related('dnd_edition'),
                                  pk=rulebook_id)
-    if not rulebook.slug == rulebook_slug:
-        return permanent_redirect_view(request, 'feats_in_rulebook',
-                                       kwargs={
-                                           'rulebook_slug': rulebook.slug,
-                                           'rulebook_id': rulebook_id, })
-
     feat_list = rulebook.feat_set.select_related('rulebook',
                                                  'rulebook__dnd_edition').all()
 
@@ -92,19 +86,10 @@ def feats_in_rulebook_mobile(request, rulebook_slug, rulebook_id):
                               }, context_instance=RequestContext(request), )
 
 
-def feat_detail_mobile(request, rulebook_slug, rulebook_id, feat_slug, feat_id):
+def feat_detail_mobile(request, feat_id):
     feat = get_object_or_404(
         Feat.objects.select_related('rulebook', 'rulebook__dnd_edition'),
         pk=feat_id)
-    if (feat.slug != feat_slug or
-                unicode(feat.rulebook.id) != rulebook_id or
-                feat.rulebook.slug != rulebook_slug):
-        return permanent_redirect_view(request, 'feat_detail',
-                                       kwargs={
-                                           'rulebook_slug': feat.rulebook.slug,
-                                           'rulebook_id': feat.rulebook.id,
-                                           'feat_slug': feat.slug,
-                                           'feat_id': feat.id, })
 
     feat_category_list = feat.feat_categories.select_related().all()
     required_feats = feat.required_feats.select_related('required_feat',

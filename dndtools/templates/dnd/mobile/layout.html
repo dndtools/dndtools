@@ -20,8 +20,9 @@
         </div>
         <div class="options">
             <ul>
-                <li>Search</li>
-                <li>Menu</li>
+                <li id="options-desktop"><a href="{% url force_desktop_version %}{% if back_desktop_url %}?b={{ back_desktop_url|urlencode }}{% endif %}">Desktop</a></li>
+                <li id="options-search">Search</li>
+                <li id="options-menu">Menu</li>
             </ul>
         </div>
         <div class="clear"></div>
@@ -69,21 +70,26 @@
         }, 0);
     });
     $('.search-box,.menu').hide();
-    $('.options li:first-child').click(function () {
+    $('.options li#options-search').click(function () {
         $(this).toggleClass('active');
         $('.search-box').toggle();
         $('.menu').hide();
-        $('.options li:last-child').removeClass('active');
+        $('.options li#options-menu').removeClass('active');
     });
-    $('.options li:last-child').click(function () {
+    $('.options li#options-menu').click(function () {
         $(this).toggleClass('active');
         $('.menu').toggle();
         $('.search-box').hide();
-        $('.options li:first-child').removeClass('active');
+        $('.options li#options-search').removeClass('active');
+    });
+    $('.options li#options-desktop').click(function(e) {
+        if (window.confirm('Do you really want to switch to desktop version? You can switch back to mobile by closing your browser or using a link at the bottom of the page.')) {
+            window.location = $(this).find('a').attr('href');
+        }
     });
     $('.content').click(function () {
         $('.search-box,.menu').hide();
-        $('.options li:last-child, .options li:first-child').removeClass('active');
+        $('.options li#options-menu, .options li#options-search').removeClass('active');
     });
 </script>
 </body>

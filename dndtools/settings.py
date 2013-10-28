@@ -65,6 +65,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.csrf',
     'dndtools.dnd.context_processors.unread_news',
     'dndtools.dnd.context_processors.disable_social',
+    'dndtools.dnd.context_processors.is_mobile',
     )
 
 ROOT_URLCONF = 'dndtools.urls'

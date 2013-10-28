@@ -402,7 +402,7 @@ footer p {
 
 .options li {
     float: left;
-    background: url('options.png') no-repeat;
+    background: url('options.png?2') no-repeat;
     width: 60px;
     height: 60px;
     display: inline-block;
@@ -416,12 +416,16 @@ footer p {
     background-color: #f2f2f2;
 }
 
-.options li:first-child {
+.options li#options-desktop {
     background-position: 22px 20px;
 }
 
-.options li:last-child {
-    background-position: -17px 20px;
+.options li#options-search {
+    background-position: -18px 20px;
+}
+
+.options li#options-menu {
+    background-position: -58px 20px;
 }
 
 .search-box {
@@ -670,10 +674,6 @@ article h2 a:hover {
 
 /* custom */
 
-.content td, .content td a {
-    padding-top: 5px;
-    padding-bottom: 5px;
-}
 .pagination a, .pagination span {
     padding: 5px;
 }
@@ -682,4 +682,23 @@ th {
 }
 .pagination form {
     float: right;
+}
+
+/*list tables, eg "all feats"*/
+table.list {
+    width: 100%;
+    margin: 20px 0;
+}
+table.list td {
+    border-top: 1px solid #AAF;
+    border-bottom: 1px solid #AAF;
+    padding: 0 0 0 5px;
+}
+table.list td:first-child {
+    padding-left: 0;
+}
+table.list td a {
+    width: 100%;
+    display: block;
+    padding: 5px 0;
 }

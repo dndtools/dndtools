@@ -11,6 +11,13 @@ urlpatterns = patterns(
         name='force_desktop_version',
     ),
 
+    # return to mobile version
+    url(
+        r'^return-to-mobile-version/$',
+        'return_to_mobile_version',
+        name='return_to_mobile_version',
+    ),
+
     # feats
     (r'^feats/', include('dndtools.dnd.mobile.feat.urls')),
 )

@@ -1,33 +1,38 @@
 # -*- coding: utf-8 -*-
 
 from django.http import HttpResponseRedirect
-from django.core.urlresolvers import reverse
-
-from dndtools.dnd.urls import desktop_to_mobile
+from dnd.mobile.mobile_dispatcher import MobileDispatcher
 
 
 class MobileMiddleware(object):
+    BETA_VERSION_NO_MOBILE = True
+
+    def __init__(self):
+        self.mobile_dispatcher = MobileDispatcher()
+
     @staticmethod
     def is_mobile():
         return True
 
     @staticmethod
     def is_forced_desktop(request):
-        return request.COOKIES.get('force_desktop', False)
+        return 'force_desktop' in request.COOKIES
 
     def process_view(self, request, view_func, view_args, view_kwargs):
-        return None
+        if self.BETA_VERSION_NO_MOBILE:
+            return None
 
-        ## mobile version is not required
-        #if not self.is_mobile() or self.is_forced_desktop(request):
-        #    return None
-        #
-        ## is there a mobile version of this page?
-        #if view_func.func_name in desktop_to_mobile:
-        #    url = reverse(desktop_to_mobile[view_func.func_name], args=view_args, kwargs=view_kwargs)
-        #    # get parameters
-        #    if len(request.GET) > 0:
-        #        #noinspection PyUnresolvedReferences
-        #        url += "?" + request.GET.urlencode()
-        #
-        #    return HttpResponseRedirect(url)
+        is_mobile = self.is_mobile()
+        request.is_mobile = is_mobile
+
+        # mobile version is not required
+        if not is_mobile or self.is_forced_desktop(request):
+            return None
+
+        dispatch_url = self.mobile_dispatcher.dispatch(view_func.func_name, view_args, view_kwargs)
+        if dispatch_url:
+            if len(request.GET) > 0:
+                #noinspection PyUnresolvedReferences
+                dispatch_url += "?" + request.GET.urlencode()
+
+            return HttpResponseRedirect(dispatch_url)

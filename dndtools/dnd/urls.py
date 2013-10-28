@@ -356,13 +356,3 @@ urlpatterns = patterns(
     # mobile patterns
     (r'^m/', include('dndtools.dnd.mobile.urls')),
 )
-
-# key: FUNC name, value: URL name!
-desktop_to_mobile = {
-    'feat_index': 'feat_index_mobile',
-    'feat_list_by_rulebook': 'feat_list_by_rulebook_mobile',
-    'feat_category_list': 'feat_category_list_mobile',
-    'feat_category_detail': 'feat_category_detail_mobile',
-    'feats_in_rulebook': 'feats_in_rulebook_mobile',
-    'feat_detail': 'feat_detail_mobile',
-}

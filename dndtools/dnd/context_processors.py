@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from dndtools.dnd.models import NewsEntry
 
+
 def unread_news(request):
     count = 0
     if 'top_news' in request.COOKIES:
@@ -11,11 +12,21 @@ def unread_news(request):
     count = min(15, count)
 
     return {
-        'unreadNewsCount' : count,
+        'unreadNewsCount': count,
     }
 
 
 def disable_social(request):
     return {
-        'disable_social' : 'disable_social' in request.COOKIES,
+        'disable_social': 'disable_social' in request.COOKIES,
+    }
+
+
+def is_mobile(request):
+    mobile = False
+    if hasattr(request, 'is_mobile') and request.is_mobile:
+        mobile = True
+
+    return {
+        'is_mobile': mobile,
     }

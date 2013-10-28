@@ -33,13 +33,13 @@ urlpatterns = patterns(
     ),
     # feats > rulebook
     url(
-        r'^(?P<rulebook_slug>[^/]+)--(?P<rulebook_id>\d+)/$',
+        r'^rulebook/(?P<rulebook_id>\d+)/$',
         'feats_in_rulebook_mobile',
         name='feats_in_rulebook_mobile',
     ),
     # feats > rulebook > feat
     url(
-        r'^(?P<rulebook_slug>[^/]+)--(?P<rulebook_id>\d+)/(?P<feat_slug>[^/]+)--(?P<feat_id>\d+)/$',
+        r'^(?P<feat_id>\d+)/$',
         'feat_detail_mobile',
         name='feat_detail_mobile',
     ),

@@ -27,7 +27,7 @@
     <p>
 
     {% for req_feat in required_feats %}
-        <a href="{% url feat_detail_mobile feat_slug=req_feat.required_feat.slug feat_id=req_feat.required_feat.id rulebook_slug=req_feat.required_feat.rulebook.slug rulebook_id=req_feat.required_feat.rulebook.id %}">{{ req_feat.required_feat.name }}</a> (<abbr title="{{ req_feat.required_feat.rulebook.name }}">{{ req_feat.required_feat.rulebook.abbr }}</abbr>)
+        <a href="{% url feat_detail_mobile feat_id=req_feat.required_feat.id %}">{{ req_feat.required_feat.name }}</a> (<abbr title="{{ req_feat.required_feat.rulebook.name }}">{{ req_feat.required_feat.rulebook.abbr }}</abbr>)
         {% if req_feat.additional_text %}
             ({{ req_feat.additional_text }})
         {% endif %},
@@ -47,7 +47,7 @@
 <h4>Required for</h4>
     <p>
     {% for req_by_feat in required_by_feats %}
-        <a href="{% url feat_detail_mobile feat_slug=req_by_feat.source_feat.slug feat_id=req_by_feat.source_feat.id rulebook_slug=req_by_feat.source_feat.rulebook.slug rulebook_id=req_by_feat.source_feat.rulebook.id %}">{{ req_by_feat.source_feat.name }}</a> (<abbr title="{{ req_by_feat.source_feat.rulebook.name }}">{{ req_by_feat.source_feat.rulebook.abbr }}</abbr>)
+        <a href="{% url feat_detail_mobile feat_id=req_by_feat.source_feat.id %}">{{ req_by_feat.source_feat.name }}</a> (<abbr title="{{ req_by_feat.source_feat.rulebook.name }}">{{ req_by_feat.source_feat.rulebook.abbr }}</abbr>)
         ,
     {% endfor %}
 </p>
@@ -86,7 +86,7 @@
     <h3>Also appears in</h3>
     <ol>
         {% for related_feat in related_feats %}
-            <li><a href="{% url feat_detail_mobile feat_slug=related_feat.slug feat_id=related_feat.id rulebook_slug=related_feat.rulebook.slug rulebook_id=related_feat.rulebook.id %}">{{ related_feat.rulebook.name }}</a></li>
+            <li><a href="{% url feat_detail_mobile feat_id=related_feat.id %}">{{ related_feat.rulebook.name }}</a></li>
         {% endfor %}
     </ol>
 {% endif %}
