@@ -131,7 +131,7 @@
       {% block breadcrumbs %}{% endblock %}
     </div>
     <div class="sidebar">
-        <form action="" method="get">
+        <form action="." method="get">
             <label for="disable_social">
                 <input id="disable_social" name="disable_social" type="checkbox" {% if disable_social %}checked="checked"{% endif %}/> All social disabled (faster)
             </label>
@@ -163,7 +163,7 @@
 
             <li><a class="FlattrButton" style="display:none;" href="http://dndtools.eu"></a>
                 <noscript><a href="http://flattr.com/thing/1021848/DnDTools" target="_blank">
-                    <img src="http://api.flattr.com/button/flattr-badge-large.png" alt="Flattr this" title="Flattr this" border="0" /></a></noscript></li>
+                    <img src="http://api.flattr.com/button/flattr-badge-large.png" alt="Flattr this" title="Flattr this" /></a></noscript></li>
           </ul>
       {% endif %}
       {% block sidebar %}{% endblock %}
