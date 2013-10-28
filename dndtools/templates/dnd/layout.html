@@ -141,7 +141,7 @@
                         if (this.checked) {
                             $.cookie("disable_social", 1, { expires : 3650, path : '/'});
                         } else {
-                            $.cookie("disable_social", null);
+                            $.cookie("disable_social", null, {path: '/'});
                         }
                         location.reload();
                     }
