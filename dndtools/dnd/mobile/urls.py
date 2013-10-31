@@ -18,6 +18,9 @@ urlpatterns = patterns(
         name='return_to_mobile_version',
     ),
 
+    # index
+    (r'^', include('dndtools.dnd.mobile.index.urls')),
+
     # feats
     (r'^feats/', include('dndtools.dnd.mobile.feat.urls')),
 )
