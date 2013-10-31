@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
+
 from django.shortcuts import get_object_or_404, render_to_response
 from django.template import RequestContext
 from dndtools.dnd.mobile.dnd_paginator import DndMobilePaginator
 from dndtools.dnd.filters import FeatFilter
 from dndtools.dnd.models import Feat, Rulebook, FeatCategory
-from dndtools.dnd.views import permanent_redirect_view, is_3e_edition
+from dndtools.dnd.views import is_3e_edition
 
 
 def feat_index_mobile(request):
