@@ -116,7 +116,6 @@ class SpellFilter(django_filters2.FilterSet):
     rulebook__dnd_edition__slug = django_filters2.MultipleChoiceFilter(
         choices=edition_choices(unknown_entry=False),
         label='Edition',
-        help_text='Use ctrl to select more editions!',
     )
     rulebook__slug = django_filters2.ChoiceFilter(
         label='Rulebook', choices=rulebook_choices()
@@ -180,7 +179,6 @@ class ItemFilter(django_filters2.FilterSet):
     rulebook__dnd_edition__slug = django_filters2.MultipleChoiceFilter(
         choices=edition_choices(unknown_entry=False),
         label='Edition',
-        help_text='Use ctrl to select more editions!',
     )
     rulebook__slug = django_filters2.ChoiceFilter(
         label='Rulebook', choices=rulebook_choices()
@@ -230,7 +228,6 @@ class CharacterClassFilter(django_filters2.FilterSet):
     rulebook__dnd_edition__slug = django_filters2.MultipleChoiceFilter(
         choices=edition_choices(unknown_entry=False),
         label='Edition',
-        help_text='Use ctrl to select more editions!',
     )
     required_bab = django_filters2.RangeFilter(
         label='Required Base Attack (range)',
@@ -285,7 +282,6 @@ class FeatFilter(django_filters2.FilterSet):
     rulebook__dnd_edition__slug = django_filters2.MultipleChoiceFilter(
         choices=edition_choices(unknown_entry=False),
         label='Edition',
-        help_text='Use ctrl to select more editions!',
     )
     description = django_filters2.CharFilter(
         lookup_type='icontains',
@@ -364,7 +360,6 @@ class MonsterFilter(django_filters2.FilterSet):
     rulebook__dnd_edition__slug = django_filters2.MultipleChoiceFilter(
         choices=edition_choices(unknown_entry=False),
         label='Edition',
-        help_text='Use ctrl to select more editions!',
     )
 
     class Meta:
@@ -383,7 +378,6 @@ class RaceFilter(django_filters2.FilterSet):
     rulebook__dnd_edition__slug = django_filters2.MultipleChoiceFilter(
         choices=edition_choices(unknown_entry=False),
         label='Edition',
-        help_text='Use ctrl to select more editions!',
     )
 
     class Meta:

@@ -344,7 +344,8 @@ form textarea {
 
 form input,
 form textarea,
-form input[type=submit] {
+form input[type=submit],
+form select{
     background: #fff;
     border: 1px solid #aaa;
     width: 90%;
@@ -384,7 +385,7 @@ footer p {
 
 .logo {
     float: left;
-    padding: 10px 0;
+    padding: 3px 0;
 }
 
 .logo img {

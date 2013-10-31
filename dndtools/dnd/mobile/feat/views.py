@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import get_object_or_404, render_to_response
 from django.template import RequestContext
-from dndtools.dnd.dnd_paginator import DndPaginator
+from dndtools.dnd.mobile.dnd_paginator import DndMobilePaginator
 from dndtools.dnd.filters import FeatFilter
 from dndtools.dnd.models import Feat, Rulebook, FeatCategory
 from dndtools.dnd.views import permanent_redirect_view, is_3e_edition
@@ -13,7 +13,7 @@ def feat_index_mobile(request):
 
     form_submitted = 1 if 'name' in request.GET else 0
 
-    paginator = DndPaginator(f.qs, request)
+    paginator = DndMobilePaginator(f.qs, request)
 
     return render_to_response('dnd/mobile/feat/feat_index.html',
                               {
@@ -29,7 +29,7 @@ def feat_list_by_rulebook_mobile(request):
     rulebook_list = Rulebook.objects.select_related('rulebook',
                                                     'dnd_edition').all()
 
-    paginator = DndPaginator(rulebook_list, request)
+    paginator = DndMobilePaginator(rulebook_list, request)
 
     return render_to_response('dnd/mobile/feat/feat_list_by_rulebook.html',
                               {
@@ -41,7 +41,7 @@ def feat_list_by_rulebook_mobile(request):
 def feat_category_list_mobile(request):
     feat_category_list = FeatCategory.objects.all()
 
-    paginator = DndPaginator(feat_category_list, request)
+    paginator = DndMobilePaginator(feat_category_list, request)
 
     return render_to_response('dnd/mobile/feat/feat_category_list.html',
                               {
@@ -55,7 +55,7 @@ def feat_category_detail_mobile(request, category_slug):
     feat_list = feat_category.feat_set.select_related('rulebook',
                                                       'rulebook__dnd_edition').all()
 
-    paginator = DndPaginator(feat_list, request)
+    paginator = DndMobilePaginator(feat_list, request)
 
     return render_to_response('dnd/mobile/feat/feat_category_detail.html',
                               {
@@ -74,7 +74,7 @@ def feats_in_rulebook_mobile(request, rulebook_id):
     feat_list = rulebook.feat_set.select_related('rulebook',
                                                  'rulebook__dnd_edition').all()
 
-    paginator = DndPaginator(feat_list, request)
+    paginator = DndMobilePaginator(feat_list, request)
 
     return render_to_response('dnd/mobile/feat/feats_in_rulebook.html',
                               {
