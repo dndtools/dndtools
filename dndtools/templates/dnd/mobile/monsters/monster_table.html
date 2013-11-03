@@ -4,13 +4,11 @@
     <tr>
         <th>Monster name</th>
         <th>Rulebook name</th>
-        <th>Edition</th>
     </tr>
     {% for monster in monster_list %}
         <tr>
             <td><a href="{{ monster.get_absolute_url_mobile }}">{{ monster.name }}</a></td>
             <td><a href="{{ monster.rulebook.get_absolute_url_mobile }}">{{ monster.rulebook.abbr }}</a></td>
-            <td><a href="{{ monster.rulebook.dnd_edition.get_absolute_url_mobile }}">{{ monster.rulebook.dnd_edition.name }}</a></td>
         </tr>
     {% endfor %}
 </table>
