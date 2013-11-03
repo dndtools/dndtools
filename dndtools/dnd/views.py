@@ -16,7 +16,7 @@ from dndtools.dnd.forms import ContactForm, InaccurateContentForm
 from dndtools.dnd.models import (Rulebook, DndEdition, FeatCategory, Feat,
                                  SpellSchool, SpellDescriptor, SpellSubSchool,
                                  Spell, CharacterClass, Domain, CharacterClassVariant, Skill, Race, SkillVariant,
-                                 NewsEntry, StaticPage, Monster, Rule, Item, Language, RaceType)
+                                 NewsEntry, StaticPage, Monster, Rule, Item, Language, RaceType, DomainVariant)
 from dndtools.dnd.utilities import int_with_commas
 
 
@@ -484,9 +484,58 @@ def spell_domain_list(request):
                               }, context_instance=RequestContext(request), )
 
 
-def spell_domain_detail(request, spell_domain_slug):
-    spell_domain = get_object_or_404(Domain,
-                                     slug=spell_domain_slug)
+def spell_domain_detail(request, spell_domain_slug, rulebook_slug=None, rulebook_id=None):
+    # fetch the class
+    spell_domain = get_object_or_404(Domain.objects.select_related(
+        'domain_variant', 'domain_variant__rulebook'), slug=spell_domain_slug)
+
+    # fetch primary variant, this is independent of rulebook selected
+    try:
+        primary_variant = DomainVariant.objects.select_related(
+            'rulebook', 'rulebook__dnd_edition',
+        ).filter(
+            domain=spell_domain,
+        ).order_by('-rulebook__dnd_edition__core', '-rulebook__published')[0]
+    except Exception:
+        primary_variant = None
+
+    # if rulebook is supplied, select find this variant
+    if rulebook_slug and rulebook_id:
+        # use canonical link in head as this is more or less duplicated content
+        use_canonical_link = True
+        selected_variant = get_object_or_404(
+            DomainVariant.objects.select_related(
+                'domain', 'rulebook', 'rulebook__dnd_edition'),
+            domain__slug=spell_domain_slug,
+            rulebook__pk=rulebook_id)
+
+        # possible malformed/changed slug
+        if rulebook_slug != selected_variant.rulebook.slug:
+            return permanent_redirect_object(request, selected_variant)
+
+        # selected variant is primary! Redirect to canonical url
+        if selected_variant == primary_variant:
+            return permanent_redirect_view(
+                request, spell_domain_detail, kwargs={
+                    'spell_domain_slug': spell_domain_slug}
+            )
+    else:
+        # this is canonical, no need to specify it
+        use_canonical_link = False
+        selected_variant = primary_variant
+
+    other_variants = [
+        variant
+        for variant
+        in spell_domain.domainvariant_set.select_related(
+            'rulebook', 'rulebook__dnd_edition', 'spell_domain').all()
+        if variant != selected_variant
+    ]
+
+    if selected_variant:
+        display_3e_warning = is_3e_edition(selected_variant.rulebook.dnd_edition)
+    else:
+        display_3e_warning = False
 
     spell_list = spell_domain.spell_set.select_related(
         'rulebook', 'rulebook__dnd_edition', 'school').all()
@@ -500,7 +549,11 @@ def spell_domain_detail(request, spell_domain_slug):
                                   'paginator': paginator,
                                   'request': request,
                                   'i_like_it_url': request.build_absolute_uri(),
-                                  'inaccurate_url': request.build_absolute_uri(), },
+                                  'inaccurate_url': request.build_absolute_uri(),
+                                  'selected_variant': selected_variant,
+                                  'other_variants': other_variants,
+                                  'use_canonical_link': use_canonical_link,
+                                  'display_3e_warning': display_3e_warning,},
                               context_instance=RequestContext(request), )
 
 

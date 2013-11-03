@@ -136,11 +136,18 @@ urlpatterns = patterns(
         'spell_domain_list',
         name='spell_domain_list',
     ),
-    # spells > schools > detail
+    # spells > domains > detail
     url(
         r'^spells/domains/(?P<spell_domain_slug>[^/]+)/$',
         'spell_domain_detail',
         name='spell_domain_detail',
+    ),
+
+    # spells > domains > detail (variant)
+    url(
+        r'^spells/domains/(?P<rulebook_slug>[^/]+)--(?P<rulebook_id>\d+)/(?P<spell_domain_slug>[^/]+)/$',
+        'spell_domain_detail',
+        name='spell_variant_domain_detail',
     ),
     # classes
     url(
@@ -352,6 +359,9 @@ urlpatterns = patterns(
         'very_secret_url',
         name='very_secret_url',
     ),
+
+    # deities
+    (r'^spells/deities/', include('dndtools.dnd.deities.urls')),
 
     # mobile patterns
     (r'^m/', include('dndtools.dnd.mobile.urls')),

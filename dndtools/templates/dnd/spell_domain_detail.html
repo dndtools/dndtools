@@ -1,6 +1,11 @@
 {% extends "dnd/spell_layout.html" %}
 
-{#{% block extra_link %}<link rel="canonical" href="{% url character_class_spells character_class_slug=character_class.slug level=level %}" />{% endblock %}#}
+{% block extra_link %}
+  {{ block.super }}
+  {% if use_canonical_link %}
+  <link rel="canonical" href="{% url spell_domain_detail spell_domain_slug=spell_domain.slug %}" />
+  {% endif %}
+{% endblock %}
 
 {% block title %}{{ spell_domain.name }}{% endblock %}
 
@@ -10,9 +15,62 @@
     &raquo; <a href="{{ spell_domain.get_absolute_url }}">{{ spell_domain.name }}</a>
 {% endblock %}
 
-{% block admin_edit %}<a href="{% url admin:dnd_domain_change spell_domain.id %}">EDIT</a>{% endblock %}
+{% block admin_edit %}
+    <a href="{% url admin:dnd_domain_change spell_domain.id %}">EDIT</a>
+    {% if selected_variant %}
+        <a href="{% url admin:dnd_domainvariant_change selected_variant.id %}">EDIT VARIANT</a>
+    {% endif %}
+{% endblock %}
 
 {% block content %}
+
+<h2>{{ spell_domain.name }}</h2>
+{% if selected_variant %}
+    <p>(<a href="{{ selected_variant.rulebook.get_absolute_url }}">{{ selected_variant.rulebook.name }}</a> variant{% if selected_variant.page %}, p. {{ selected_variant.page }}{% endif %})</p>
+
+    {% if selected_variant.deities %}
+
+        <h4>Deities:</h4>
+        <p>
+        {% for deity in selected_variant.deities.all %}
+            <a href="{{ deity.get_absolute_url }}">{{ deity }}</a>{% if not forloop.last %},{% endif %}
+        {% endfor %}
+        </p>
+    {% endif %}
+    {% if selected_variant.deities_text %}
+        <h4>Deities:</h4>
+        <p>
+        {{ selected_variant.deities_text }}
+        </p>
+    {% endif %}
+    {% if selected_variant.other_deities %}
+        <h4>Other deities:</h4>
+        <p>
+        {% for deity in selected_variant.other_deities.all %}
+            {{ deity }}{% if not forloop.last %},{% endif %}
+        {% endfor %}
+        </p>
+    {% endif %}
+    {% if selected_variant.requirement %}
+       <h4>Requirement:</h4>  <p>{{ selected_variant.requirement }}</p>
+    {% endif %}
+
+    {% if selected_variant.granted_power_html %}
+        <h4>Granted power{% if selected_variant.granted_power_type %} ({{ selected_variant.granted_power_type }}){% endif %}</h4>
+        <div class="nice-textile">
+            {{ selected_variant.granted_power_html|safe }}
+        </div>
+    {% endif %}
+{% endif %}
+
+{% if other_variants %}
+    <h3>Also appears in</h3>
+    <ol>
+        {% for variant in other_variants %}
+            <li><a href="{{ variant.get_absolute_url }}">{{ variant.rulebook.name }}</a></li>
+        {% endfor %}
+    </ol>
+{% endif %}
 
 <h2>Spells in {{ spell_domain.name }} domain</h2>
 

@@ -3,7 +3,8 @@
 from dndtools import django_filters2
 from dndtools.dnd.models import (
     Spell, DndEdition, SpellSchool, SpellSubSchool, SpellDescriptor, FeatCategory,
-    CharacterClass, Rulebook, Domain, Feat, Skill, Item, Language, RaceType, ItemSlot, ItemProperty)
+    CharacterClass, Rulebook, Domain, Feat, Skill, Item, Language, RaceType, ItemSlot,
+    ItemProperty, Deity)
 from dndtools.dnd.filters_fields import FeatMultiPrerequisiteFieldFilter
 
 
@@ -348,6 +349,16 @@ class SkillFilter(django_filters2.FilterSet):
     class Meta:
         model = Skill
         fields = ['name', 'trained_only', 'armor_check_penalty', 'base_skill']
+
+
+class DeityFilter(django_filters2.FilterSet):
+    name = django_filters2.CharFilter(
+        lookup_type='icontains'
+    )
+
+    class Meta:
+        model = Deity
+        fields = ['name']
 
 
 class MonsterFilter(django_filters2.FilterSet):

@@ -10,10 +10,10 @@ from dndtools.dnd.models import (FeatCategory, Skill, SpecialFeatPrerequisite, T
                                  RaceSpeedType, SkillVariant, NewsEntry, StaticPage, CharacterClassVariantRequiresFeat,
                                  CharacterClassVariantRequiresRace, CharacterClassVariantRequiresSkill, MonsterHasFeat,
                                  MonsterHasSkill, MonsterSpeed, Monster, MonsterSubtype, MonsterType, Rule, Item,
-                                 ItemSlot, ItemAuraType, ItemActivationType, ItemProperty, Language, RaceType)
-from dndtools.dnd.models import (DndEdition, Rulebook, CharacterClass, SpellDescriptor,
+                                 ItemSlot, ItemAuraType, ItemActivationType, ItemProperty, Language, RaceType, Deity,
+                                 DndEdition, Rulebook, CharacterClass, SpellDescriptor,
                                  SpellSchool, SpellSubSchool, Spell, SpellClassLevel,
-                                 Domain, SpellDomainLevel)
+                                 Domain, SpellDomainLevel, DomainVariant)
 
 
 class DndEditionAdmin(VersionAdmin):
@@ -107,6 +107,14 @@ class DomainAdmin(VersionAdmin):
     list_display = ('id', 'name',)
     list_display_links = ('name', )
     search_fields = ('name', )
+
+
+class DomainVariantAdmin(VersionAdmin):
+    list_display = ('id', 'domain', 'rulebook', )
+    list_display_links = ('domain', )
+    list_filter = ('domain', 'rulebook', )
+    search_fields = ('domain__name', )
+    filter_horizontal = ('deities', 'other_deities', )
 
 
 class SpellDescriptorAdmin(VersionAdmin):
@@ -358,6 +366,15 @@ class RaceTypeAdmin(VersionAdmin):
     list_display_links = ('name', )
     search_fields = ('name', )
 
+
+class DeityAdmin(VersionAdmin):
+    prepopulated_fields = {"slug": ("name",)}
+    list_display = (
+        'name',
+    )
+    list_display_links = ('name', )
+    search_fields = ('name', )
+
 admin.site.register(DndEdition, DndEditionAdmin)
 admin.site.register(Rulebook, RulebookAdmin)
 admin.site.register(CharacterClass, CharacterClassAdmin)
@@ -388,3 +405,5 @@ admin.site.register(ItemSlot, ItemSlotAdmin)
 admin.site.register(ItemProperty, ItemPropertyAdmin)
 admin.site.register(ItemAuraType, ItemAuraTypeAdmin)
 admin.site.register(ItemActivationType, ItemActivationTypeAdmin)
+admin.site.register(Deity, DeityAdmin)
+admin.site.register(DomainVariant, DomainVariantAdmin)

@@ -1,0 +1,13 @@
+{# inner table is used if no pagination is required #}
+{% load custom_filters %}
+
+<table {% if nostyle %}{% else %}class="common"{% endif %}>
+<tr>
+  <th>Deity name</th>
+</tr>
+    {% for deity in deity_list %}
+        <tr>
+            <td><a href="{{ deity.get_absolute_url }}">{{ deity.name }}</a></td>
+        </tr>
+    {% endfor %}
+</table>

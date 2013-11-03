@@ -351,6 +351,58 @@ class CharacterClassVariantRequiresSkill(models.Model):
     )
 
 
+class Deity(models.Model):
+    name = models.CharField(
+        max_length=64,
+        unique=True,
+    )
+    slug = models.SlugField(
+        max_length=64,
+        unique=True,
+    )
+
+    description = models.TextField(
+        blank=True,
+        help_text='Textile enabled!',
+    )
+    description_html = models.TextField(
+        editable=False,
+        blank=True,
+    )
+
+    alignment = models.CharField(
+        max_length=2,
+        blank=True,
+        help_text='CG, LE, N, ...'
+    )
+
+    favored_weapon = models.ForeignKey(
+        'Item',
+        blank=True,
+        null=True,
+    )
+
+    class Meta:
+        ordering = ['name', ]
+        verbose_name_plural = 'deities'
+
+    def __unicode__(self):
+        return self.name
+
+    def save(self, *args, **kwargs):
+        update_html_cache_attributes(self, 'description')
+        super(Deity, self).save(*args, **kwargs)
+
+    @models.permalink
+    def get_absolute_url(self):
+        return (
+            'deity_detail', (),
+            {
+                'deity_slug': self.slug,
+            }
+        )
+
+
 class Domain(models.Model):
     name = models.CharField(
         max_length=64,
@@ -385,6 +437,72 @@ class Domain(models.Model):
             }
         )
 
+
+class DomainVariant(models.Model):
+    domain = models.ForeignKey(
+        Domain,
+    )
+
+    rulebook = models.ForeignKey(
+        Rulebook,
+    )
+    page = models.PositiveSmallIntegerField(
+        null=True,
+        blank=True,
+    )
+    deities_text = models.CharField(
+        max_length=128,
+        blank=True,
+        help_text='If deities is not an enumeration but some text.',
+    )
+
+    deities = models.ManyToManyField(
+        to=Deity,
+        blank=True,
+        related_name='primary_domains',
+        help_text='Also sometimes called "Core domains"',
+    )
+
+    other_deities = models.ManyToManyField(
+        to=Deity,
+        blank=True,
+        related_name='other_domains',
+    )
+
+    requirement = models.CharField(
+        max_length=64,
+        blank=True,
+    )
+
+    granted_power = models.TextField(
+        blank=True,
+        help_text='Textile enabled!',
+    )
+    granted_power_html = models.TextField(
+        editable=False,
+        blank=True,
+    )
+
+    granted_power_type = models.CharField(
+        max_length=8,
+        blank=True,
+        help_text='Something like "Su" for supernaturals etc. Leave blank if nothing is in the book.'
+    )
+
+    def save(self, *args, **kwargs):
+        update_html_cache_attributes(self, 'granted_power')
+        super(DomainVariant, self).save(*args, **kwargs)
+
+    @models.permalink
+    def get_absolute_url(self):
+        return (
+            'spell_variant_domain_detail', (),
+            {
+                'rulebook_slug': self.rulebook.slug,
+                'rulebook_id': self.rulebook.id,
+                'spell_domain_slug': self.domain.slug
+            }
+        )
 
 class SpellDescriptor(models.Model):
     name = models.CharField(
