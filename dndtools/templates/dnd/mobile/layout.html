@@ -80,7 +80,15 @@
     });
 
     if ($('#submenu').find('li').size() == 0) {
-        $('#options-submenu').hide();
+        $('#options-submenu').addClass('disabled');
+    } else {
+        $('#options-submenu').click(function () {
+            $(this).toggleClass('active');
+            $('#submenu').toggle();
+
+            $('#menu, #search-box').hide();
+            $('#options-search, #options-menu').removeClass('active');
+        });
     }
 
     $('#search-box, #menu, #submenu').hide();
@@ -99,13 +107,7 @@
         $('#submenu, #search-box').hide();
         $('#options-submenu, #options-search').removeClass('active');
     });
-    $('#options-submenu').click(function () {
-        $(this).toggleClass('active');
-        $('#submenu').toggle();
 
-        $('#menu, #search-box').hide();
-        $('#options-search, #options-menu').removeClass('active');
-    });
     $('#options-desktop').click(function(e) {
         if (window.confirm('Do you really want to switch to desktop version? You can switch back to mobile by closing your browser or using a link at the bottom of the page.')) {
             window.location = $(this).find('a').attr('href');

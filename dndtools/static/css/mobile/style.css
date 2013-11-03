@@ -418,8 +418,7 @@ footer p {
     text-indent: -1000em;
 }
 
-.options li.active,
-.active {
+.options li.active, .active {
     background-color: #f2f2f2;
 }
 
@@ -437,6 +436,10 @@ footer p {
 
 .options li#options-submenu {
     background-position: -98px 20px;
+}
+.options li.disabled {
+    cursor: default;
+    background-color: #d0d0d0;
 }
 
 .search-box {
@@ -705,7 +708,11 @@ table.list td {
     border-bottom: 1px solid #AAF;
     padding: 0 0 0 5px;
 }
-table.list td:first-child {
+table.list th {
+    text-align: left;
+    padding: 0 0 0 5px;
+}
+table.list td:first-child, table.list th:first-child {
     padding-left: 0;
 }
 table.list td a {
