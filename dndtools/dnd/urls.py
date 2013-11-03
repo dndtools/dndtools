@@ -250,13 +250,13 @@ urlpatterns = patterns(
     ),
 
 
-    # radial types
+    # racial types
     url(
         r'^races/types/$',
         'race_type_index',
         name='race_type_index'
     ),
-    # languages > detail
+    # race > detail
     url(
         r'^races/types/(?P<race_type_slug>[^/]+)/$',
         'race_type_detail',

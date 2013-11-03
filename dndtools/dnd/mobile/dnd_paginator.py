@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
-from dndtools.dnd.dnd_paginator import DndPaginator
 from django.template.loader import get_template
 from django.template.context import Context
+
+from dndtools.dnd.dnd_paginator import DndPaginator
 
 
 class DndMobilePaginator(DndPaginator):
@@ -16,5 +17,5 @@ class DndMobilePaginator(DndPaginator):
             'get_vars': self.get_vars,
             'get_vars_solo': self.get_vars_solo(),
             'hidden_inputs': self.hidden_inputs,
-            })
+        })
         return template.render(context)

@@ -36,6 +36,16 @@ class DndEdition(models.Model):
             }
         )
 
+    @models.permalink
+    def get_absolute_url_mobile(self):
+        return (
+            'edition_detail_mobile', (),
+            {
+                'edition_slug': self.slug,
+                'edition_id': self.id,
+            }
+        )
+
 
 class Rulebook(models.Model):
     dnd_edition = models.ForeignKey(
@@ -94,6 +104,18 @@ class Rulebook(models.Model):
             }
         )
 
+    @models.permalink
+    def get_absolute_url_mobile(self):
+        return (
+            'rulebook_detail_mobile', (),
+            {
+                'edition_slug': self.dnd_edition.slug,
+                'edition_id': self.dnd_edition.id,
+                'rulebook_slug': self.slug,
+                'rulebook_id': self.id,
+            }
+        )
+
 
 class CharacterClass(models.Model):
     name = models.CharField(
@@ -129,6 +151,15 @@ class CharacterClass(models.Model):
     def get_absolute_url(self):
         return (
             'dndtools.dnd.views.character_class_detail', (),
+            {
+                'character_class_slug': self.slug,
+            }
+        )
+
+    @models.permalink
+    def get_absolute_url_mobile(self):
+        return (
+            'character_class_detail_mobile', (),
             {
                 'character_class_slug': self.slug,
             }
@@ -216,6 +247,17 @@ class CharacterClassVariant(models.Model):
     def get_absolute_url(self):
         return (
             'character_class_variant_detail', (),
+            {
+                'rulebook_slug': self.rulebook.slug,
+                'rulebook_id': self.rulebook.id,
+                'character_class_slug': self.character_class.slug
+            }
+        )
+
+    @models.permalink
+    def get_absolute_url_mobile(self):
+        return (
+            'character_class_variant_detail_mobile', (),
             {
                 'rulebook_slug': self.rulebook.slug,
                 'rulebook_id': self.rulebook.id,
@@ -334,6 +376,15 @@ class Domain(models.Model):
             }
         )
 
+    @models.permalink
+    def get_absolute_url_mobile(self):
+        return (
+            'spell_domain_detail_mobile', (),
+            {
+                'spell_domain_slug': self.slug,
+            }
+        )
+
 
 class SpellDescriptor(models.Model):
     name = models.CharField(
@@ -356,6 +407,15 @@ class SpellDescriptor(models.Model):
     def get_absolute_url(self):
         return (
             'dndtools.dnd.views.spell_descriptor_detail', (),
+            {
+                'spell_descriptor_slug': self.slug,
+            }
+        )
+
+    @models.permalink
+    def get_absolute_url_mobile(self):
+        return (
+            'spell_descriptor_detail_mobile', (),
             {
                 'spell_descriptor_slug': self.slug,
             }
@@ -387,6 +447,15 @@ class SpellSchool(models.Model):
             }
         )
 
+    @models.permalink
+    def get_absolute_url_mobile(self):
+        return (
+            'spell_school_detail_mobile', (),
+            {
+                'spell_school_slug': self.slug,
+            }
+        )
+
 
 class SpellSubSchool(models.Model):
     name = models.CharField(
@@ -408,6 +477,15 @@ class SpellSubSchool(models.Model):
     def get_absolute_url(self):
         return (
             'dndtools.dnd.views.spell_sub_school_detail', (),
+            {
+                'spell_sub_school_slug': self.slug,
+            }
+        )
+
+    @models.permalink
+    def get_absolute_url_mobile(self):
+        return (
+            'spell_sub_school_detail_mobile', (),
             {
                 'spell_sub_school_slug': self.slug,
             }
@@ -551,6 +629,18 @@ class Spell(models.Model):
             }
         )
 
+    @models.permalink
+    def get_absolute_url_mobile(self):
+        return (
+            'spell_detail_mobile', (),
+            {
+                'spell_slug': self.slug,
+                'spell_id': self.id,
+                'rulebook_slug': self.rulebook.slug,
+                'rulebook_id': self.rulebook.id,
+            }
+        )
+
 
 class SpellClassLevel(models.Model):
     character_class = models.ForeignKey(
@@ -614,6 +704,15 @@ class FeatCategory(models.Model):
             }
         )
 
+    @models.permalink
+    def get_absolute_url_mobile(self):
+        return (
+            'feat_category_detail_mobile', (),
+            {
+                'category_slug': self.slug,
+            }
+        )
+
 
 class Skill(models.Model):
     required_by_feats = models.ManyToManyField(
@@ -647,6 +746,15 @@ class Skill(models.Model):
     def get_absolute_url(self):
         return (
             'dndtools.dnd.views.skill_detail', (),
+            {
+                'skill_slug': self.slug,
+            }
+        )
+
+    @models.permalink
+    def get_absolute_url_mobile(self):
+        return (
+            'skill_detail_mobile', (),
             {
                 'skill_slug': self.slug,
             }
@@ -759,6 +867,17 @@ class SkillVariant(models.Model):
             }
         )
 
+    @models.permalink
+    def get_absolute_url_mobile(self):
+        return (
+            'skill_variant_detail_mobile', (),
+            {
+                'rulebook_slug': self.rulebook.slug,
+                'rulebook_id': self.rulebook.id,
+                'skill_slug': self.skill.slug
+            }
+        )
+
 
 class SpecialFeatPrerequisite(models.Model):
     name = models.CharField(
@@ -849,6 +968,18 @@ class Feat(models.Model):
     def get_absolute_url(self):
         return (
             'dndtools.dnd.views.feat_detail', (),
+            {
+                'feat_slug': self.slug,
+                'feat_id': self.id,
+                'rulebook_slug': self.rulebook.slug,
+                'rulebook_id': self.rulebook.id,
+            }
+        )
+
+    @models.permalink
+    def get_absolute_url_mobile(self):
+        return (
+            'feat_detail_mobile', (),
             {
                 'feat_slug': self.slug,
                 'feat_id': self.id,
@@ -971,6 +1102,15 @@ class Language(models.Model):
             }
         )
 
+    @models.permalink
+    def get_absolute_url_mobile(self):
+        return (
+            'language_detail_mobile', (),
+            {
+                'language_slug': self.slug,
+            }
+        )
+
 
 class RaceSize(models.Model):
     name = models.CharField(
@@ -1051,6 +1191,15 @@ class MonsterType(models.Model):
             }
         )
 
+    @models.permalink
+    def get_absolute_url_mobile(self):
+        return (
+            'monster_type_detail_mobile', (),
+            {
+                'slug': self.slug,
+            }
+        )
+
 
 class MonsterSubtype(models.Model):
     name = models.CharField(
@@ -1072,6 +1221,15 @@ class MonsterSubtype(models.Model):
     def get_absolute_url(self):
         return (
             'dndtools.dnd.views.monster_subtype_detail', (),
+            {
+                'slug': self.slug,
+            }
+        )
+
+    @models.permalink
+    def get_absolute_url_mobile(self):
+        return (
+            'monster_subtype_detail_mobile', (),
             {
                 'slug': self.slug,
             }
@@ -1269,6 +1427,18 @@ class Monster(models.Model):
             }
         )
 
+    @models.permalink
+    def get_absolute_url_mobile(self):
+        return (
+            'monster_detail_mobile', (),
+            {
+                'monster_slug': self.slug,
+                'monster_id': self.id,
+                'rulebook_slug': self.rulebook.slug,
+                'rulebook_id': self.rulebook.id,
+            }
+        )
+
 
 class MonsterHasFeat(models.Model):
     monster = models.ForeignKey(
@@ -1380,6 +1550,15 @@ class RaceType(models.Model):
     def get_absolute_url(self):
         return (
             'dndtools.dnd.views.race_type_detail', (),
+            {
+                'race_type_slug': self.slug,
+            }
+        )
+
+    @models.permalink
+    def get_absolute_url_mobile(self):
+        return (
+            'race_type_detail_mobile', (),
             {
                 'race_type_slug': self.slug,
             }
@@ -1542,6 +1721,18 @@ class Race(models.Model):
     def get_absolute_url(self):
         return (
             'dndtools.dnd.views.race_detail', (),
+            {
+                'race_slug': self.slug,
+                'race_id': self.id,
+                'rulebook_slug': self.rulebook.slug,
+                'rulebook_id': self.rulebook.id,
+            }
+        )
+
+    @models.permalink
+    def get_absolute_url_mobile(self):
+        return (
+            'race_detail_mobile', (),
             {
                 'race_slug': self.slug,
                 'race_id': self.id,
@@ -1832,6 +2023,18 @@ class Item(models.Model):
             }
         )
 
+    @models.permalink
+    def get_absolute_url_mobile(self):
+        return (
+            'item_detail_mobile', (),
+            {
+                'item_slug': self.slug,
+                'item_id': self.id,
+                'rulebook_slug': self.rulebook.slug,
+                'rulebook_id': self.rulebook.id,
+            }
+        )
+
 
 class NewsEntry(models.Model):
     published = models.DateField(
@@ -1937,9 +2140,22 @@ class Rule(models.Model):
     def get_absolute_url(self):
         return (
             'dndtools.dnd.views.rule_detail', (),
-            {'rule_slug': self.slug,
-             'rule_id': self.id,
-             'rulebook_slug': self.rulebook.slug,
-             'rulebook_id': self.rulebook.id,
+            {
+                'rule_slug': self.slug,
+                'rule_id': self.id,
+                'rulebook_slug': self.rulebook.slug,
+                'rulebook_id': self.rulebook.id,
+            }
+        )
+
+    @models.permalink
+    def get_absolute_url_mobile(self):
+        return (
+            'rule_detail_mobile', (),
+            {
+                'rule_slug': self.slug,
+                'rule_id': self.id,
+                'rulebook_slug': self.rulebook.slug,
+                'rulebook_id': self.rulebook.id,
             }
         )

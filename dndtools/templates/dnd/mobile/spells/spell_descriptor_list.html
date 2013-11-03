@@ -1,0 +1,26 @@
+{% extends "dnd/mobile/spells/spell_layout.html" %}
+
+{% block title %}Spell Descriptors{% endblock %}
+
+{% block content %}
+
+<h2>Spell Descriptors</h2>
+
+{% include "dnd/mobile/filter_form.html" %}
+
+{{ paginator.print_navigation }}
+
+<table class="list">
+<tr>
+  <th>Name</th>
+</tr>
+{% for spell_descriptor in spell_descriptor_list %}
+    <tr>
+        <td><a href="{{ spell_descriptor.get_absolute_url_mobile }}">{{ spell_descriptor.name }}</a></td>
+    </tr>
+{% endfor %}
+</table>
+
+{{ paginator.print_navigation }}
+
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends "dnd/mobile/rulebooks/rulebooks_layout.html" %}
+
+{% block title %}Rulebooks{% endblock %}
+
+{% block content %}
+
+<h2>Rulebooks</h2>
+
+{% include "dnd/mobile/filter_form.html" %}
+
+{{ paginator.print_navigation }}
+
+<table class="list">
+<tr>
+  <th>Rulebook name</th>
+  <th>Edition</th>
+</tr>
+    {% for rulebook in rulebook_list %}
+        <tr>
+            <td><a href="{{ rulebook.get_absolute_url_mobile }}">{{ rulebook.name }}</a></td>
+            <td><a href="{{ rulebook.dnd_edition.get_absolute_url_mobile }}">{{ rulebook.dnd_edition.name }}</a></td>
+        </tr>
+    {% endfor %}
+</table>
+
+{{ paginator.print_navigation }}
+
+{% endblock %}

@@ -1,0 +1,20 @@
+{% load custom_filters %}
+
+{{ paginator.print_navigation }}
+
+<table class="list">
+<tr>
+  <th>Spell name</th>
+  <th>Spell School</th>
+  <th>Rulebook name</th>
+</tr>
+{% for spell in spell_list %}
+<tr>
+    <td><a href="{{ spell.get_absolute_url_mobile }}">{{ spell.name }}</a></td>
+    <td><a href="{{ spell.school.get_absolute_url_mobile }}">{{ spell.school.name }}</a></td>
+    <td><a href="{{ spell.rulebook.get_absolute_url_mobile }}">{{ spell.rulebook.abbr }}</a></td>
+</tr>
+{% endfor %}
+</table>
+
+{{ paginator.print_navigation }}

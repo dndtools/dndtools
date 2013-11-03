@@ -1,0 +1,73 @@
+{% extends "dnd/mobile/items/item_layout.html" %}
+{% load custom_filters %}
+
+{% block title %}{{ item.name }} &ndash; Item{% endblock %}
+
+{% block content %}
+
+    <h2>{{ item.name }}</h2>
+    <div class="item_{{ item.type }}">{{ item.get_type_display }}</div>
+    (<a href="{{ rulebook.get_absolute_url_mobile }}">{{ rulebook.name }}</a>{% if item.page %},  p. {{ item.page }}{% endif %})
+    <br/>
+    <br/>
+
+    {% if item.price_gp %}
+            <strong>Price:</strong> {% if item.type == ItemType.ENHANCEMENT %}+{% endif %}{{ item.price_gp|thousands_separator }} gp<br/>
+    {% endif %}
+    {% if item.price_bonus %}
+            <strong>Price:</strong> +{{ item.price_bonus }} bonus<br/>
+    {% endif %}
+    {% if item.item_level %}
+        <strong>Item Level:</strong> {{ item.item_level|ordinal_number }}<br/>
+    {% endif %}
+
+    {% if item.type == ItemType.MUNDANE %}
+        {% include "dnd/mobile/items/item_detail_mundane.html" %}
+    {% endif %}
+    {% if item.type == ItemType.MAGIC %}
+        {% include "dnd/mobile/items/item_detail_magic.html" %}
+    {% endif %}
+    {% if item.type == ItemType.ENHANCEMENT %}
+        {% include "dnd/mobile/items/item_detail_enhancement.html" %}
+    {% endif %}
+
+    <br/>
+
+    {% if item.visual_description %}
+        <p>
+            <i>{{ item.visual_description }}</i>
+        </p>
+    {% endif %}
+
+    <div class="nice-textile">
+        {% if item.description_html %}
+            {{ item.description_html|safe }}
+        {% else %}
+            <p>{{ item.description|linebreaksbr }}</p>
+        {% endif %}
+    </div>
+
+    {% if required_spells or required_feats or item.required_extra %}
+    <p>
+    <i>Prerequisites:</i>
+    {% for required_feat in required_feats %}
+
+        <a href="{{ required_feat.get_absolute_url_mobile }}">{{ required_feat }}</a>{% if not forloop.last %}, {% endif %}
+    {% endfor %}
+    {% if required_feats and required_spells %},{% endif %}
+    <i>
+    {% for required_spell in required_spells %}
+        <a href="{{ required_spell.get_absolute_url_mobile }}">{{ required_spell }}</a>{% if not forloop.last %}, {% endif %}
+    {% endfor %}
+    </i>
+    {{ item.required_extra }}.
+    </p>
+    {% endif %}
+
+    {% if cost_to_create and cost_to_create != '-' %}
+        <p>
+            <i>Cost to Create:</i> {{ cost_to_create }}.
+        </p>
+    {% endif %}
+
+{% endblock %}

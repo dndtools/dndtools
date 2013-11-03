@@ -1,0 +1,13 @@
+{% extends "dnd/mobile/races/race_layout.html" %}
+
+{% block title %}Race Types{% endblock %}
+
+{% block content %}
+
+    <h2>Race Types</h2>
+
+    {% include "dnd/mobile/filter_form.html" %}
+
+    {% include "dnd/mobile/races/race_type_table.html" %}
+
+{% endblock %}

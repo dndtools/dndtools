@@ -1,0 +1,25 @@
+{% extends "dnd/mobile/character_classes/character_class_layout.html" %}
+
+{##}
+
+{% block title %}{{ character_class.name }} &ndash; level {{ level }} spells{% endblock %}
+
+{% block content %}
+
+<h2>{{ character_class.name }} level {{ level }} spells</h2>
+
+<p>
+More spell levels:
+{% for otherLevel in "0123456789" %}
+    {% if otherLevel != level %}
+        <a href="{% url character_class_spells_mobile character_class_slug=character_class.slug level=otherLevel %}">{{ otherLevel }}</a>
+    {% else %}
+        {{ otherLevel }}
+    {% endif %}
+
+{% endfor %}
+</p>
+
+{% include "dnd/mobile/spells/spell_table.html" %}
+
+{% endblock %}

@@ -1,0 +1,18 @@
+{{ paginator.print_navigation }}
+
+<table class="common">
+    <tr>
+        <th>Race name</th>
+        <th>Rulebook name</th>
+        <th>Edition</th>
+    </tr>
+    {% for race in race_list %}
+        <tr>
+            <td><a href="{{ race.get_absolute_url_mobile }}">{{ race.name }}</a></td>
+            <td><a href="{{ race.rulebook.get_absolute_url_mobile }}">{{ race.rulebook.abbr }}</a></td>
+            <td><a href="{{ race.rulebook.dnd_edition.get_absolute_url_mobile }}">{{ race.rulebook.dnd_edition.name }}</a></td>
+        </tr>
+    {% endfor %}
+</table>
+
+{{ paginator.print_navigation }}

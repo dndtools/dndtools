@@ -1,0 +1,155 @@
+{% extends "dnd/mobile/races/race_layout.html" %}
+
+{% load custom_filters %}
+{% load custom_tags %}
+
+{% block title %}{{ race.name }} &ndash; Race{% endblock %}
+
+{% block content %}
+    <h2>{{ race.name }}</h2>
+    (
+    <a href="{{ rulebook.get_absolute_url_mobile }}">{{ rulebook.name }}</a>{% if race.page != None %},  p. {{ race.page }}{% endif %})
+    <br/>
+    <br/>
+
+    <h3>Attributes</h3>
+
+    <table class="race-attributes">
+        <tr>
+            <th>Size:</th>
+            <td>
+                {{ race.size }}
+            </td>
+        </tr>
+        <tr>
+            <th>Base speed:</th>
+            <td>
+                {% for speed in race_speeds %}
+                    {% if not forloop.first %}, {% endif %}
+                    {{ speed.type }} {{ speed.speed }}
+                {% endfor %}
+            </td>
+        </tr>
+        <tr class="separator">
+            <th>Strength:</th>
+            <td> {{ race.str|plus_minus }}</td>
+        </tr>
+        <tr>
+            <th>Intelligence:</th>
+            <td> {{ race.int|plus_minus }}</td>
+        </tr>
+        <tr>
+            <th>Dexterity:</th>
+            <td> {{ race.dex|plus_minus }}</td>
+        </tr>
+        <tr>
+            <th>Wisdom:</th>
+            <td> {{ race.wis|plus_minus }}</td>
+        </tr>
+        <tr>
+            <th>Constitution:</th>
+            <td> {{ race.con|plus_minus }}</td>
+        </tr>
+        <tr>
+            <th>Charisma:</th>
+            <td> {{ race.cha|plus_minus }}</td>
+        </tr>
+        <tr class="separator">
+            <th>Level adjustment:</th>
+            <td> {{ race.level_adjustment|plus_minus }}</td>
+        </tr>
+        <tr class="separator">
+            <th>Space:</th>
+            <td>
+                {{ race.space }}
+                feet
+            </td>
+        </tr>
+        <tr>
+            <th>Reach:</th>
+            <td>
+                {{ race.space }}
+                feet
+            </td>
+        </tr>
+        {% if race.natural_armor %}
+            <tr>
+                <th>Natural armor:</th>
+                <td>
+                    {{ race.natural_armor|plus_minus }}
+                </td>
+            </tr>
+        {% endif %}
+        {% if automatic_languages %}
+        <tr class="separator">
+            <th>Automatic languages:</th>
+            <td>
+                {% for language in automatic_languages %}
+                    {% if not forloop.first %}, {% endif %}
+                    <a href="{{ language.get_absolute_url_mobile }}">{{ language.name }}</a>
+                {% endfor %}
+            </td>
+        </tr>
+        {% endif %}
+        {% if bonus_languages %}
+        <tr{% if not automatic_languages %} class="separator"{% endif %}>
+            <th>Bonus Languages:</th>
+            <td>
+                {% for language in bonus_languages %}
+                    {% if not forloop.first %}, {% endif %}
+                    <a href="{{ language.get_absolute_url_mobile }}">{{ language.name }}</a>
+                {% endfor %}
+            </td>
+        </tr>
+        {% endif %}
+
+        {% if race.racial_hit_dice_count and race.race_type %}
+
+        <tr class="separator">
+            <th>Racial Hit Dice:</th>
+            <td>
+                {{ race.racial_hit_dice_count }}d{{ race.race_type.hit_die_size }} (<a href="{{ race.race_type.get_absolute_url_mobile }}">{{ race.race_type.name }}</a>)
+            </td>
+        </tr>
+        <tr>
+            <th>Racial Base Attack:</th>
+            <td>
+                +{{ race.racialBaseAttack }}
+            </td>
+        </tr>
+        <tr>
+            <th>Racial Base Saves:</th>
+            <td>
+                Fort +{{ race.racialBaseFortSave }},
+                Reflex +{{ race.racialBaseReflexSave }},
+                Will +{{ race.racialBaseWillSave }}
+            </td>
+        </tr>
+
+        {% endif %}
+    </table>
+
+    <div class="nice-textile">
+        <h3>Description</h3>
+
+        {{ race.description_html|safe }}
+
+        <h3>Combat</h3>
+
+        {{ race.combat_html|safe }}
+
+        <h3>Racial Traits</h3>
+
+        {{ race.racial_traits_html|safe }}
+    </div>
+
+    {% if related_races %}
+        <h3>Also appears in</h3>
+        <ol>
+            {% for related_race in related_races %}
+                <li><a href="{{ related_race.get_absolute_url_mobile }}">{{ related_race.rulebook.name }}</a></li>
+            {% endfor %}
+        </ol>
+    {% endif %}
+
+{% endblock %}

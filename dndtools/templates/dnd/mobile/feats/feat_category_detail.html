@@ -1,0 +1,11 @@
+{% extends "dnd/mobile/feats/feat_layout.html" %}
+
+{% block title %}{{ feat_category.name }} &ndash; Feat Category{% endblock %}
+
+{% block content %}
+
+<h2>Feat Category &ndash; {{ feat_category.name }}</h2>
+
+{% include "dnd/mobile/feats/feat_table.html" %}
+
+{% endblock %}

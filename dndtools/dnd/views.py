@@ -45,6 +45,34 @@ def is_3e_edition(edition):
     return edition.system == 'DnD 3.0'
 
 
+def menu_item(menu_item_name):
+    def menu_item_generator(old_function):
+        def new_function(*args, **kwargs):
+            if 'request' in kwargs:
+                kwargs['request'].menu_item = menu_item_name
+            else:
+                args[0].menu_item = menu_item_name
+
+            return old_function(*args, **kwargs)
+        return new_function
+
+    return menu_item_generator
+
+
+def submenu_item(menu_item_name):
+    def submenu_item_generator(old_function):
+        def new_function(*args, **kwargs):
+            if 'request' in kwargs:
+                kwargs['request'].submenu_item = menu_item_name
+            else:
+                args[0].submenu_item = menu_item_name
+
+            return old_function(*args, **kwargs)
+        return new_function
+
+    return submenu_item_generator
+
+
 def index(request):
     newsEntries = NewsEntry.objects.filter(enabled=True).order_by('-published')[:15]
 
@@ -94,10 +122,7 @@ def edition_list(request):
 def edition_detail(request, edition_slug, edition_id):
     dnd_edition = get_object_or_404(DndEdition, id=edition_id)
     if dnd_edition.slug != edition_slug:
-        return permanent_redirect_view(request, 'edition_detail',
-                                       kwargs={
-                                           'edition_slug': dnd_edition.slug,
-                                           'edition_id': dnd_edition.id, })
+        return permanent_redirect_object(request, dnd_edition)
 
     rulebook_list = dnd_edition.rulebook_set.select_related('dnd_edition').all()
 
@@ -121,13 +146,7 @@ def rulebook_detail(request, edition_slug, edition_id, rulebook_slug,
     if (rulebook.slug != rulebook_slug or
                 unicode(rulebook.dnd_edition.id) != edition_id or
                 rulebook.dnd_edition.slug != edition_slug):
-        return permanent_redirect_view(
-            request, 'rulebook_detail',
-            kwargs={
-                'edition_slug': rulebook.dnd_edition.slug,
-                'edition_id': rulebook.dnd_edition.id,
-                'rulebook_slug': rulebook.slug,
-                'rulebook_id': rulebook.id, })
+        return permanent_redirect_object(request, rulebook)
 
     return render_to_response('dnd/rulebook_detail.html',
                               {
@@ -232,12 +251,7 @@ def feat_detail(request, rulebook_slug, rulebook_id, feat_slug, feat_id):
     if (feat.slug != feat_slug or
                 unicode(feat.rulebook.id) != rulebook_id or
                 feat.rulebook.slug != rulebook_slug):
-        return permanent_redirect_view(request, 'feat_detail',
-                                       kwargs={
-                                           'rulebook_slug': feat.rulebook.slug,
-                                           'rulebook_id': feat.rulebook.id,
-                                           'feat_slug': feat.slug,
-                                           'feat_id': feat.id, })
+        return permanent_redirect_object(request, feat)
 
     feat_category_list = feat.feat_categories.select_related().all()
     required_feats = feat.required_feats.select_related('required_feat',
@@ -359,14 +373,7 @@ def spell_detail(request, rulebook_slug, rulebook_id, spell_slug, spell_id):
     if (spell.slug != spell_slug or
                 unicode(spell.rulebook.id) != rulebook_id or
                 spell.rulebook.slug != rulebook_slug):
-        return permanent_redirect_view(
-            request, 'spell_detail', kwargs={
-                'rulebook_slug': spell.rulebook.slug,
-                'rulebook_id': spell.rulebook.id,
-                'spell_slug': spell.slug,
-                'spell_id': spell_id,
-            }
-        )
+        return permanent_redirect_object(request, spell)
 
     spell_class_level_set = spell.spellclasslevel_set.select_related(
         'rulebook', 'character_class',
@@ -817,15 +824,9 @@ def monster_detail(request, rulebook_slug, rulebook_id, monster_slug, monster_id
     if (monster.slug != monster_slug or
                 unicode(monster.rulebook.id) != rulebook_id or
                 monster.rulebook.slug != rulebook_slug):
-        return permanent_redirect_view(request, 'monster_detail',
-                                       kwargs={
-                                           'rulebook_slug': monster.rulebook.slug,
-                                           'rulebook_id': monster.rulebook.id,
-                                           'monster_slug': monster.slug,
-                                           'monster_id': monster.id, })
+        return permanent_redirect_object(request, monster)
 
-    if False:
-        monster = Monster()
+    assert isinstance(monster, Monster)
 
     monster_speeds = monster.monsterspeed_set.select_related('type', ).all()
     monster_subtypes = monster.subtypes.all()
@@ -1045,14 +1046,7 @@ def item_detail(request, rulebook_slug, rulebook_id, item_slug, item_id):
     if (item.slug != item_slug or
                 unicode(item.rulebook.id) != rulebook_id or
                 item.rulebook.slug != rulebook_slug):
-        return permanent_redirect_view(
-            request, 'item_detail', kwargs={
-                'rulebook_slug': item.rulebook.slug,
-                'rulebook_id': item.rulebook.id,
-                'item_slug': item.slug,
-                'item_id': item_id,
-            }
-        )
+        return permanent_redirect_object(request, item)
 
     required_feats = item.required_feats.select_related('rulebook').all()
     required_spells = item.required_spells.select_related('rulebook').all()

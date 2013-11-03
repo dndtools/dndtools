@@ -1,0 +1,6 @@
+{% extends "dnd/mobile/layout.html" %}
+
+{% block submenu %}
+  <li{% if request.submenu_item == "rulebooks" %} class="selected"{% endif %}><a href="{% url rulebook_list_mobile %}">Rulebooks</a></li>
+  <li{% if request.submenu_item == "editions" %} class="selected"{% endif %}><a href="{% url edition_list_mobile %}">Editions</a></li>
+{% endblock %}

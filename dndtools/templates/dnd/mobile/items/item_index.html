@@ -1,0 +1,13 @@
+{% extends "dnd/mobile/items/item_layout.html" %}
+
+{% block title %}Items{% endblock %}
+
+{% block content %}
+
+    <h2>Items</h2>
+
+    {% include "dnd/mobile/filter_form.html" %}
+
+    {% include "dnd/mobile/items/item_table.html" %}
+
+{% endblock %}

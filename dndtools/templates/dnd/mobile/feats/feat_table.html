@@ -1,0 +1,16 @@
+{{ paginator.print_navigation }}
+
+<table class="list">
+<tr>
+  <th>Feat name</th>
+  <th>Rulebook</th>
+</tr>
+{% for feat in feat_list %}
+    <tr>
+        <td><a href="{{ feat.get_absolute_url_mobile }}">{{ feat.name }}</a></td>
+        <td><a href="{{ feat.rulebook.get_absolute_url_mobile }}">{{ feat.rulebook.abbr }}</a></td>
+    </tr>
+{% endfor %}
+</table>
+
+{{ paginator.print_navigation }}

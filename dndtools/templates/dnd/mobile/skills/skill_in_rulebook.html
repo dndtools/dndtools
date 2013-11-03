@@ -1,0 +1,13 @@
+{% extends "dnd/mobile/skills/skill_layout.html" %}
+
+{% load custom_filters %}
+
+{% block title %}Skills in {{ rulebook.name }}{% endblock %}
+
+{% block content %}
+
+    <h2>Skills in {{ rulebook.name }}</h2>
+
+    {% include "dnd/mobile/skills/skill_table_inner.html" %}
+
+{% endblock %}

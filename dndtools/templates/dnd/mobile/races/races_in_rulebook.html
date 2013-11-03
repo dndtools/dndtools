@@ -1,0 +1,11 @@
+{% extends "dnd/mobile/races/race_layout.html" %}
+
+{% block title %}Races in {{ rulebook.name }}{% endblock %}
+
+{% block content %}
+
+    <h2>Races in {{ rulebook.name }}</h2>
+
+    {% include "dnd/mobile/races/race_table.html" %}
+
+{% endblock %}

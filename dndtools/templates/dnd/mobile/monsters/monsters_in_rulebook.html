@@ -1,0 +1,13 @@
+{% extends "dnd/mobile/monsters/monster_layout.html" %}
+
+{##}
+
+{% block title %}Monsters in {{ rulebook.name }}{% endblock %}
+
+{% block content %}
+
+    <h2>Monsters in {{ rulebook.name }}</h2>
+
+    {% include "dnd/mobile/monsters/monster_table.html" %}
+
+{% endblock %}

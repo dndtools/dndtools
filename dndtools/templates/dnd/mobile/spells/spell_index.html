@@ -1,0 +1,13 @@
+{% extends "dnd/mobile/spells/spell_layout.html" %}
+
+{% block title %}Spells{% endblock %}
+
+{% block content %}
+
+<h2>Spells</h2>
+
+{% include "dnd/mobile/filter_form.html" %}
+
+{% include "dnd/mobile/spells/spell_table.html" %}
+
+{% endblock %}

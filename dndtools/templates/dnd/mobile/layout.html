@@ -23,10 +23,11 @@
                 <li id="options-desktop"><a href="{% url force_desktop_version %}{% if back_desktop_url %}?b={{ back_desktop_url|urlencode }}{% endif %}">Desktop</a></li>
                 <li id="options-search">Search</li>
                 <li id="options-menu">Menu</li>
+                <li id="options-submenu">Submenu</li>
             </ul>
         </div>
         <div class="clear"></div>
-        <div class="search-box">
+        <div class="search-box" id="search-box">
             <form action="http://www.google.com/cse" id="cse-search-box">
                 <input name="cx" type="hidden" value="010918785989085430250:jd6tjgonwfu"/>
                 <input name="ie" type="hidden" value="UTF-8"/>
@@ -35,18 +36,26 @@
             </form>
             <div class="clear"></div>
         </div>
-        <nav class="vertical menu">
+        <nav class="vertical menu" id="menu">
             <ul>
-                <li{% block menu_home %}{% endblock %}><a href="{% url index_mobile %}">Home</a></li>
-                <li{% block menu_rulebooks %}{% endblock %}><a href="{% url rulebook_list %}">Rulebooks</a></li>
-                <li{% block menu_feats %}{% endblock %}><a href="{% url feat_index_mobile %}">Feats</a></li>
-                <li{% block menu_spells %}{% endblock %}><a href="{% url spell_index %}">Spells</a></li>
-                <li{% block menu_classes %}{% endblock %}><a href="{% url character_class_list %}">Classes</a></li>
-                <li{% block menu_skills %}{% endblock %}><a href="{% url skill_list %}">Skills</a></li>
-                <li{% block menu_contact %}{% endblock %}><a href="{% url contact %}">Contact Us</a></li>
-                <li{% block menu_staff %}{% endblock %}><a href="{% url staff %}">Staff</a></li>
+                <li{% if request.menu_item == "home" %} class="selected"{% endif %}><a href="{% url index_mobile %}">Home</a></li>
+                <li{% if request.menu_item == "rulebooks" %} class="selected"{% endif %}><a href="{% url rulebook_list_mobile %}">Rulebooks</a></li>
+                <li{% if request.menu_item == "feats" %} class="selected"{% endif %}><a href="{% url feat_index_mobile %}">Feats</a></li>
+                <li{% if request.menu_item == "spells" %} class="selected"{% endif %}><a href="{% url spell_index_mobile %}">Spells</a></li>
+                <li{% if request.menu_item == "classes" %} class="selected"{% endif %}><a href="{% url character_class_list_mobile %}">Classes</a></li>
+                <li{% if request.menu_item == "skills" %} class="selected"{% endif %}><a href="{% url skill_list_mobile %}">Skills</a></li>
+                <li{% if request.menu_item == "items" %} class="selected"{% endif %}><a href="{% url item_index_mobile %}">Items</a></li>
+                <li{% if request.menu_item == "races_monsters" %} class="selected"{% endif %}><a href="{% url monster_index_mobile %}">Races &amp; Monsters</a></li>
             </ul>
         </nav>
+
+        <nav class="vertical menu" id="submenu">
+            <ul>
+                {% block submenu %}
+                {% endblock %}
+            </ul>
+        </nav>
+
     </header>
 
 
@@ -69,27 +78,42 @@
             window.scrollTo(0, 1);
         }, 0);
     });
-    $('.search-box,.menu').hide();
-    $('.options li#options-search').click(function () {
+
+    if ($('#submenu').find('li').size() == 0) {
+        $('#options-submenu').hide();
+    }
+
+    $('#search-box, #menu, #submenu').hide();
+
+    $('#options-search').click(function () {
         $(this).toggleClass('active');
-        $('.search-box').toggle();
-        $('.menu').hide();
-        $('.options li#options-menu').removeClass('active');
+        $('#search-box').toggle();
+
+        $('#submenu, #menu').hide();
+        $('#options-menu, #options-submenu').removeClass('active');
     });
-    $('.options li#options-menu').click(function () {
+    $('#options-menu').click(function () {
         $(this).toggleClass('active');
-        $('.menu').toggle();
-        $('.search-box').hide();
-        $('.options li#options-search').removeClass('active');
+        $('#menu').toggle();
+
+        $('#submenu, #search-box').hide();
+        $('#options-submenu, #options-search').removeClass('active');
     });
-    $('.options li#options-desktop').click(function(e) {
+    $('#options-submenu').click(function () {
+        $(this).toggleClass('active');
+        $('#submenu').toggle();
+
+        $('#menu, #search-box').hide();
+        $('#options-search, #options-menu').removeClass('active');
+    });
+    $('#options-desktop').click(function(e) {
         if (window.confirm('Do you really want to switch to desktop version? You can switch back to mobile by closing your browser or using a link at the bottom of the page.')) {
             window.location = $(this).find('a').attr('href');
         }
     });
     $('.content').click(function () {
-        $('.search-box,.menu').hide();
-        $('.options li#options-menu, .options li#options-search').removeClass('active');
+        $('#search-box, #menu, #submenu').hide();
+        $('#options-menu, #options-search, #options-submenu').removeClass('active');
     });
 </script>
 </body>

@@ -1,0 +1,44 @@
+{% extends "dnd/mobile/skills/skill_layout.html" %}
+
+{% block title %}{{ skill.name }} &ndash; Skills{% endblock %}
+
+{% block content %}
+
+<h2>{{ skill.name }} <span class="small">({{ skill.base_skill }}{% if skill.trained_only %}; Trained only{% endif %}{% if skill.armor_check_penalty %}; Armor check penalty{% endif %})</span></h2>
+{% if selected_variant %}
+    <p>(<a href="{% url skills_in_rulebook_mobile selected_variant.rulebook.slug selected_variant.rulebook.id %}">{{ selected_variant.rulebook.name }}</a> variant, p. {{ selected_variant.page }})</p>
+
+    {% with selected_variant as skill_variant %}
+        {% include "dnd/mobile/skills/skill_variant_inner.html" %}
+    {% endwith %}
+
+{% endif %}
+
+{% if other_variants %}
+    <h3>Also appears in</h3>
+    <ol>
+        {% for variant in other_variants %}
+            <li><a href="{{ variant.get_absolute_url_mobile }}">{{ variant.rulebook.name }}</a></li>
+        {% endfor %}
+    </ol>
+{% endif %}
+
+<h3>Required for feats</h3>
+
+{{ feat_paginator.print_navigation }}
+
+<table class="list">
+<tr>
+  <th>Feat name</th>
+</tr>
+{% for feat in feat_list %}
+    <tr>
+        <td><a href="{{ feat.get_absolute_url_mobile }}">{{ feat.name }}</a></td>
+    </tr>
+{% endfor %}
+
+</table>
+
+{{ feat_paginator.print_navigation }}
+
+{% endblock %}

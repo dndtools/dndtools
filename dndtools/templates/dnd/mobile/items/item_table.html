@@ -1,0 +1,47 @@
+{% load custom_filters %}
+
+{{ paginator.print_navigation }}
+
+<table class="list">
+    <tr>
+        <th>Name</th>
+        <th>Level</th>
+        <th class="align-right">Cost</th>
+        <th>Slot/Property</th>
+        <th>Rulebook name</th>
+        <th>Edition</th>
+    </tr>
+    {% for item in item_list %}
+        <tr>
+            <td><a href="{{ item.get_absolute_url_mobile }}">{{ item.name }}</a></td>
+            <td>
+                {{ item.item_level|empty_as_dash|ordinal_number }}
+            </td>
+            <td class="align-right">
+                {% if item.price_gp %}
+                    {% if item.type == ItemType.ENHANCEMENT %}+{% endif %}{{ item.price_gp|thousands_separator }} gp<br/>
+                {% endif %}
+                {% if item.price_bonus %}
+                    +{{ item.price_bonus }} bonus
+                {% endif %}
+            </td>
+            <td>
+               {# both? Well, display both #}
+                {% if item.body_slot and item.property %}
+                    {{ item.body_slot }}/{{ item.property }}
+                {% else %}
+                    {% if item.body_slot %}
+                        {{ item.body_slot }}
+                    {% else %}
+                        {{ item.property|empty_as_dash }}
+                    {% endif %}
+                {% endif %}
+            </td>
+            <td><a href="{{ item.rulebook.get_absolute_url_mobile }}">{{ item.rulebook.abbr }}</a></td>
+            <td><a href="{{ item.rulebook.dnd_edition.get_absolute_url_mobile }}">{{ item.rulebook.dnd_edition.name }}</a></td>
+        </tr>
+    {% endfor %}
+</table>
+
+
+{{ paginator.print_navigation }}

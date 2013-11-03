@@ -1,0 +1,7 @@
+{% extends "dnd/mobile/layout.html" %}
+
+{% block submenu %}
+  <li{% if request.submenu_item == "skills" %} class="selected"{% endif %}><a href="{% url skill_list_mobile %}">Skills</a></li>
+  <li><a href="{% url feat_category_detail_mobile category_slug="skill-trick" %}">Skill tricks</a></li>
+  <li{% if request.submenu_item == "skills_by_rulebook" %} class="selected"{% endif %}><a href="{% url skills_list_by_rulebook_mobile%}">By Rulebooks</a></li>
+{% endblock %}

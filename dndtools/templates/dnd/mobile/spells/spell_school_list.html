@@ -1,0 +1,27 @@
+{% extends "dnd/mobile/spells/spell_layout.html" %}
+
+{% block title %}Spell Schools{% endblock %}
+
+{% block content %}
+
+<h2>Spell Schools</h2>
+
+<ul>
+    {% for spell_school in spell_school_list %}
+        <li>
+            <a href="{{ spell_school.get_absolute_url_mobile }}">{{ spell_school.name }}</a>
+        </li>
+    {% endfor %}
+</ul>
+
+<h2>Spell Subschools</h2>
+
+<ul>
+    {% for spell_sub_school in spell_sub_school_list %}
+        <li>
+            <a href="{{ spell_sub_school.get_absolute_url_mobile }}">{{ spell_sub_school.name }}</a>
+        </li>
+    {% endfor %}
+</ul>
+
+{% endblock %}

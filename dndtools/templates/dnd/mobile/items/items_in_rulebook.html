@@ -1,0 +1,13 @@
+{% extends "dnd/mobile/items/item_layout.html" %}
+
+{##}
+
+{% block title %}Items in {{ rulebook.name }}{% endblock %}
+
+{% block content %}
+
+    <h2>Items in {{ rulebook.name }}</h2>
+
+    {% include "dnd/mobile/items/item_table.html" %}
+
+{% endblock %}

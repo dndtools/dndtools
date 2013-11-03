@@ -1,0 +1,14 @@
+{{ paginator.print_navigation }}
+
+<table class="list">
+    <tr>
+        <th>Language name</th>
+    </tr>
+    {% for language in language_list %}
+        <tr>
+            <td><a href="{{ language.get_absolute_url_mobile }}">{{ language.name }}</a></td>
+        </tr>
+    {% endfor %}
+</table>
+
+{{ paginator.print_navigation }}

@@ -1,0 +1,27 @@
+{% extends "dnd/mobile/races/race_layout.html" %}
+
+{% block extra_link %}{{ paginator.print_rel_prev_next }}{{ block.super }}{% endblock %}
+{% block title %}Races{% endblock %}
+
+{% block content %}
+
+    <h2>Races by rulebook</h2>
+
+    {{ paginator.print_navigation }}
+
+    <table class="common">
+        <tr>
+            <th>Rulebook name</th>
+            <th>Edition</th>
+        </tr>
+        {% for rulebook in rulebook_list %}
+            <tr>
+                <td><a href="{% url races_in_rulebook_mobile rulebook_slug=rulebook.slug rulebook_id=rulebook.id %}">{{ rulebook.name }}</a></td>
+                <td><a href="{{ rulebook.dnd_edition.get_absolute_url_mobile }}">{{ rulebook.dnd_edition.name }}</a></td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    {{ paginator.print_navigation }}
+
+{% endblock %}

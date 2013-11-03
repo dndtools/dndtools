@@ -1,6 +1,16 @@
 # -*- coding: utf-8 -*-
 from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponsePermanentRedirect
+
+
+def permanent_redirect_object_mobile(request, object):
+    url = object.get_absolute_url_mobile()
+    # get parameters
+    if len(request.GET) > 0:
+        #noinspection PyUnresolvedReferences
+        url += "?" + request.GET.urlencode()
+
+    return HttpResponsePermanentRedirect(url)
 
 
 def force_desktop_version(request):

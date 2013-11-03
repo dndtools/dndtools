@@ -1,0 +1,11 @@
+{% extends "dnd/mobile/spells/spell_layout.html" %}
+
+{% block title %}Spells in {{ spell_sub_school.name }}{% endblock %}
+
+{% block content %}
+
+<h2>Spells in {{ spell_sub_school.name }}</h2>
+
+{% include "dnd/mobile/spells/spell_table.html" %}
+
+{% endblock %}

@@ -1,0 +1,19 @@
+{# inner table is used if no pagination is required #}
+{% load custom_filters %}
+
+<table {% if nostyle %}{% else %}class="common"{% endif %}>
+<tr>
+  <th>Skill name</th>
+  <th>Key ability</th>
+  <th>Trained only</th>
+  <th>Armor check penalty</th>
+</tr>
+    {% for skill in skill_list %}
+        <tr>
+            <td><a href="{{ skill.get_absolute_url_mobile }}">{{ skill.name }}</a></td>
+            <td>{{ skill.base_skill }}</td>
+            <td>{{ skill.trained_only|boolean_as_img }}</td>
+            <td>{{ skill.armor_check_penalty|boolean_as_img }}</td>
+        </tr>
+    {% endfor %}
+</table>

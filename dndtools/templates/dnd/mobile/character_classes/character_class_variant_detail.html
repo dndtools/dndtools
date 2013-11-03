@@ -1,0 +1,11 @@
+{% extends "dnd/mobile/character_classes/character_class_layout.html" %}
+
+{% block title %}{{ character_class_variant.character_class.name }} &ndash; {{ character_class_variant.rulebook.name }} variant  &ndash; Class{% endblock %}
+
+{% block content %}
+
+<h2>{{ character_class_variant.character_class.name }} &ndash; {{ character_class_variant.rulebook.name }}</h2>
+
+{% include "dnd/mobile/character_class_variant_inner.html" %}
+
+{% endblock %}

@@ -16,7 +16,7 @@ def _boolean_as_img(value):
     except Exception:
         mapped = BOOLEAN_MAPPING[None]
 
-    return mark_safe(u'<img src="%simg/admin/icon-%s.gif" alt="%s" />' % (
+    return mark_safe(u'<img src="%simg/admin/icon-%s.gif" alt="%s" class="yes-no-icon" />' % (
         settings.ADMIN_MEDIA_PREFIX, mapped, mapped))
 _boolean_as_img.is_safe = False
 

@@ -350,6 +350,12 @@ form select{
     border: 1px solid #aaa;
     width: 90%;
 }
+form input.range {
+    width: 30%;
+}
+#form label {
+    display: block;
+}
 
 form input[type=submit] {
     width: 94%;
@@ -427,6 +433,10 @@ footer p {
 
 .options li#options-menu {
     background-position: -58px 20px;
+}
+
+.options li#options-submenu {
+    background-position: -98px 20px;
 }
 
 .search-box {
@@ -702,4 +712,53 @@ table.list td a {
     width: 100%;
     display: block;
     padding: 5px 0;
+}
+img.yes-no-icon {
+    background: none;
+    border: none;
+    margin: 0;
+    padding: 0;
+}
+
+.nice-textile table, table.common {
+    margin: 20px 0;
+}
+
+.nice-textile table td, table.common td {
+    border-top: 1px solid #AAF;
+    border-bottom: 1px solid #AAF;
+    padding: 0 0 0 5px;
+}
+
+.nice-textile table td a, table.common td a {
+    width: 100%;
+    display: block;
+    padding: 5px 0;
+}
+
+.nice-textile table th, table.common th {
+    padding: 0 0 0 5px;
+}
+
+table.race-attributes {
+    margin: 0 0 20px 0;
+    border-spacing: 0;
+}
+
+table.race-attributes tr td, table.race-attributes tr th {
+    background: #F0EFE2;
+    border-top: 1px solid #FFF;
+    padding: 2px;
+    text-align: left;
+}
+
+table.race-attributes tr th {
+    background: #e3e2d5;
+    color: #3B3B3B;
+    padding: 2px;
+    text-align: left;
+}
+
+table.race-attributes tr.separator, table.race-attributes tr.separator td, table.race-attributes tr.separator th {
+    border-top: 10px solid #F9F9F9;
 }

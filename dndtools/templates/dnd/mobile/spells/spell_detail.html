@@ -1,0 +1,99 @@
+{% extends "dnd/mobile/spells/spell_layout.html" %}
+
+{% block title %}{{ spell.name }} &ndash; Spell{% endblock %}
+
+{% block content %}
+
+<h2>{{ spell.name }}</h2>
+(<a href="{{ rulebook.get_absolute_url_mobile }}">{{ rulebook.name }}</a>{% if spell.page %},  p. {{ spell.page }}{% endif %})
+<br/>
+<br/>
+
+<a href="{{ spell.school.get_absolute_url_mobile }}">{{ spell.school.name }}</a>
+{% if spell.sub_school %}
+    (<a href="{{ spell.sub_school.get_absolute_url_mobile }}">{{ spell.sub_school.name }}</a>)
+{% endif %}
+{% if spell.descriptors.count > 0 %}
+    [{% for descriptor in spell.descriptors.all %}{% if not forloop.first %}, {% endif %}<a href="{{ descriptor.get_absolute_url_mobile }}">{{ descriptor.name }}</a>{% endfor %}]
+{% endif %}
+<br/>
+
+{% if spellclasslevel_set.count > 0 or spelldomainlevel_set.count > 0 or spell.corrupt_component %}
+    <strong>Level:</strong>
+    {% for class_level in spellclasslevel_set.all %}
+        <a href="{% url character_class_spells_mobile character_class_slug=class_level.character_class.slug level=class_level.level %}">{{ class_level.character_class.name }} {{ class_level.level }}</a>{% if class_level.extra %} ({{ class_level.extra }}){% endif %},
+    {% endfor %}
+    {% for domain_level in spelldomainlevel_set %}
+        <a href="{{ domain_level.domain.get_absolute_url_mobile }}">{{ domain_level.domain.name }}</a> {{ domain_level.level }}{% if domain_level.extra %} ({{ domain_level.extra }}){% endif %},
+    {% endfor %}
+    {% if spell.corrupt_component %}
+        <a href="{{ corrupt_rule.get_absolute_url_mobile }}">Corrupt</a> {{ spell.corrupt_level }}
+    {% endif %}
+    <br/>
+{% endif %}
+
+<strong>Components:</strong>
+{% if spell.verbal_component %}<abbr title="Verbal">V</abbr>, {% endif %}
+{% if spell.somatic_component %}<abbr title="Somatic">S</abbr>, {% endif %}
+{% if spell.material_component %}<abbr title="Material">M</abbr>, {% endif %}
+{% if spell.arcane_focus_component %}<abbr title="Arcane Focus">AF</abbr>, {% endif %}
+{% if spell.divine_focus_component %}<abbr title="Divine Focus">DF</abbr>, {% endif %}
+{% if spell.xp_component %}<abbr title="Experience">XP</abbr>, {% endif %}
+{% if spell.meta_breath_component %}<abbr title="Meta Breath">MB</abbr>, {% endif %}
+{% if spell.true_name_component %}<abbr title="True Name">TN</abbr>, {% endif %}
+{% if spell.corrupt_component %}<a href="{{ corrupt_rule.get_absolute_url_mobile }}">Corrupt</a>, {% endif %}
+{% if spell.extra_components %}{{ spell.extra_components }}{% endif %}
+<br/>
+
+{% if spell.casting_time %}
+    <strong>Casting Time:</strong> {{ spell.casting_time }}<br/>
+{% endif %}
+
+{% if spell.range %}
+    <strong>Range:</strong> {{ spell.range }}<br/>
+{% endif %}
+
+{% if spell.effect %}
+    <strong>Effect:</strong> {{ spell.effect }}<br/>
+{% endif %}
+
+{% if spell.area %}
+    <strong>Area:</strong> {{ spell.area }}<br/>
+{% endif %}
+
+{% if spell.target %}
+    <strong>Target:</strong> {{ spell.target }}<br/>
+{% endif %}
+
+{% if spell.duration %}
+    <strong>Duration:</strong> {{ spell.duration }}<br/>
+{% endif %}
+
+{% if spell.saving_throw %}
+    <strong>Saving Throw:</strong> {{ spell.saving_throw }}<br/>
+{% endif %}
+
+{% if spell.spell_resistance %}
+    <strong>Spell Resistance:</strong> {{ spell.spell_resistance }}<br/>
+{% endif %}
+
+<br/>
+
+<div class="nice-textile">
+{% if spell.description_html %}
+    {{ spell.description_html|safe }}
+{% else %}
+    <p>{{ spell.description|linebreaksbr }}</p>
+{% endif %}
+</div>
+
+{% if related_spells %}
+    <h3>Also appears in</h3>
+    <ol>
+        {% for related_spell in related_spells %}
+            <li><a href="{{ related_spell.get_absolute_url_mobile }}">{{ related_spell.rulebook.name }}</a></li>
+        {% endfor %}
+    </ol>
+{% endif %}
+
+{% endblock %}

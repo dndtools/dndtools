@@ -1,0 +1,13 @@
+{% extends "dnd/mobile/monsters/monster_layout.html" %}
+
+{% block title %}Monsters{% endblock %}
+
+{% block content %}
+
+    <h2>Monsters</h2>
+
+    {% include "dnd/mobile/filter_form.html" %}
+
+    {% include "dnd/mobile/monsters/monster_table.html" %}
+
+{% endblock %}

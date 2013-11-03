@@ -1,0 +1,20 @@
+{% extends "dnd/mobile/languages/language_layout.html" %}
+
+{% load custom_filters %}
+
+{% block title %}{{ language.name }} &ndash; Language{% endblock %}
+
+{% block content %}
+
+<h2>{{ language.name }}</h2>
+
+
+<div class="nice-textile">
+    {{ language.description_html|safe }}
+</div>
+
+<h3>Races with this language</h3>
+
+{% include "dnd/mobile/races/race_table.html" %}
+
+{% endblock %}
