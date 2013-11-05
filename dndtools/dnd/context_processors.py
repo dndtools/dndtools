@@ -30,3 +30,9 @@ def is_mobile(request):
     return {
         'is_mobile': mobile,
     }
+
+
+def is_admin(request):
+    return {
+        'is_admin': request.user.is_staff and request.user.is_active,
+    }

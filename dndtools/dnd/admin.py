@@ -151,17 +151,13 @@ class SpellDomainLevelInline(admin.TabularInline):
 class SpellAdmin(VersionAdmin):
     prepopulated_fields = {"slug": ("name",)}
     list_display = (
-        'id', 'name', 'rulebook', 'page', 'school', 'sub_school',
-        'verbal_component', 'somatic_component', 'material_component',
-        'arcane_focus_component', 'divine_focus_component',
+        'id', 'name', 'verified', 'verified_author', 'verified_time',
+        'rulebook', 'page', 'school', 'sub_school',
     )
     list_display_links = ('name', )
-    list_filter = (
-        'rulebook', 'verbal_component', 'somatic_component',
-        'material_component', 'arcane_focus_component',
-        'divine_focus_component', 'casting_time', 'range', 'saving_throw',
-        'spell_resistance', 'duration',
-    )
+    list_filter = ('verified', 'verified_author', 'rulebook',)
+    date_hierarchy = 'verified_time'
+    readonly_fields = ('verified', 'verified_author', 'verified_time', )
     search_fields = ('name', )
     inlines = (SpellClassLevelInline, SpellDomainLevelInline, )
     filter_horizontal = ('descriptors', )

@@ -4,6 +4,11 @@
 
 <table class="common">
 <tr>
+  {% if is_admin %}
+    <th>
+        <abbr title="Verified">V</abbr>
+    </th>
+  {% endif %}
   <th>Spell name</th>
   <th>Spell School</th>
   <th>
@@ -14,6 +19,9 @@
 </tr>
 {% for spell in spell_list %}
 <tr>
+    {% if is_admin %}
+        <td {% if spell.verified %}title="{{ spell.verified_time }} by {{ spell.verified_author }}"{% endif %}>{{ spell.verified|boolean_as_img }}</td>
+    {% endif %}
     <td><a href="{{ spell.get_absolute_url }}">{{ spell.name }}</a></td>
     <td><a href="{{ spell.school.get_absolute_url }}">{{ spell.school.name }}</a></td>
     <td>{{ spell.verbal_component|boolean_as_img }}&nbsp;{{ spell.somatic_component|boolean_as_img }}&nbsp;{{ spell.material_component|boolean_as_img }}&nbsp;{{ spell.arcane_focus_component|boolean_as_img }}&nbsp;{{ spell.divine_focus_component|boolean_as_img }}&nbsp;{{ spell.xp_component|boolean_as_img }}</td>

@@ -1,16 +1,17 @@
 # Create your views here.
+from datetime import datetime
 from math import ceil
 from django.contrib.auth.models import User
 from django.core.mail.message import EmailMessage
 from django.core.urlresolvers import reverse
 from django.db.models import Q
-from django.http import HttpResponsePermanentRedirect, HttpResponseRedirect
+from django.http import HttpResponsePermanentRedirect, HttpResponseRedirect, HttpResponseForbidden
 from django.shortcuts import get_object_or_404, render_to_response
 from django.template.context import RequestContext
 from reversion.revisions import revision
 from dndtools.dnd.dnd_paginator import DndPaginator
 from dndtools.dnd.filters import (SpellFilter, CharacterClassFilter, RulebookFilter, FeatFilter, SpellDomainFilter,
-                                  SpellDescriptorFilter, SkillFilter, RaceFilter, MonsterFilter, ItemFilter, LanguageFilter, RaceTypeFilter)
+                                  SpellDescriptorFilter, SkillFilter, RaceFilter, MonsterFilter, ItemFilter, LanguageFilter, RaceTypeFilter, SpellFilterAdmin)
 from dndtools.dnd.forms import ContactForm, InaccurateContentForm
 
 from dndtools.dnd.models import (Rulebook, DndEdition, FeatCategory, Feat,
@@ -71,6 +72,10 @@ def submenu_item(menu_item_name):
         return new_function
 
     return submenu_item_generator
+
+
+def is_admin(request):
+    return request.user.is_staff and request.user.is_active
 
 
 def index(request):
@@ -283,8 +288,12 @@ def feat_detail(request, rulebook_slug, rulebook_id, feat_slug, feat_id):
 
 
 def spell_index(request):
-    f = SpellFilter(request.GET, queryset=Spell.objects.select_related(
-        'rulebook', 'rulebook__dnd_edition', 'school').distinct())
+    if is_admin(request):
+        f = SpellFilterAdmin(request.GET, queryset=Spell.objects.select_related(
+            'rulebook', 'rulebook__dnd_edition', 'school', 'verified_author').distinct())
+    else:
+        f = SpellFilter(request.GET, queryset=Spell.objects.select_related(
+            'rulebook', 'rulebook__dnd_edition', 'school').distinct())
 
     paginator = DndPaginator(f.qs, request)
 
@@ -406,6 +415,20 @@ def spell_detail(request, rulebook_slug, rulebook_id, spell_slug, spell_id):
                                   'related_spells': related_spells,
                               },
                               context_instance=RequestContext(request), )
+
+
+def spell_verify(request, spell_id):
+    if not is_admin(request):
+        return HttpResponseForbidden("Forbidden.")
+
+    spell = get_object_or_404(Spell, id=spell_id)
+
+    spell.verified = True
+    spell.verified_time = datetime.now()
+    spell.verified_author = request.user
+    spell.save()
+
+    return permanent_redirect_object(request, spell)
 
 
 def spell_descriptor_detail(request, spell_descriptor_slug):

@@ -172,7 +172,7 @@
       {% if inaccurate_url  %}
         <div id="inaccurate"><a href="{% url inaccurate_content %}?url={{ inaccurate_url|urlencode }}"><img src="{% media "media/inaccurate.png" %}" alt="Inaccurate?"/></a></div>
       {% endif %}
-      {% if user and user.is_staff and user.is_active %}
+      {% if is_admin %}
           <span class="edit">{% block admin_edit %}{% endblock %}</span>
       {% endif %}
       {% block content %}{% endblock %}

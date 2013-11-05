@@ -100,6 +100,11 @@ urlpatterns = patterns(
         'spell_detail',
         name='spell_detail',
     ),
+    url(
+        r'^verify/spell/(?P<spell_id>\d+)/$',
+        'spell_verify',
+        name='spell_verify',
+    ),
     # spells > descriptors
     url(
         r'^spells/descriptors/$',

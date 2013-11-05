@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from PIL import Image
+from django.contrib.auth.models import User
 from django.db import models
 
 from dndtools.dnd.utilities import update_html_cache_attributes
@@ -722,6 +723,19 @@ class Spell(models.Model):
         help_text='Level of corrupt spells (as they are not binded to any class)',
         null=True,
         blank=True,
+    )
+
+    verified = models.BooleanField(
+        default=False,
+    )
+    verified_author = models.ForeignKey(
+        to=User,
+        blank=True,
+        null=True,
+    )
+    verified_time = models.DateTimeField(
+        blank=True,
+        null=True,
     )
 
     class Meta:

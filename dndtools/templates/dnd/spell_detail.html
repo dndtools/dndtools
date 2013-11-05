@@ -1,5 +1,7 @@
 {% extends "dnd/spell_layout.html" %}
 
+{% load custom_filters %}
+
 {% block title %}{{ spell.name }} &ndash; Spell{% endblock %}
 
 {% block breadcrumbs %}
@@ -8,7 +10,12 @@
     &raquo; <a href="{{ spell.get_absolute_url }}">{{ spell.name }}</a>
 {% endblock %}
 
-{% block admin_edit %}<a href="{% url admin:dnd_spell_change spell.id %}">EDIT</a>{% endblock %}
+{% block admin_edit %}
+    <a href="{% url admin:dnd_spell_change spell.id %}">EDIT</a>
+    <a href="{% url spell_verify spell_id=spell.id %}" onclick="return window.confirm('Sure? You\'ll be marked as new Verify author');" {% if spell.verified %}title="{{ spell.verified_time }} by {{ spell.verified_author }}"{% endif %}>
+        Mark as {% if spell.verified %}re{% endif %}verified {{ spell.verified|boolean_as_img }}
+    </a>
+{% endblock %}
 
 {% block content %}
 

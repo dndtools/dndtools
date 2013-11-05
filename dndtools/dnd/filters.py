@@ -160,6 +160,15 @@ class SpellFilter(django_filters2.FilterSet):
             'domain_levels__slug', 'spelldomainlevel__level', ]
 
 
+class SpellFilterAdmin(SpellFilter):
+    verified = django_filters2.BooleanFilter(
+    )
+
+    class Meta:
+        model = SpellFilter.Meta.model
+        fields = ['verified', ] + SpellFilter.Meta.fields
+
+
 class ItemFilter(django_filters2.FilterSet):
     type_choices = [itemType for itemType in Item.ITEM_TYPE]
     type_choices.insert(0, ('', 'Unknown'))
