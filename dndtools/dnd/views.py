@@ -1302,12 +1302,7 @@ def rule_detail(request, rulebook_slug, rulebook_id, rule_slug, rule_id):
     if (rule.slug != rule_slug or
                 unicode(rule.rulebook.id) != rulebook_id or
                 rule.rulebook.slug != rulebook_slug):
-        return permanent_redirect_view(request, 'rule_detail',
-                                       kwargs={
-                                           'rulebook_slug': rule.rulebook.slug,
-                                           'rulebook_id': rule.rulebook.id,
-                                           'rule_slug': rule.slug,
-                                           'rule_id': rule.id, })
+        return permanent_redirect_object(request, rule)
 
     return render_to_response('dnd/rule_detail.html',
                               {
