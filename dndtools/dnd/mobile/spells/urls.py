@@ -66,10 +66,17 @@ urlpatterns = patterns(
         'spell_domain_list_mobile',
         name='spell_domain_list_mobile',
     ),
-    # spells > schools > detail
+    # spells > domains > detail
     url(
         r'^domains/(?P<spell_domain_slug>[^/]+)/$',
         'spell_domain_detail_mobile',
         name='spell_domain_detail_mobile',
+    ),
+
+    # spells > domains > detail (variant)
+    url(
+        r'^domains/(?P<rulebook_slug>[^/]+)--(?P<rulebook_id>\d+)/(?P<spell_domain_slug>[^/]+)/$',
+        'spell_domain_detail_mobile',
+        name='spell_variant_domain_detail_mobile',
     ),
 )

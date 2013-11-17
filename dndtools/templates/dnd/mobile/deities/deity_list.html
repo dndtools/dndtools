@@ -1,0 +1,17 @@
+{% extends "dnd/mobile/deities/deity_layout.html" %}
+
+{% block title %}Deities{% endblock %}
+
+{% block content %}
+
+<h2>Deities</h2>
+
+{% include "dnd/mobile/filter_form.html" %}
+
+{{ paginator.print_navigation }}
+
+{% include "dnd/mobile/deities/deity_table_inner.html" %}
+
+{{ paginator.print_navigation }}
+
+{% endblock %}

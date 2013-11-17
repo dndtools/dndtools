@@ -46,6 +46,7 @@
                 <li{% if request.menu_item == "skills" %} class="selected"{% endif %}><a href="{% url skill_list_mobile %}">Skills</a></li>
                 <li{% if request.menu_item == "items" %} class="selected"{% endif %}><a href="{% url item_index_mobile %}">Items</a></li>
                 <li{% if request.menu_item == "races_monsters" %} class="selected"{% endif %}><a href="{% url monster_index_mobile %}">Races &amp; Monsters</a></li>
+                <li{% if request.menu_item == "deities" %} class="selected"{% endif %}><a href="{% url deity_list_mobile %}">Deities</a></li>
             </ul>
         </nav>
 

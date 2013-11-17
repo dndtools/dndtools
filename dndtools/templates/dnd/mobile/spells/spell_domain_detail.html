@@ -6,14 +6,14 @@
 
 <h2>{{ spell_domain.name }}</h2>
 {% if selected_variant %}
-    <p>(<a href="{{ selected_variant.rulebook.get_absolute_url }}">{{ selected_variant.rulebook.name }}</a> variant{% if selected_variant.page %}, p. {{ selected_variant.page }}{% endif %})</p>
+    <p>(<a href="{{ selected_variant.rulebook.get_absolute_url_mobile }}">{{ selected_variant.rulebook.name }}</a> variant{% if selected_variant.page %}, p. {{ selected_variant.page }}{% endif %})</p>
 
     {% if selected_variant.deities %}
 
         <h4>Deities:</h4>
         <p>
         {% for deity in selected_variant.deities.all %}
-            <a href="{{ deity.get_absolute_url }}">{{ deity }}</a>{% if not forloop.last %},{% endif %}
+            <a href="{{ deity.get_absolute_url_mobile }}">{{ deity }}</a>{% if not forloop.last %},{% endif %}
         {% endfor %}
         </p>
     {% endif %}
@@ -47,7 +47,7 @@
     <h3>Also appears in</h3>
     <ol>
         {% for variant in other_variants %}
-            <li><a href="{{ variant.get_absolute_url }}">{{ variant.rulebook.name }}</a></li>
+            <li><a href="{{ variant.get_absolute_url_mobile }}">{{ variant.rulebook.name }}</a></li>
         {% endfor %}
     </ol>
 {% endif %}

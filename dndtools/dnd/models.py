@@ -403,6 +403,15 @@ class Deity(models.Model):
             }
         )
 
+    @models.permalink
+    def get_absolute_url_mobile(self):
+        return (
+            'deity_detail_mobile', (),
+            {
+                'deity_slug': self.slug,
+            }
+        )
+
 
 class Domain(models.Model):
     name = models.CharField(
@@ -504,6 +513,18 @@ class DomainVariant(models.Model):
                 'spell_domain_slug': self.domain.slug
             }
         )
+
+    @models.permalink
+    def get_absolute_url_mobile(self):
+        return (
+            'spell_variant_domain_detail_mobile', (),
+            {
+                'rulebook_slug': self.rulebook.slug,
+                'rulebook_id': self.rulebook.id,
+                'spell_domain_slug': self.domain.slug
+            }
+        )
+
 
 class SpellDescriptor(models.Model):
     name = models.CharField(

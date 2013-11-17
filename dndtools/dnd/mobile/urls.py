@@ -50,4 +50,7 @@ urlpatterns = patterns(
 
     # spells
     (r'^spells/', include('dndtools.dnd.mobile.spells.urls')),
+
+    # deities
+    (r'^deities/', include('dndtools.dnd.mobile.deities.urls')),
 )

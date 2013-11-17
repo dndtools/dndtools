@@ -366,7 +366,7 @@ urlpatterns = patterns(
     ),
 
     # deities
-    (r'^spells/deities/', include('dndtools.dnd.deities.urls')),
+    (r'^deities/', include('dndtools.dnd.deities.urls')),
 
     # mobile patterns
     (r'^m/', include('dndtools.dnd.mobile.urls')),
