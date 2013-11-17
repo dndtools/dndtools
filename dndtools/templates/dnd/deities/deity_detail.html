@@ -1,9 +1,8 @@
-{% extends "dnd/spell_layout.html" %}
+{% extends "dnd/deities/deity_layout.html" %}
 
 {% block title %}{{ deity.name }} &ndash; Deities{% endblock %}
 
 {% block breadcrumbs %}
-    &raquo; <a href="{% url spell_index %}">Spells</a>
     &raquo; <a href="{% url deity_list %}">Deities</a>
     &raquo; <a href="{{ deity.get_absolute_url }}">{{ deity.name }}</a>
 {% endblock %}
