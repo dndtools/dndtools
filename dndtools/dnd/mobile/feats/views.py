@@ -2,11 +2,12 @@
 
 from django.shortcuts import get_object_or_404, render_to_response
 from django.template import RequestContext
+from dndtools.dnd.menu import menu_item, submenu_item
 from dndtools.dnd.mobile.views import permanent_redirect_object_mobile
 from dndtools.dnd.mobile.dnd_paginator import DndMobilePaginator
 from dndtools.dnd.filters import FeatFilter
 from dndtools.dnd.models import Feat, Rulebook, FeatCategory
-from dndtools.dnd.views import is_3e_edition, permanent_redirect_view, menu_item, submenu_item
+from dndtools.dnd.views import is_3e_edition, permanent_redirect_view
 
 
 @menu_item("feats")
@@ -27,21 +28,6 @@ def feat_index_mobile(request):
                                   'filter': f,
                                   'form_submitted': form_submitted,
                               }, context_instance=RequestContext(request), )
-
-
-@menu_item("feats")
-@submenu_item("by_rulebooks")
-def feat_list_by_rulebook_mobile(request):
-    rulebook_list = Rulebook.objects.select_related('rulebook',
-                                                    'dnd_edition').all()
-
-    paginator = DndMobilePaginator(rulebook_list, request)
-
-    return render_to_response('dnd/mobile/feats/feat_list_by_rulebook.html',
-                              {
-                                  'rulebook_list': paginator.items(),
-                                  'paginator': paginator,
-                                  'request': request, }, context_instance=RequestContext(request), )
 
 
 @menu_item("feats")

@@ -1,0 +1,35 @@
+{% extends "dnd/spells/spell_layout.html" %}
+
+{% block extra_link %}{{ paginator.print_rel_prev_next }}{{ block.super }}{% endblock %}
+{% block extra_meta %}{% include "dnd/meta_noindex.html" %}{% endblock %}
+
+{% block title %}Spell Domains{% endblock %}
+
+{% block breadcrumbs %}
+    &raquo; <a href="{% url spell_index %}">Spells</a>
+    &raquo; <a href="{% url spell_domain_list  %}">Domains</a>
+{% endblock %}
+
+
+{% block content %}
+
+<h2>Spell Domains</h2>
+
+{% include "dnd/filter_form.html" %}
+
+{{ paginator.print_navigation }}
+
+<table class="common">
+<tr>
+  <th>Name</th>
+</tr>
+{% for spell_domain in spell_domain_list %}
+    <tr>
+        <td><a href="{{ spell_domain.get_absolute_url }}">{{ spell_domain.name }}</a></td>
+    </tr>
+{% endfor %}
+</table>
+
+{{ paginator.print_navigation }}
+
+{% endblock %}

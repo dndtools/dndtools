@@ -1,0 +1,35 @@
+{% extends "dnd/spells/spell_layout.html" %}
+
+{% block extra_meta %}{% include "dnd/meta_noindex.html" %}{% endblock %}
+
+{% block title %}Spell Schools{% endblock %}
+
+{% block breadcrumbs %}
+    &raquo; <a href="{% url spell_index %}">Spells</a>
+    &raquo; <a href="{% url spell_school_list  %}">Spell Schools</a>
+{% endblock %}
+
+
+{% block content %}
+
+<h2>Spell Schools</h2>
+
+<ul>
+    {% for spell_school in spell_school_list %}
+        <li>
+            <a href="{{ spell_school.get_absolute_url }}">{{ spell_school.name }}</a>
+        </li>
+    {% endfor %}
+</ul>
+
+<h2>Spell Subschools</h2>
+
+<ul>
+    {% for spell_sub_school in spell_sub_school_list %}
+        <li>
+            <a href="{{ spell_sub_school.get_absolute_url }}">{{ spell_sub_school.name }}</a>
+        </li>
+    {% endfor %}
+</ul>
+
+{% endblock %}

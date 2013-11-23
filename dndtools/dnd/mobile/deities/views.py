@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
+from dndtools.dnd.menu import menu_item, submenu_item
 from dndtools.dnd.mobile.dnd_paginator import DndMobilePaginator
 from dndtools.dnd.filters import DeityFilter
 from dndtools.dnd.models import Deity
-from dndtools.dnd.views import menu_item, submenu_item
 
 
 @menu_item("deities")

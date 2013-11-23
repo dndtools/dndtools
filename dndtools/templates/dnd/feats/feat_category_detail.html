@@ -1,0 +1,21 @@
+{% extends "dnd/feats/feat_layout.html" %}
+
+{% block extra_link %}{{ paginator.print_rel_prev_next }}{{ block.super }}{% endblock %}
+{% block title %}{{ feat_category.name }} &ndash; Feat Category{% endblock %}
+
+{% block breadcrumbs %}
+    &raquo; <a href="{% url feat_index %}">Feats</a>
+    &raquo; <a href="{% url feat_category_list %}">Categories</a>
+    &raquo; <a href="{{ feat_category.get_absolute_url }}">{{ feat_category.name }}</a>
+{% endblock %}
+
+{% block admin_edit %}<a href="{% url admin:dnd_featcategory_change feat_category.id %}">EDIT</a>{% endblock %}
+
+
+{% block content %}
+
+<h2>Feat Category &ndash; {{ feat_category.name }}</h2>
+
+{% include "dnd/feats/feat_table.html" %}
+
+{% endblock %}

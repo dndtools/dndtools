@@ -1,0 +1,118 @@
+<div class="nice-textile">
+    {% if character_class_variant.requirements_html or character_class_variant.required_bab or required_skills or required_feats %}
+        <h4>Requirements</h4>
+
+        <div class="nice-textile close-paragraphs">
+            {% if character_class_variant.required_bab %}
+                <p><strong>Base Attack Bonus:</strong> +{{ character_class_variant.required_bab }}</p>
+            {% endif %}
+            {# Alignment for PrC is displayed as a requirement. "Any" is ignored. #}
+            {% if character_class.prestige and character_class_variant.alignment and character_class_variant.alignment != "Any" %}
+                <p><strong>Alignment:</strong> {{ character_class_variant.alignment }}</p>
+            {% endif %}
+            {% if required_races %}
+                <p>
+                    <strong>Race:</strong>
+                    {% for required_race in required_races %}
+                        {% if not forloop.first and not required_race.remove_comma %}or{% endif %}
+                        {{ required_race.text_before }}
+{#                        <a href="{{ required_race.race.get_absolute_url }}">{{ required_race.race }}</a>#}
+                        {{ required_race.race }}
+                        {% if required_race.extra %}({{ required_race.extra }}){% endif %}
+                        {{ required_race.text_after }}
+                    {% endfor %}
+                </p>
+            {% endif %}
+            {% if required_skills %}
+                <p>
+                    <strong>Skills:</strong>
+                    {% for required_skill in required_skills %}
+                        {% if not forloop.first and not required_skill.remove_comma %}, {% endif %}
+                        {{ required_skill.text_before }}
+                        <a href="{{ required_skill.skill.get_absolute_url }}">{{ required_skill.skill }}</a>
+                        {% if required_skill.extra %}({{ required_skill.extra }}){% endif %}
+                        {{ required_skill.ranks }} ranks
+                        {{ required_skill.text_after }}
+                    {% endfor %}
+                </p>
+            {% endif %}
+            {% if required_feats %}
+                <p>
+                    <strong>Feats:</strong>
+                    {% for required_feat in required_feats %}
+                        {% if not forloop.first and not required_feat.remove_comma %}, {% endif %}
+                        {{ required_feat.text_before }}
+                        <a href="{{ required_feat.feat.get_absolute_url }}">{{ required_feat.feat }}</a>
+                        {% if required_feat.extra %}({{ required_feat.extra }}){% endif %}
+                        {{ required_feat.text_after }}
+                    {% endfor %}
+                </p>
+            {% endif %}
+            {{ character_class_variant.requirements_html|safe }}
+            <br/>
+        </div>
+
+    {% endif %}
+</div>
+
+{% if not character_class_variant.class_features_html and not character_class_variant.class_features and not character_class_variant.advancement_html %}
+
+    <div style="background-color: #ffeeee">
+    <h3>Work in progress</h3>
+
+    <p>
+    Dear visitor,
+    </p>
+    <p>
+    this class is not yet completed. We are working hard to make the site complete, but as there are roughly about a thousand classes, this can take some time.
+    </p>
+    <p>
+    If you want to see this class done faster, <a href="{% url contact %}">let us know</a> and we will move it up our priority list. Or better yet,
+    if you would like to contribute to the site, you can apply to be a part of our team yourself!
+    </p>
+    </div>
+
+{% else %}
+
+    {% if character_class_variant.hit_die != None %}
+    <h4>Hit die</h4>
+    <p>d{{ character_class_variant.hit_die }}</p>
+    {% endif %}
+
+    {# Alignment for PrC is displayed as a requirement #}
+    {% if character_class_variant.alignment and not character_class.prestige %}
+    <h4>Alignment</h4>
+    <p>{{ character_class_variant.alignment }}</p>
+    {% endif %}
+
+    {% if character_class_variant.starting_gold %}
+    <h4>Starting gold</h4>
+    <p>{{ character_class_variant.starting_gold }}</p>
+    {% endif %}
+
+    {% if character_class_variant.skill_points %}
+    <h4>Skill points</h4>
+    <p>{{ character_class_variant.skill_points }} + Int</p>
+    {% endif %}
+
+    <div class="nice-textile">
+
+    <h4>Class Features</h4>
+    {% if character_class_variant.class_features_html %}
+        {{ character_class_variant.class_features_html|safe }}
+    {% else %}
+        <p>{{ character_class_variant.class_features|linebreaksbr }}</p>
+    {% endif %}
+
+    <h3>Advancement</h3>
+
+    {{ character_class_variant.advancement_html|safe }}
+    </div>
+
+    <h3>Class skills</h3>
+
+    {% with character_class_variant.class_skills.all as skill_list %}
+      {% include "dnd/skills/skill_table_inner.html" %}
+    {% endwith %}
+
+{% endif %}

@@ -1,0 +1,35 @@
+{% extends "dnd/rulebooks/rulebooks_layout.html" %}
+
+{% block extra_link %}{{ paginator.print_rel_prev_next }}{{ block.super }}{% endblock %}
+
+{% block title %}{{ dnd_edition.name }} &ndash; Editions{% endblock %}
+
+{% block breadcrumbs %}
+    &raquo; <a href="{% url edition_list  %}">Editions</a>
+    &raquo; <a href="{{ dnd_edition.get_absolute_url }}">{{ dnd_edition.name }}</a>
+{% endblock %}
+
+{% block admin_edit %}<a href="{% url admin:dnd_dndedition_change dnd_edition.id %}">EDIT</a>{% endblock %}
+
+{% block content %}
+
+<h2>Rulebooks in {{ dnd_edition.name }}</h2>
+
+{{ paginator.print_navigation }}
+
+<table class="common">
+<tr>
+  <th>Rulebook name</th>
+  <th>Edition</th>
+</tr>
+    {% for rulebook in rulebook_list %}
+        <tr>
+            <td><a href="{{ rulebook.get_absolute_url }}">{{ rulebook.name }}</a></td>
+            <td><a href="{{ rulebook.dnd_edition.get_absolute_url }}">{{ rulebook.dnd_edition.name }}</a></td>
+        </tr>
+    {% endfor %}
+</table>
+
+{{ paginator.print_navigation }}
+
+{% endblock %}

@@ -1,0 +1,14 @@
+{{ paginator.print_navigation }}
+
+<table class="common">
+    <tr>
+        <th>Rule name</th>
+    </tr>
+    {% for rule in rule_list %}
+        <tr>
+            <td><a href="{{ rule.get_absolute_url }}">{{ rule.name }}</a></td>
+        </tr>
+    {% endfor %}
+</table>
+
+{{ paginator.print_navigation }}

@@ -1,0 +1,34 @@
+{% extends "dnd/spells/spell_layout.html" %}
+
+{% block extra_meta %}{% include "dnd/meta_noindex.html" %}{% endblock %}
+
+{% block title %}Spell Descriptors{% endblock %}
+
+{% block breadcrumbs %}
+    &raquo; <a href="{% url spell_index %}">Spells</a>
+    &raquo; <a href="{% url spell_descriptor_list  %}">Spell Descriptors</a>
+{% endblock %}
+
+
+{% block content %}
+
+<h2>Spell Descriptors</h2>
+
+{% include "dnd/filter_form.html" %}
+
+{{ paginator.print_navigation }}
+
+<table class="common">
+<tr>
+  <th>Name</th>
+</tr>
+{% for spell_descriptor in spell_descriptor_list %}
+    <tr>
+        <td><a href="{{ spell_descriptor.get_absolute_url }}">{{ spell_descriptor.name }}</a></td>
+    </tr>
+{% endfor %}
+</table>
+
+{{ paginator.print_navigation }}
+
+{% endblock %}

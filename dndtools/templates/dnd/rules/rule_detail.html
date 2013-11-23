@@ -1,0 +1,30 @@
+{% extends "dnd/rules/rule_layout.html" %}
+
+{% block extra_link %}
+    {% if use_canonical_link %}
+        <link rel="canonical" href="{% url rule_detail rule_slug=rule.slug %}" />
+    {% endif %}
+    {{ feat_paginator.print_rel_prev_next }}
+    {{ block.super }}
+{% endblock %}
+{% block title %}{{ rule.name }} &ndash; Rules{% endblock %}
+
+{% block breadcrumbs %}
+    &raquo; <a href="{% url rule_list %}">Rules</a>
+    &raquo; <a href="{{ rule.get_absolute_url }}">{{ rule.name }}</a>
+{% endblock %}
+
+
+{% block admin_edit %}
+    <a href="{% url admin:dnd_rule_change rule.id %}">EDIT</a>
+{% endblock %}
+
+{% block content %}
+
+    <h2>{{ rule.name }}</h2>
+    (<a href="{{ rulebook.get_absolute_url }}">{{ rulebook.name }}</a>{% if rule.page_from %},  p. {{ rule.page_from }}{% if rule.page_to %}&mdash;{{ rule.page_to }}{% endif %}{% endif %})
+
+    {{ rule.body_html|safe }}
+
+
+{% endblock %}

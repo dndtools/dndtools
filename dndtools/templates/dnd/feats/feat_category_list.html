@@ -1,0 +1,29 @@
+{% extends "dnd/feats/feat_layout.html" %}
+
+{% block extra_link %}{{ paginator.print_rel_prev_next }}{{ block.super }}{% endblock %}
+{% block extra_meta %}{% include "dnd/meta_noindex.html" %}{% endblock %}
+
+{% block title %}Feat Categories{% endblock %}
+
+{% block breadcrumbs %}
+    &raquo; <a href="{% url feat_index %}">Feats</a>
+    &raquo; <a href="{% url feat_category_list %}">Categories</a>
+{% endblock %}
+
+
+{% block content %}
+
+<h2>Feat Categories</h2>
+
+{{ paginator.print_navigation }}
+
+<table class="common">
+  <tr><th>Category name</th></tr>
+    {% for feat_category in feat_category_list %}
+        <tr><td><a href="{{ feat_category.get_absolute_url }}">{{ feat_category.name }}</a></td></tr>
+    {% endfor %}
+</table>
+
+{{ paginator.print_navigation }}
+
+{% endblock %}

@@ -13,12 +13,6 @@ urlpatterns = patterns(
         'feat_index_mobile',
         name='feat_index_mobile',
     ),
-    # feats > by rulebooks
-    url(
-        r'^by-rulebooks/$',
-        'feat_list_by_rulebook_mobile',
-        name='feat_list_by_rulebook_mobile',
-    ),
     #feats > categories
     url(
         r'^categories/$',

@@ -56,71 +56,36 @@
   Please check the home page, I've added some news. Thanks.
 </div>{% endcomment %}
 <div id="main">
-  <div id="header">
-    <div id="logo">
-      <div id="logo_text">
-        <h1>
-          <a href="{% url index %}">D&amp;D<span class="logo_colour">tools</span></a>
-        </h1>
+    <div id="header">
+        <div id="logo">
+            <div id="logo_text">
+                <h1>
+                    <a href="{% url index %}">D&amp;D<span class="logo_colour">tools</span></a>{% if unreadNewsCount %}<span id="counter" title="{{ unreadNewsCount }} unread news">{{ unreadNewsCount }}</span>{% endif %}
+                </h1>
 
-        <h2>Feats. Spells. Prestige Classes. And more!</h2>
-      </div>
-      {# Google search engine  #}
-      {% if not debug %}
-      <div id="google-search-holder">
-        <div id="cse-search-form" style="width: 100%">Loading</div>
-        <script src="http://www.google.com/jsapi" type="text/javascript"></script>
-        <script type="text/javascript">
-          google.load('search', '1', {language : 'en'});
-          google.setOnLoadCallback(function() {
-            var customSearchControl = new google.search.CustomSearchControl('010918785989085430250:jd6tjgonwfu');
-            customSearchControl.setResultSetSize(google.search.Search.FILTERED_CSE_RESULTSET);
-            var options = new google.search.DrawOptions();
-            options.setAutoComplete(true);
-            options.enableSearchboxOnly("http://www.google.com/cse?cx=010918785989085430250:jd6tjgonwfu");
-            customSearchControl.draw('cse-search-form', options);
-          }, true);
-        </script>
-      </div>
-      {% endif %}
+                <h2>Feats. Spells. Prestige Classes. And more!</h2>
+            </div>
+            {# Google search engine  #}
+            {% if not debug %}
+                <div id="google-search-holder">
+                    <div id="cse-search-form" style="width: 100%">Loading</div>
+                    <script src="http://www.google.com/jsapi" type="text/javascript"></script>
+                    <script type="text/javascript">
+                        google.load('search', '1', {language: 'en'});
+                        google.setOnLoadCallback(function () {
+                            var customSearchControl = new google.search.CustomSearchControl('010918785989085430250:jd6tjgonwfu');
+                            customSearchControl.setResultSetSize(google.search.Search.FILTERED_CSE_RESULTSET);
+                            var options = new google.search.DrawOptions();
+                            options.setAutoComplete(true);
+                            options.enableSearchboxOnly("http://www.google.com/cse?cx=010918785989085430250:jd6tjgonwfu");
+                            customSearchControl.draw('cse-search-form', options);
+                        }, true);
+                    </script>
+                </div>
+            {% endif %}
+        </div>
+        {% include "dnd/menu.html" %}
     </div>
-    <div id="menubar">
-      <ul id="menu">
-        <li{% block menu_home %}{% endblock %}>
-          <a href="{% url index %}">Home{% if unreadNewsCount %} (<span class="unread-news-count" title="{{ unreadNewsCount }} unread news">{{ unreadNewsCount }}</span>){% endif %}</a></li>
-
-        <li{% block menu_rulebooks %}{% endblock %}>
-          <a href="{% url rulebook_list %}">Rulebooks</a></li>
-
-        <li{% block menu_feats %}{% endblock %}>
-          <a href="{% url feat_index %}">Feats</a></li>
-
-        <li{% block menu_spells %}{% endblock %}>
-          <a href="{% url spell_index %}">Spells</a></li>
-
-        <li{% block menu_classes %}{% endblock %}>
-          <a href="{% url character_class_list %}">Classes</a></li>
-
-{% comment %}        <li{% block menu_races %}{% endblock %}>
-          <a href="{% url race_index %}">Races</a></li>
-
-        <li{% block menu_monsters %}{% endblock %}>
-          <a href="{% url race_index %}">Monsters</a></li>
-
-        <li{% block menu_items %}{% endblock %}>
-          <a href="{% url race_index %}">Items</a></li>{% endcomment %}
-
-        <li{% block menu_skills %}{% endblock %}>
-          <a href="{% url skill_list %}">Skills</a></li>
-
-        <li{% block menu_contact %}{% endblock %}>
-          <a href="{% url contact %}">Contact Us</a></li>
-
-        <li{% block menu_staff %}{% endblock %}>
-          <a href="{% url staff %}">Staff</a></li>
-      </ul>
-    </div>
-  </div>
   <div id="site_content">
     {% if display_3e_warning %}
       <div id="warning-bar">
@@ -137,6 +102,30 @@
             </label>
         </form>
         <script type="text/javascript">
+            var resetMenuTimer;
+            $("#menu").find("li").mouseenter(function() {
+                $('#menu').find('li').removeClass('arrow');
+                $(this).addClass('arrow');
+                $('#submenubar').find('ul').hide();
+                $('#sub' + $(this).attr('id')).show();
+            });
+            var $menus = $('#menus');
+            $menus.mouseleave(function() {
+                window.clearTimeout(resetMenuTimer);
+                resetMenuTimer = window.setTimeout(resetMenu, 250);
+            });
+            $menus.mouseenter(function () {
+                window.clearTimeout(resetMenuTimer);
+            });
+            function resetMenu() {
+                var $menu = $('#menu');
+                $menu.find('li').removeClass('arrow');
+                $menu.find('li.selected').addClass('arrow');
+                var $submenubar = $('#submenubar');
+                $submenubar.find('ul').hide();
+                $submenubar.find('ul.enabled').show();
+            }
+
             $("#disable_social").change(function(){
                         if (this.checked) {
                             $.cookie("disable_social", 1, { expires : 3650, path : '/'});

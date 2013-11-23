@@ -30,7 +30,7 @@ class DndEdition(models.Model):
     @models.permalink
     def get_absolute_url(self):
         return (
-            'dndtools.dnd.views.edition_detail', (),
+            'edition_detail', (),
             {
                 'edition_slug': self.slug,
                 'edition_id': self.id,
@@ -96,7 +96,7 @@ class Rulebook(models.Model):
     @models.permalink
     def get_absolute_url(self):
         return (
-            'dndtools.dnd.views.rulebook_detail', (),
+            'rulebook_detail', (),
             {
                 'edition_slug': self.dnd_edition.slug,
                 'edition_id': self.dnd_edition.id,
@@ -151,7 +151,7 @@ class CharacterClass(models.Model):
     @models.permalink
     def get_absolute_url(self):
         return (
-            'dndtools.dnd.views.character_class_detail', (),
+            'character_class_detail', (),
             {
                 'character_class_slug': self.slug,
             }
@@ -432,7 +432,7 @@ class Domain(models.Model):
     @models.permalink
     def get_absolute_url(self):
         return (
-            'dndtools.dnd.views.spell_domain_detail', (),
+            'spell_domain_detail', (),
             {
                 'spell_domain_slug': self.slug,
             }
@@ -546,7 +546,7 @@ class SpellDescriptor(models.Model):
     @models.permalink
     def get_absolute_url(self):
         return (
-            'dndtools.dnd.views.spell_descriptor_detail', (),
+            'spell_descriptor_detail', (),
             {
                 'spell_descriptor_slug': self.slug,
             }
@@ -581,7 +581,7 @@ class SpellSchool(models.Model):
     @models.permalink
     def get_absolute_url(self):
         return (
-            'dndtools.dnd.views.spell_school_detail', (),
+            'spell_school_detail', (),
             {
                 'spell_school_slug': self.slug,
             }
@@ -616,7 +616,7 @@ class SpellSubSchool(models.Model):
     @models.permalink
     def get_absolute_url(self):
         return (
-            'dndtools.dnd.views.spell_sub_school_detail', (),
+            'spell_sub_school_detail', (),
             {
                 'spell_sub_school_slug': self.slug,
             }
@@ -773,7 +773,7 @@ class Spell(models.Model):
     @models.permalink
     def get_absolute_url(self):
         return (
-            'dndtools.dnd.views.spell_detail', (),
+            'spell_detail', (),
             {
                 'spell_slug': self.slug,
                 'spell_id': self.id,
@@ -851,7 +851,7 @@ class FeatCategory(models.Model):
     @models.permalink
     def get_absolute_url(self):
         return (
-            'dndtools.dnd.views.feat_category_detail', (),
+            'feat_category_detail', (),
             {
                 'category_slug': self.slug,
             }
@@ -898,7 +898,7 @@ class Skill(models.Model):
     @models.permalink
     def get_absolute_url(self):
         return (
-            'dndtools.dnd.views.skill_detail', (),
+            'skill_detail', (),
             {
                 'skill_slug': self.slug,
             }
@@ -1120,7 +1120,7 @@ class Feat(models.Model):
     @models.permalink
     def get_absolute_url(self):
         return (
-            'dndtools.dnd.views.feat_detail', (),
+            'feat_detail', (),
             {
                 'feat_slug': self.slug,
                 'feat_id': self.id,
@@ -1249,7 +1249,7 @@ class Language(models.Model):
     @models.permalink
     def get_absolute_url(self):
         return (
-            'dndtools.dnd.views.language_detail', (),
+            'language_detail', (),
             {
                 'language_slug': self.slug,
             }
@@ -1338,7 +1338,7 @@ class MonsterType(models.Model):
     @models.permalink
     def get_absolute_url(self):
         return (
-            'dndtools.dnd.views.monster_type_detail', (),
+            'monster_type_detail', (),
             {
                 'slug': self.slug,
             }
@@ -1373,7 +1373,7 @@ class MonsterSubtype(models.Model):
     @models.permalink
     def get_absolute_url(self):
         return (
-            'dndtools.dnd.views.monster_subtype_detail', (),
+            'monster_subtype_detail', (),
             {
                 'slug': self.slug,
             }
@@ -1571,7 +1571,7 @@ class Monster(models.Model):
     @models.permalink
     def get_absolute_url(self):
         return (
-            'dndtools.dnd.views.monster_detail', (),
+            'monster_detail', (),
             {
                 'monster_slug': self.slug,
                 'monster_id': self.id,
@@ -1702,7 +1702,7 @@ class RaceType(models.Model):
     @models.permalink
     def get_absolute_url(self):
         return (
-            'dndtools.dnd.views.race_type_detail', (),
+            'race_type_detail', (),
             {
                 'race_type_slug': self.slug,
             }
@@ -1873,7 +1873,7 @@ class Race(models.Model):
     @models.permalink
     def get_absolute_url(self):
         return (
-            'dndtools.dnd.views.race_detail', (),
+            'race_detail', (),
             {
                 'race_slug': self.slug,
                 'race_id': self.id,
@@ -2167,7 +2167,7 @@ class Item(models.Model):
     @models.permalink
     def get_absolute_url(self):
         return (
-            'dndtools.dnd.views.item_detail', (),
+            'item_detail', (),
             {
                 'item_slug': self.slug,
                 'item_id': self.id,
@@ -2292,7 +2292,7 @@ class Rule(models.Model):
     @models.permalink
     def get_absolute_url(self):
         return (
-            'dndtools.dnd.views.rule_detail', (),
+            'rule_detail', (),
             {
                 'rule_slug': self.slug,
                 'rule_id': self.id,

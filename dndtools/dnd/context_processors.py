@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from dndtools.dnd.menu import MenuItem
 from dndtools.dnd.models import NewsEntry
 
 
@@ -35,4 +36,10 @@ def is_mobile(request):
 def is_admin(request):
     return {
         'is_admin': request.user.is_staff and request.user.is_active,
+    }
+
+
+def menu_constants(request):
+    return {
+        'MenuItem': MenuItem
     }

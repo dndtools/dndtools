@@ -67,6 +67,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'dndtools.dnd.context_processors.disable_social',
     'dndtools.dnd.context_processors.is_mobile',
     'dndtools.dnd.context_processors.is_admin',
+    'dndtools.dnd.context_processors.menu_constants',
     )
 
 ROOT_URLCONF = 'dndtools.urls'

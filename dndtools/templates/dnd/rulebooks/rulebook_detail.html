@@ -1,0 +1,45 @@
+{% extends "dnd/rulebooks/rulebooks_layout.html" %}
+
+{% load custom_tags %}
+
+{% block title %}{{ rulebook.name }} &ndash; Rulebooks{% endblock %}
+
+{% block breadcrumbs %}
+    &raquo; <a href="{% url rulebook_list %}">Rulebooks</a>
+    &raquo; <a href="{{ dnd_edition.get_absolute_url }}">{{ dnd_edition.name }}</a>
+    &raquo; <a href="{{ rulebook.get_absolute_url }}">{{ rulebook.name }}</a>
+{% endblock %}
+
+{% block sidebar %}
+{{ block.super }}
+<h3>In this rulebook</h3>
+
+<ul>
+  <li><a href="{% url spells_in_rulebook rulebook_slug=rulebook.slug rulebook_id=rulebook.id %}">Spells</a></li>
+  <li><a href="{% url feats_in_rulebook rulebook_slug=rulebook.slug rulebook_id=rulebook.id %}">Feats</a></li>
+  <li><a href="{% url character_classes_in_rulebook rulebook_slug=rulebook.slug rulebook_id=rulebook.id %}">Classes</a></li>
+  <li><a href="{% url skills_in_rulebook rulebook_slug=rulebook.slug rulebook_id=rulebook.id %}">Skills</a></li>
+  <li><a href="{% url items_in_rulebook rulebook_slug=rulebook.slug rulebook_id=rulebook.id %}">Items</a></li>
+  <li><a href="{% url races_in_rulebook rulebook_slug=rulebook.slug rulebook_id=rulebook.id %}">Races</a></li>
+</ul>
+
+{% endblock %}
+
+{% block admin_edit %}<a href="{% url admin:dnd_rulebook_change rulebook.id %}">EDIT</a>{% endblock %}
+
+{% block content %}
+
+
+<h2>{{ rulebook.name }}</h2>
+{% if rulebook.year %}({{ rulebook.year }}{% endif %}
+
+<div class="nice-textile">
+<p>
+  {% if rulebook.image %}
+        <span class="right"><img src="{% media rulebook.image.name "timestamp" %}" alt="{{ rulebook.name }}" /></span>
+  {% endif %}
+  {{ rulebook.description|linebreaksbr }}
+</p>
+</div>
+
+{% endblock %}

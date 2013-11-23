@@ -1,0 +1,137 @@
+{% extends "dnd/monsters/monster_layout.html" %}
+
+{% load custom_filters %}
+
+{% block title %}{{ monster.name }} &ndash; Monster{% endblock %}
+
+{% block breadcrumbs %}
+    &raquo; <a href="{% url monster_index  %}">Monsters</a>
+    &raquo; <a href="{% url monsters_in_rulebook rulebook_slug=rulebook.slug rulebook_id=rulebook.id  %}">{{ rulebook.name }}</a> (
+    <a href="{{ rulebook.get_absolute_url }}">book</a>)
+    &raquo; <a href="{{ monster.get_absolute_url }}">{{ monster.name }}</a>
+{% endblock %}
+
+{% block admin_edit %}<a href="{% url admin:dnd_monster_change monster.id %}">EDIT</a>{% endblock %}
+
+{% block content %}
+
+    <h2>{{ monster.name }}</h2>
+    (
+    <a href="{{ rulebook.get_absolute_url }}">{{ rulebook.name }}</a>{% if monster.page != None %},  p. {{ monster.page }}{% endif %})
+    <br/>
+    <br/>
+
+    <div class="close-paragraphs">
+        <p>
+            <strong>{{ monster.size }} {{ monster.type.name }}
+                {% if monster_subtypes %}
+                    ({% for subtype in monster_subtypes %}{% if not forloop.first %}
+                    , {% endif %}{{ subtype.name }}{% endfor %})
+                {% endif %}
+            </strong>
+        </p>
+
+        <p><strong>Hit dice:</strong> {{ monster.hit_dice }}</p>
+
+        <p><strong>Initiative:</strong> {{ monster.initiative }}</p>
+
+        <p>
+            <strong>Armor class:</strong> {{ monster.armor_class }},
+            touch {{ monster.touch_armor_class|empty_as_dash }},
+            flat-footed {{ monster.flat_footed_armor_class|empty_as_dash }}
+        </p>
+
+        <p><strong>Base Attack/Grapple:</strong> {{ monster.base_attack|plus_minus }}/{{ monster.grapple|plus_minus }} </p>
+
+        <p><strong>Attack:</strong> {{ monster.attack }} </p>
+
+        <p><strong>Full Attack:</strong> {{ monster.full_attack }} </p>
+
+        <p><strong>Space/Reach:</strong> {{ monster.space }} ft./{{ monster.reach }} ft.</p>
+
+        {% if monster.special_attacks %}
+            <p><strong>Special Attacks:</strong> {{ monster.special_attacks }}</p>
+        {% endif %}
+
+        {% if monster.special_qualities %}
+            <p><strong>Special Qualities:</strong> {{ monster.special_qualities }}</p>
+        {% endif %}
+
+        <p>
+            <strong>Saves:</strong>
+            Fort {{ monster.fort_save|plus_minus }}
+            {% if monster.fort_save_extra %}({{ monster.fort_save_extra }}){% endif %}
+            Ref {{ monster.reflex_save|plus_minus }}
+            {% if monster.reflex_save_extra %}({{ monster.reflex_save_extra }}){% endif %}
+            Will {{ monster.will_save|plus_minus }}
+            {% if monster.will_save_extra %}({{ monster.will_save_extra }}){% endif %}
+        </p>
+
+        <p>
+            <strong>Abilities:</strong>
+            Str {{ monster.str }},
+            Dex {{ monster.dex }},
+            Con {{ monster.con|empty_as_dash }},
+            Int {{ monster.int }},
+            Wis {{ monster.wis }},
+            Cha {{ monster.cha }}
+        </p>
+
+        {% if monster_skills %}
+            <p>
+                <strong>Skills:</strong>
+                {% for monster_skill in monster_skills %}
+                    <a href="{{ monster_skill.skill.get_absolute_url }}">{{ monster_skill.skill.name }}</a>
+                    {% if monster_skill.extra %}({{ monster_skill.extra }}){% endif %}
+                    {{ monster_skill.ranks|plus_minus }}{% if not forloop.last %}, {% endif %}
+                {% endfor %}
+            </p>
+        {% endif %}
+
+        {% if monster_feats %}
+            <p>
+                <strong>Feats:</strong>
+                {% for monster_feat in monster_feats %}{% if not forloop.first %}, {% endif %}
+                    <a href="{{ monster_feat.feat.get_absolute_url }}">{{ monster_feat.feat.name }}</a>{% if monster_feat.extra %} ({{ monster_feat.extra }}){% endif %}{% endfor %}
+            </p>
+        {% endif %}
+
+        {% if monster.environment %}
+            <p><strong>Environment:</strong> {{ monster.environment }}</p>
+        {% endif %}
+
+        {% if monster.organization %}
+            <p><strong>Organization:</strong> {{ monster.organization }}</p>
+        {% endif %}
+
+        <p><strong>Challenge Rating:</strong> {{ monster.challenge_rating }}</p>
+
+        {% if monster.treasure %}
+            <p><strong>Treasure:</strong> {{ monster.treasure }}</p>
+        {% endif %}
+
+        {% if monster.alignment %}
+            <p><strong>Alignment:</strong> {{ monster.alignment }}</p>
+        {% endif %}
+
+        {% if monster.advancement %}
+            <p><strong>Advancement:</strong> {{ monster.advancement }}</p>
+        {% endif %}
+
+        {% if monster.level_adjustment %}
+            <p><strong>Level adjustment:</strong> {{ monster.level_adjustment|plus_minus }}</p>
+        {% endif %}
+    </div>
+
+    <br/>
+
+    <div class="nice-textile">
+
+        {{ monster.description_html|safe }}
+
+        <h3>Combat</h3>
+
+        {{ monster.combat_html|safe }}
+    </div>
+
+{% endblock %}

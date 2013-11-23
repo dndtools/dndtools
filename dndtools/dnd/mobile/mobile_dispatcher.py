@@ -6,6 +6,7 @@ from django.core.urlresolvers import reverse
 
 class MobileDispatcher(object):
     def __init__(self):
+        # TODO autodispatch
         self.dispatch_methods = {}
 
         for method_name in dir(self):
@@ -27,10 +28,6 @@ class MobileDispatcher(object):
     @staticmethod
     def _dispatch_feat_index(args, kwargs):
         return reverse('feat_index_mobile')
-
-    @staticmethod
-    def _dispatch_feat_list_by_rulebook(args, kwargs):
-        return reverse('feat_list_by_rulebook_mobile')
 
     @staticmethod
     def _dispatch_feat_category_list(args, kwargs):

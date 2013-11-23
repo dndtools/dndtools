@@ -1,13 +1,14 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
+from dndtools.dnd.menu import menu_item, submenu_item, MenuItem
 from dndtools.dnd.dnd_paginator import DndPaginator
 from dndtools.dnd.filters import DeityFilter
 from dndtools.dnd.models import Deity
-from dndtools.dnd.views import menu_item, submenu_item
 
 
-@menu_item("deities")
+@menu_item(MenuItem.CHARACTER_OPTIONS)
+@submenu_item(MenuItem.CharacterOptions.DEITIES)
 def deity_list(request):
     f = DeityFilter(request.GET, queryset=Deity.objects.all())
 
@@ -25,7 +26,8 @@ def deity_list(request):
                               }, context_instance=RequestContext(request), )
 
 
-@menu_item("deities")
+@menu_item(MenuItem.CHARACTER_OPTIONS)
+@submenu_item(MenuItem.CharacterOptions.DEITIES)
 def deity_detail(request, deity_slug):
     # fetch the class
     deity = get_object_or_404(Deity.objects.select_related('favored_weapon', 'favored_weapon__rulebook'), slug=deity_slug)

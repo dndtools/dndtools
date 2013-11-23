@@ -1,0 +1,31 @@
+{% extends "dnd/character_classes/character_class_layout.html" %}
+
+{% load custom_filters %}
+
+{% block title %}Classes in {{ rulebook.name }}{% endblock %}
+
+{% block breadcrumbs %}
+    &raquo; <a href="{% url character_class_list %}">Classes</a>
+    &raquo; <a href="{% url character_classes_in_rulebook rulebook_slug=rulebook.slug rulebook_id=rulebook.id  %}">{{ rulebook.name }}</a> (<a href="{{ rulebook.get_absolute_url }}">book</a>)
+{% endblock %}
+
+{% block content %}
+
+<h2>Classes in {{ rulebook.name }}</h2>
+
+<table class="common">
+<tr>
+  <th>Class name</th>
+  <th>Prestige</th>
+</tr>
+
+{% for character_class in class_list %}
+    <tr>
+        <td><a href="{{ character_class.get_absolute_url }}">{{ character_class.name }}</a></td>
+        <td>{{ character_class.prestige|boolean_as_img }}</td>
+    </tr>
+{% endfor %}
+
+</table>
+
+{% endblock %}

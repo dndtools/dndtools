@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import get_object_or_404, render_to_response
 from django.template import RequestContext
+from dndtools.dnd.menu import menu_item
 from dndtools.dnd.filters import CharacterClassFilter
 from dndtools.dnd.mobile.dnd_paginator import DndMobilePaginator
 from dndtools.dnd.mobile.views import permanent_redirect_object_mobile
 from dndtools.dnd.models import Rulebook, Spell, CharacterClass, CharacterClassVariant
-from dndtools.dnd.views import permanent_redirect_view, is_3e_edition, menu_item
+from dndtools.dnd.views import permanent_redirect_view, is_3e_edition
 
 
 @menu_item("classes")

@@ -1,0 +1,18 @@
+{% extends "dnd/monsters/monster_layout.html" %}
+
+{#{% block extra_link %}<link rel="canonical" href="{% url monsters_in_rulebook rulebook_slug=rulebook.slug rulebook_id=rulebook.id  %}" />{% endblock %}#}
+
+{% block title %}Monsters in {{ rulebook.name }}{% endblock %}
+
+{% block breadcrumbs %}
+    &raquo; <a href="{% url monster_index %}">monsters</a>
+    &raquo; <a href="{% url monsters_in_rulebook rulebook_slug=rulebook.slug rulebook_id=rulebook.id  %}">{{ rulebook.name }}</a> (<a href="{{ rulebook.get_absolute_url }}">book</a>)
+{% endblock %}
+
+{% block content %}
+
+    <h2>Monsters in {{ rulebook.name }}</h2>
+
+    {% include "dnd/monsters/monster_table.html" %}
+
+{% endblock %}

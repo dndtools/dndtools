@@ -1,0 +1,20 @@
+{% extends "dnd/rules/rule_layout.html" %}
+
+{% block extra_link %}{{ paginator.print_rel_prev_next }}{{ block.super }}{% endblock %}
+{% block extra_meta %}{% include "dnd/meta_noindex.html" %}{% endblock %}
+
+{% block title %}Rules{% endblock %}
+
+{% block breadcrumbs %}
+    &raquo; <a href="{% url rule_list  %}">Rules</a>
+{% endblock %}
+
+{% block content %}
+
+<h2>Rules</h2>
+
+{% include "dnd/filter_form.html" %}
+
+{% include "dnd/rules/rule_table.html" %}
+
+{% endblock %}

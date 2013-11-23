@@ -1,0 +1,63 @@
+<div id="menus">
+    <div id="menubar">
+        <ul id="menu">
+            <li{% if request.menu_item == MenuItem.RULEBOOKS %} class="selected arrow"{% endif %} id="menu_{{ MenuItem.RULEBOOKS }}"><a href="{% url rulebook_list %}">Rulebooks</a></li>
+            <li{% if request.menu_item == MenuItem.CHARACTER_OPTIONS %} class="selected arrow"{% endif %} id="menu_{{ MenuItem.CHARACTER_OPTIONS }}"><a href="{% url character_class_list %}">Character Options</a></li>
+            <li{% if request.menu_item == MenuItem.MAGIC %} class="selected arrow"{% endif %} id="menu_{{ MenuItem.MAGIC }}"><a href="{% url spell_index %}">Magic</a></li>
+            <li{% if request.menu_item == MenuItem.BESTIARY %} class="selected arrow"{% endif %} id="menu_{{ MenuItem.BESTIARY }}"><a href="{% url race_index %}">Bestiary</a></li>
+            <li{% if request.menu_item == MenuItem.ITEMS %} class="selected arrow"{% endif %} id="menu_{{ MenuItem.ITEMS }}"><a href="{% url item_index %}">Items</a></li>
+            <li{% if request.menu_item == MenuItem.CONTACTS %} class="selected arrow"{% endif %} id="menu_{{ MenuItem.CONTACTS }}"><a href="{% url contact %}">Contacts</a></li>
+        </ul>
+    </div>
+    <div id="submenubar">
+        <ul id="submenu_{{ MenuItem.RULEBOOKS }}"{% if request.menu_item == MenuItem.RULEBOOKS %} class="enabled"{% endif %}>
+            <li{% if request.submenu_item == MenuItem.Rulebooks.RULEBOOKS %} class="selected"{% endif %}><a href="{% url rulebook_list %}">All</a></li>
+            <li{% if request.submenu_item == MenuItem.Rulebooks.EDITIONS %} class="selected"{% endif %}><a href="{% url edition_list %}">Editions</a></li>
+            <li{% if request.submenu_item == MenuItem.Rulebooks.CORE_3_5 %} class="selected"{% endif %}><a href="{% url edition_detail edition_slug="core-35" edition_id=1 %}">3.5 Core</a></li>
+            <li{% if request.submenu_item == MenuItem.Rulebooks.SUPPLEMENTS_3_5 %} class="selected"{% endif %}><a href="{% url edition_detail edition_slug="supplementals-35" edition_id=5 %}">3.5 Supplements</a></li>
+            <li{% if request.submenu_item == MenuItem.Rulebooks.DRAGONLANCE_3_5 %} class="selected"{% endif %}><a href="{% url edition_detail edition_slug="dragonlance-35" edition_id=9 %}">3.5 Supplements</a></li>
+            <li{% if request.submenu_item == MenuItem.Rulebooks.EBERRON_3_5 %} class="selected"{% endif %}><a href="{% url edition_detail edition_slug="eberron-35" edition_id=3 %}">3.5 Eberron</a></li>
+            <li{% if request.submenu_item == MenuItem.Rulebooks.FORGOTTEN_REALMS_3_5 %} class="selected"{% endif %}><a href="{% url edition_detail edition_slug="forgotten-realms-35" edition_id=4 %}">3.5 Forgotten Realms</a></li>
+            <li{% if request.submenu_item == MenuItem.Rulebooks.RULES %} class="selected"{% endif %}><a href="{% url rule_list %}">Rules</a></li>
+        </ul>
+        <ul id="submenu_{{ MenuItem.CHARACTER_OPTIONS }}"{% if request.menu_item == MenuItem.CHARACTER_OPTIONS %} class="enabled"{% endif %}>
+            <li{% if request.submenu_item == MenuItem.CharacterOptions.CLASSES %} class="selected"{% endif %}><a href="{% url character_class_list %}">Classes</a></li>
+            <li{% if request.submenu_item == MenuItem.CharacterOptions.FEATS %} class="selected"{% endif %}><a href="{% url feat_index %}">Feats</a></li>
+            <li{% if request.submenu_item == MenuItem.CharacterOptions.FEAT_CATEGORIES %} class="selected"{% endif %}><a href="{% url feat_category_list %}">Feat Categories</a></li>
+            <li{% if request.submenu_item == MenuItem.CharacterOptions.TRAITS %} class="selected"{% endif %}><a href="{% url feat_category_detail category_slug="trait" %}">Traits</a></li>
+            <li{% if request.submenu_item == MenuItem.CharacterOptions.FLAWS %} class="selected"{% endif %}><a href="{% url feat_category_detail category_slug="flaw" %}">Flaws</a></li>
+            <li{% if request.submenu_item == MenuItem.CharacterOptions.SKILLS %} class="selected"{% endif %}><a href="{% url skill_list %}">Skills</a></li>
+            <li{% if request.submenu_item == MenuItem.CharacterOptions.SKILL_TRICKS %} class="selected"{% endif %}><a href="{% url feat_category_detail category_slug="skill-trick" %}">Skill Tricks</a></li>
+            <li{% if request.submenu_item == MenuItem.CharacterOptions.DEITIES %} class="selected"{% endif %}><a href="{% url deity_list %}">Deities</a></li>
+            <li{% if request.submenu_item == MenuItem.CharacterOptions.LANGUAGES %} class="selected"{% endif %}><a href="{% url language_index %}">Languages</a></li>
+        </ul>
+        <ul id="submenu_{{ MenuItem.MAGIC }}"{% if request.menu_item == MenuItem.MAGIC %} class="enabled"{% endif %}>
+            <li{% if request.submenu_item == MenuItem.Magic.SPELLS %} class="selected"{% endif %}><a href="{% url spell_index %}">Spells</a></li>
+            <li{% if request.submenu_item == MenuItem.Magic.SCHOOLS %} class="selected"{% endif %}><a href="{% url spell_school_list %}">Spell Schools</a></li>
+            <li{% if request.submenu_item == MenuItem.Magic.DESCRIPTORS %} class="selected"{% endif %}><a href="{% url spell_descriptor_list %}">Descriptors</a></li>
+            <li{% if request.submenu_item == MenuItem.Magic.SHADOW_CASTING %} class="selected"{% endif %}><span class="disabled" title="Not yet">Shadow Casting</span></li>
+            <li{% if request.submenu_item == MenuItem.Magic.INVOCATIONS %} class="selected"{% endif %}><span class="disabled" title="Not yet">Invocations</span></li>
+            <li{% if request.submenu_item == MenuItem.Magic.PSIONICS %} class="selected"{% endif %}><span class="disabled" title="Not yet">Psionics</span></li>
+            <li{% if request.submenu_item == MenuItem.Magic.AURAS %} class="selected"{% endif %}><span class="disabled" title="Not yet">Auras</span></li>
+            <li{% if request.submenu_item == MenuItem.Magic.MANEUVERS %} class="selected"{% endif %}><span class="disabled" title="Not yet">Maneuvers</span></li>
+            <li{% if request.submenu_item == MenuItem.Magic.DOMAINS %} class="selected"{% endif %}><a href="{% url spell_domain_list %}">Domains</a></li>
+        </ul>
+        <ul id="submenu_{{ MenuItem.BESTIARY }}"{% if request.menu_item == MenuItem.BESTIARY %} class="enabled"{% endif %}>
+            <li{% if request.submenu_item == MenuItem.Bestiary.RACES %} class="selected"{% endif %}><a href="{% url race_index %}">Races</a></li>
+            <li{% if request.submenu_item == MenuItem.Bestiary.RACE_TYPES %} class="selected"{% endif %}><a href="{% url race_type_index %}">Race Types</a></li>
+            <li{% if request.submenu_item == MenuItem.Bestiary.MONSTERS %} class="selected"{% endif %}><a href="{% url monster_index %}">Monsters</a></li>
+            <li{% if request.submenu_item == MenuItem.Bestiary.MONSTROUS_TYPES %} class="selected"{% endif %}><span class="disabled" title="Not yet">Monstrous Types</span></li>
+            <li{% if request.submenu_item == MenuItem.Bestiary.MONSTROUS_TRAITS %} class="selected"{% endif %}><span class="disabled" title="Not yet">Monstrous Traits</span></li>
+            <li{% if request.submenu_item == MenuItem.Bestiary.TEMPLATES %} class="selected"{% endif %}><span class="disabled" title="Not yet">Templates</span></li>
+        </ul>
+        <ul id="submenu_{{ MenuItem.ITEMS }}"{% if request.menu_item == MenuItem.ITEMS %} class="enabled"{% endif %}>
+            <li{% if request.submenu_item == MenuItem.Items.MAGICAL %} class="selected"{% endif %}><a href="{% url item_index %}">Magical</a></li>
+            <li{% if request.submenu_item == MenuItem.Items.MUNDANE_ALCHEMICAL %} class="selected"{% endif %}><span class="disabled" title="Not yet">Mundane / Alchemical</span></li>
+        </ul>
+        <ul id="submenu_{{ MenuItem.CONTACTS }}"{% if request.menu_item == MenuItem.CONTACTS %} class="enabled"{% endif %}>
+            <li{% if request.submenu_item == MenuItem.Contacts.CONTACT_US %} class="selected"{% endif %}><a href="{% url contact %}">Contact Us</a></li>
+            <li{% if request.submenu_item == MenuItem.Contacts.NEWS %} class="selected"{% endif %}><a href="{% url index %}">News</a></li>
+            <li{% if request.submenu_item == MenuItem.Contacts.STAFF %} class="selected"{% endif %}><a href="{% url staff %}">Staff</a></li>
+        </ul>
+    </div>
+</div>

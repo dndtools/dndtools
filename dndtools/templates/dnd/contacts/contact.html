@@ -1,0 +1,31 @@
+{% extends "dnd/contacts/contact_layout.html" %}
+
+{% block content %}
+
+    {{ debug }}
+
+  <p>Hi, if you want to leave a feedback, please, feel free to do so. If you want to criticise, please, say what you do not like and how you would
+  like it better. We read all the messages and even if it takes some time to work them in, we consider every one.
+  </p>
+
+  <form action="{% url contact %}" method="post">{% csrf_token %}
+    <div class="form_settings">
+      {% for field in form %}
+        <p>
+          {{ field.errors }}
+          {% if field.field.required %}
+            <span class="required">{{ field.label_tag }}</span>
+          {% else %}
+            <span>{{ field.label_tag }}</span>
+          {% endif %}
+          {{ field }}
+          {% if field.help_text %} <small>{{ field.help_text }}</small> {% endif %}
+        </p>
+      {% endfor %}
+      <p style="padding-top: 15px">
+        <span>&nbsp;</span><input class="submit" type="submit" name="contact_submitted" value="submit"/>
+      </p>
+    </div>
+  </form>
+
+{% endblock %}

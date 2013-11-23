@@ -3,12 +3,13 @@ from math import ceil
 
 from django.shortcuts import get_object_or_404, render_to_response
 from django.template import RequestContext
+from dndtools.dnd.menu import menu_item, submenu_item
 from dndtools.dnd.mobile.views import permanent_redirect_object_mobile
 from dndtools.dnd.utilities import int_with_commas
 from dndtools.dnd.mobile.dnd_paginator import DndMobilePaginator
 from dndtools.dnd.filters import ItemFilter
 from dndtools.dnd.models import Rulebook, Item
-from dndtools.dnd.views import is_3e_edition, menu_item, submenu_item, permanent_redirect_view
+from dndtools.dnd.views import is_3e_edition, permanent_redirect_view
 
 
 @menu_item("items")

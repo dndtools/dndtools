@@ -1,0 +1,67 @@
+{% extends "dnd/races/race_layout.html" %}
+
+{% load custom_filters %}
+
+{% block title %}{{ race_type.name }} &ndash; Race Types{% endblock %}
+
+{% block breadcrumbs %}
+    &raquo; <a href="{% url race_index %}">Races</a>
+    &raquo; <a href="{% url race_type_index %}">Types</a>
+    &raquo; <a href="{{ race_type.get_absolute_url }}">{{ race_type.name }}</a>
+{% endblock %}
+
+{% block admin_edit %}<a href="{% url admin:dnd_racetype_change race_type.id %}">EDIT</a>{% endblock %}
+
+{% block content %}
+
+    <h2>{{ race_type.name }}</h2>
+
+    <table class="race-attributes">
+        <tr class="separator">
+            <th>Hit Die:</th>
+            <td>
+                d{{ race_type.hit_die_size }}
+            </td>
+        </tr>
+        <tr>
+            <th>Base Attack:</th>
+            <td>
+                {% if race_type.base_attack_type == BaseAttackType.FIGHTER %}
+                    Fighter (as HD)
+                {% endif %}
+                {% if race_type.base_attack_type == BaseAttackType.CLERIC %}
+                    Cleric (HD x 3/4)
+                {% endif %}
+                {% if race_type.base_attack_type == BaseAttackType.WIZARD %}
+                    Wizard (HD x 1/2)
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <th>Fort Save:</th>
+            <td>
+                {% if race_type.base_fort_save_type == BaseSaveType.BAD %}Bad{% endif %}
+                {% if race_type.base_fort_save_type == BaseSaveType.GOOD %}Good{% endif %}
+            </td>
+        </tr>
+        <tr>
+            <th>Reflex Save:</th>
+            <td>
+                {% if race_type.base_reflex_save_type == BaseSaveType.BAD %}Bad{% endif %}
+                {% if race_type.base_reflex_save_type == BaseSaveType.GOOD %}Good{% endif %}
+            </td>
+        </tr>
+        <tr>
+            <th>Will Save:</th>
+            <td>
+                {% if race_type.base_will_save_type == BaseSaveType.BAD %}Bad{% endif %}
+                {% if race_type.base_will_save_type == BaseSaveType.GOOD %}Good{% endif %}
+            </td>
+        </tr>
+    </table>
+
+    <h3>Races with this Type</h3>
+
+    {% include "dnd/races/race_table.html" %}
+
+{% endblock %}
