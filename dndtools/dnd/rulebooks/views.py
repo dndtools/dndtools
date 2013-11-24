@@ -60,7 +60,7 @@ def edition_detail(request, edition_slug, edition_id):
         request.submenu_item = MenuItem.Rulebooks.CORE_3_5
     elif dnd_edition.slug == "supplementals-35":
         request.submenu_item = MenuItem.Rulebooks.SUPPLEMENTS_3_5
-    elif dnd_edition.slug == "dragonlance-35":
+    elif dnd_edition.slug == "dragonlance":
         request.submenu_item = MenuItem.Rulebooks.DRAGONLANCE_3_5
     elif dnd_edition.slug == "eberron-35":
         request.submenu_item = MenuItem.Rulebooks.EBERRON_3_5
@@ -94,7 +94,7 @@ def rulebook_detail(request, edition_slug, edition_id, rulebook_slug, rulebook_i
         request.submenu_item = MenuItem.Rulebooks.CORE_3_5
     elif rulebook.dnd_edition.slug == "supplementals-35":
         request.submenu_item = MenuItem.Rulebooks.SUPPLEMENTS_3_5
-    elif rulebook.dnd_edition.slug == "dragonlance-35":
+    elif rulebook.dnd_edition.slug == "dragonlance":
         request.submenu_item = MenuItem.Rulebooks.DRAGONLANCE_3_5
     elif rulebook.dnd_edition.slug == "eberron-35":
         request.submenu_item = MenuItem.Rulebooks.EBERRON_3_5

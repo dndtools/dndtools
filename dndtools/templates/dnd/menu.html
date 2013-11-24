@@ -16,7 +16,7 @@
             <li{% if request.submenu_item == MenuItem.Rulebooks.EDITIONS %} class="selected"{% endif %}><a href="{% url edition_list %}">Editions</a></li>
             <li{% if request.submenu_item == MenuItem.Rulebooks.CORE_3_5 %} class="selected"{% endif %}><a href="{% url edition_detail edition_slug="core-35" edition_id=1 %}">3.5 Core</a></li>
             <li{% if request.submenu_item == MenuItem.Rulebooks.SUPPLEMENTS_3_5 %} class="selected"{% endif %}><a href="{% url edition_detail edition_slug="supplementals-35" edition_id=5 %}">3.5 Supplements</a></li>
-            <li{% if request.submenu_item == MenuItem.Rulebooks.DRAGONLANCE_3_5 %} class="selected"{% endif %}><a href="{% url edition_detail edition_slug="dragonlance-35" edition_id=9 %}">3.5 Supplements</a></li>
+            <li{% if request.submenu_item == MenuItem.Rulebooks.DRAGONLANCE_3_5 %} class="selected"{% endif %}><a href="{% url edition_detail edition_slug="dragonlance-35" edition_id=9 %}">3.5 Dragonlance</a></li>
             <li{% if request.submenu_item == MenuItem.Rulebooks.EBERRON_3_5 %} class="selected"{% endif %}><a href="{% url edition_detail edition_slug="eberron-35" edition_id=3 %}">3.5 Eberron</a></li>
             <li{% if request.submenu_item == MenuItem.Rulebooks.FORGOTTEN_REALMS_3_5 %} class="selected"{% endif %}><a href="{% url edition_detail edition_slug="forgotten-realms-35" edition_id=4 %}">3.5 Forgotten Realms</a></li>
             <li{% if request.submenu_item == MenuItem.Rulebooks.RULES %} class="selected"{% endif %}><a href="{% url rule_list %}">Rules</a></li>
