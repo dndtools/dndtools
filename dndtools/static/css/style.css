@@ -192,7 +192,7 @@ ul#menu li, div#submenubar ul li {
     list-style: none;
 }
 
-ul#menu li a {
+ul#menu li a, ul#menu li span.disabled {
     letter-spacing: 0.1em;
     font: normal 100% 'lucida sans unicode', arial, sans-serif;
     display: block;
@@ -220,7 +220,7 @@ div#submenubar ul li a, div#submenubar ul li span.disabled {
     text-decoration: none;
     background: transparent;
 }
-div#submenubar ul li span.disabled {
+div#submenubar ul li span.disabled, div#menubar ul li span.disabled {
     color: gray;
 }
 
