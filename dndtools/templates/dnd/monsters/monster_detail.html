@@ -36,6 +36,20 @@
         <p><strong>Initiative:</strong> {{ monster.initiative }}</p>
 
         <p>
+            <strong>Speed:</strong>
+            {% for speed in monster_speeds %}
+                {% if not forloop.first %}, {% endif %}
+                {% if speed.type.name != "Land" %}
+                    {{ speed.type.name }}
+                {% endif %}
+                {{ speed.speed }}&nbsp;ft.
+                {% if speed.type.extra %}
+                    ({{ speed.type.extra }})
+                {% endif %}
+            {% endfor %}
+        </p>
+
+        <p>
             <strong>Armor class:</strong> {{ monster.armor_class }},
             touch {{ monster.touch_armor_class|empty_as_dash }},
             flat-footed {{ monster.flat_footed_armor_class|empty_as_dash }}
