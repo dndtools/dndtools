@@ -528,6 +528,14 @@ div.nice-textile table tr td {
     text-align: left;
 }
 
+div.nice-textile table.layout, div.nice-textile table.layout tr, div.nice-textile table.layout th, div.nice-textile table.layout td {
+    border: none;
+    padding: 2px;
+    margin: 0;
+    background: none;
+    width: auto;
+}
+
 div.nice-textile p {
     text-align: justify;
 }
