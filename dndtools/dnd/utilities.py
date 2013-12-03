@@ -3,6 +3,7 @@ import re
 from django.utils.html import escape
 import textile
 
+
 def remove_special_chars(s, strict=False):
     if not strict:
         s = re.sub(r'fl +(?=[A-z])', 'fl', s)
@@ -14,6 +15,7 @@ def remove_special_chars(s, strict=False):
     s = re.sub(u'[–—]', "--", s)
     s = re.sub(u'[“”]', '"', s)
     return s
+
 
 def create_links(s):
     """
@@ -28,6 +30,14 @@ def create_links(s):
     """
     return re.sub(r"&quot;((?:[-\w ():]|&#39;)+)&quot;:/?(?![-a-z0-9/]+://)([-a-z0-9/]+)", r'<a href="/\2">\1</a>', s)
 
+
+def create_hr(s):
+    """
+    Replaces ----- (five or more dashes) into <hr/>
+    """
+    return re.sub(u'-{5,}', '<hr/>', s)
+
+
 def update_html_cache_attributes(object, *args):
     for attr_name in args:
         value = getattr(object, attr_name)
@@ -39,14 +49,16 @@ def update_html_cache_attributes(object, *args):
 
         # apply textile
         value = escape(value)
+        value = create_hr(value)
         value = create_links(value)
 
         value = textile.textile(value)
         value = re.sub(r'\[errata\](.*?)\[new\](.*?)\[/errata\]',
-            r'<span class="errata-old">\1</span><span class="errata-new">\2</span>', value)
+                       r'<span class="errata-old">\1</span><span class="errata-new">\2</span>', value)
 
         # set it to '_html'
         setattr(object, '%s_html' % attr_name, value)
+
 
 def int_with_commas(x):
     if type(x) == (type(0.0)):

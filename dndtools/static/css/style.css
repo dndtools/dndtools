@@ -573,3 +573,12 @@ div.close-paragraphs p {
 table.common td.align-right, table.common th.align-right {
     text-align: right;
 }
+
+hr {
+    height: 1px;
+    color: #678;
+    background: #678;
+    font-size: 0;
+    border: 0;
+    margin-bottom: 10px;
+}
