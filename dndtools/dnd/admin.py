@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 from django import forms
-
 from reversion.admin import VersionAdmin
 from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin
+from django.contrib.auth.models import User
 
 from dndtools.dnd.models import (FeatCategory, Skill, SpecialFeatPrerequisite, TextFeatPrerequisite,
                                  FeatSpecialFeatPrerequisite, FeatRequiresFeat, Feat, FeatRequiresSkill,
@@ -14,6 +15,10 @@ from dndtools.dnd.models import (FeatCategory, Skill, SpecialFeatPrerequisite, T
                                  DndEdition, Rulebook, CharacterClass, SpellDescriptor,
                                  SpellSchool, SpellSubSchool, Spell, SpellClassLevel,
                                  Domain, SpellDomainLevel, DomainVariant)
+
+
+class ModifiedUserAdmin(UserAdmin):
+    list_display = ('username', 'email', 'first_name', 'last_name', 'is_active', 'is_staff', 'last_login')
 
 
 class DndEditionAdmin(VersionAdmin):
@@ -371,6 +376,7 @@ class DeityAdmin(VersionAdmin):
     list_display_links = ('name', )
     search_fields = ('name', )
 
+
 admin.site.register(DndEdition, DndEditionAdmin)
 admin.site.register(Rulebook, RulebookAdmin)
 admin.site.register(CharacterClass, CharacterClassAdmin)
@@ -403,3 +409,5 @@ admin.site.register(ItemAuraType, ItemAuraTypeAdmin)
 admin.site.register(ItemActivationType, ItemActivationTypeAdmin)
 admin.site.register(Deity, DeityAdmin)
 admin.site.register(DomainVariant, DomainVariantAdmin)
+admin.site.unregister(User)
+admin.site.register(User, ModifiedUserAdmin)
