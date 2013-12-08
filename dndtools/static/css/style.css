@@ -273,6 +273,14 @@ div#submenubar ul.enabled {
     background: #ffffc0;
     border: 1px solid #ffe87f;
 }
+span.small-warning-bar {
+    display: inline-block;
+    text-align: center;
+    padding: 5px 10px;
+    margin: -10px 0 10px -16px;
+    background: #ffffc0;
+    border: 1px solid #ffe87f;
+}
 
 .sidebar {
     float: right;

@@ -8,13 +8,14 @@ from dndtools.dnd.models import (
 from dndtools.dnd.filters_fields import FeatMultiPrerequisiteFieldFilter
 
 
-def rulebook_choices():
+def rulebook_choices(unknown_entry=True):
     rulebook_choices = [
         (edition.name,
          [(rulebook.slug, rulebook.name)
           for rulebook in edition.rulebook_set.all()])
         for edition in DndEdition.objects.all()]
-    rulebook_choices.insert(0, ('', 'Unknown'))
+    if unknown_entry:
+        rulebook_choices.insert(0, ('', 'Unknown'))
 
     return rulebook_choices
 
@@ -277,17 +278,17 @@ class RulebookFilter(django_filters2.FilterSet):
 class FeatFilter(django_filters2.FilterSet):
     feat_category_choices = [(feat_category.slug, feat_category.name)
                              for feat_category in FeatCategory.objects.all()]
-    feat_category_choices.insert(0, ('', 'Unknown'))
 
     name = django_filters2.CharFilter(
         lookup_type='icontains', label='Feat name'
     )
-    feat_categories__slug = django_filters2.ChoiceFilter(
+    feat_categories__slug = django_filters2.MultipleChoiceFilter(
         choices=feat_category_choices,
         label='Feat category'
     )
-    rulebook__slug = django_filters2.ChoiceFilter(
-        label='Rulebook', choices=rulebook_choices()
+    rulebook__slug = django_filters2.MultipleChoiceFilter(
+        choices=rulebook_choices(unknown_entry=False),
+        label='Rulebook',
     )
     rulebook__dnd_edition__slug = django_filters2.MultipleChoiceFilter(
         choices=edition_choices(unknown_entry=False),

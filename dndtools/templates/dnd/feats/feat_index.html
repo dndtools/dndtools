@@ -13,7 +13,18 @@
 
 <h2>Feats</h2>
 
+<span class="small-warning-bar">
+    Experimental filter form &mdash; <a href="{% url contact %}">let us know</a> what you think about it!
+</span>
 {% include "dnd/filter_form.html" %}
+<script>
+    $('#form').find('select').chosen({
+        allow_single_deselect: true,
+        width: "310px",
+        placeholder_text_multiple: "Select multiple items",
+        placeholder_text_single: "Select single item"
+    });
+</script>
 
 {% include "dnd/feats/feat_table.html" %}
 
