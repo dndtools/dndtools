@@ -17,7 +17,7 @@ def character_class_list_mobile(request):
             'rulebook', 'rulebook__dnd_edition', 'character_class')
     )
 
-    form_submitted = 1 if 'name' in request.GET else 0
+    form_submitted = 1 if '_filter' in request.GET else 0
 
     paginator = DndMobilePaginator(f.qs, request)
 

@@ -20,7 +20,7 @@ def item_index_mobile(request):
 
     paginator = DndMobilePaginator(f.qs, request)
 
-    form_submitted = 1 if 'name' in request.GET else 0
+    form_submitted = 1 if '_filter' in request.GET else 0
 
     return render_to_response('dnd/mobile/items/item_index.html',
                               {

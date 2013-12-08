@@ -11,7 +11,7 @@ from dndtools.dnd.models import Deity
 def deity_list_mobile(request):
     f = DeityFilter(request.GET, queryset=Deity.objects.all())
 
-    form_submitted = 1 if 'name' in request.GET else 0
+    form_submitted = 1 if '_filter' in request.GET else 0
 
     paginator = DndMobilePaginator(f.qs, request)
 

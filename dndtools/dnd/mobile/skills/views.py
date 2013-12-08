@@ -14,7 +14,7 @@ from dndtools.dnd.views import is_3e_edition, permanent_redirect_view
 def skill_list_mobile(request):
     f = SkillFilter(request.GET, queryset=Skill.objects.all())
 
-    form_submitted = 1 if 'name' in request.GET else 0
+    form_submitted = 1 if '_filter' in request.GET else 0
 
     paginator = DndMobilePaginator(f.qs, request)
 

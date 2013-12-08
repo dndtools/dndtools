@@ -16,7 +16,7 @@ def feat_index_mobile(request):
     f = FeatFilter(request.GET, queryset=Feat.objects.select_related(
         'rulebook', 'rulebook__dnd_edition').distinct())
 
-    form_submitted = 1 if 'name' in request.GET else 0
+    form_submitted = 1 if '_filter' in request.GET else 0
 
     paginator = DndMobilePaginator(f.qs, request)
 

@@ -14,7 +14,7 @@ from dndtools.dnd.views import is_3e_edition
 def rule_list(request):
     f = RuleFilter(request.GET, queryset=Rule.objects.all())
 
-    form_submitted = 1 if 'name' in request.GET else 0
+    form_submitted = 1 if '_filter' in request.GET else 0
 
     paginator = DndPaginator(f.qs, request)
 

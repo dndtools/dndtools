@@ -13,7 +13,7 @@ from dndtools.dnd.models import Rulebook, Skill, SkillVariant
 def skill_list(request):
     f = SkillFilter(request.GET, queryset=Skill.objects.all())
 
-    form_submitted = 1 if 'name' in request.GET else 0
+    form_submitted = 1 if '_filter' in request.GET else 0
 
     paginator = DndPaginator(f.qs, request)
 

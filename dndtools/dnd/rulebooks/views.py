@@ -15,7 +15,7 @@ def rulebook_list(request):
     f = RulebookFilter(request.GET, queryset=Rulebook.objects.select_related(
         'dnd_edition'))
 
-    form_submitted = 1 if 'name' in request.GET else 0
+    form_submitted = 1 if '_filter' in request.GET else 0
 
     paginator = DndPaginator(f.qs, request)
 
