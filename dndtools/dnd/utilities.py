@@ -28,7 +28,7 @@ def create_links(s):
 
     wont create link that has anything other than A-z0-9, "(", ")", ":" or space in their name and wont allow for absolute URLs (eg. http://foo.bar)
     """
-    return re.sub(r"&quot;((?:[-\w ():]|&#39;)+)&quot;:/?(?![-a-z0-9/]+://)([-a-z0-9/]+)", r'<a href="/\2">\1</a>', s)
+    return re.sub(r"&quot;((?:[-\w ():/]|&#39;)+)&quot;:/?(?![-a-z0-9/]+://)([-a-z0-9/]+)", r'<a href="/\2">\1</a>', s)
 
 
 def create_hr(s):
