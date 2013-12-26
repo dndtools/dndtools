@@ -81,6 +81,21 @@ def inaccurate_content(request):
 
             email.send()
 
+            # Trello email
+
+            email = EmailMessage(
+                subject='#2 BUGFIXES: %s' % form.cleaned_data['url'],
+                body="Message: %s\n\nUrl: %s\n\nBetter desc:%s\nFrom: %s" % (
+                    form.cleaned_data['message'], form.cleaned_data['url'],
+                    form.cleaned_data['better_description'],
+                    form.cleaned_data['sender']),
+                from_email='mailer@dndtools.eu',
+                to=('dndtoolsbugfixes+fdpadeovxynhkxuyzjqf@boards.trello.com', ),
+                headers=headers,
+            )
+
+            email.send()
+
             # Redirect after POST
             return HttpResponseRedirect(reverse('inaccurate_content_sent'))
 
