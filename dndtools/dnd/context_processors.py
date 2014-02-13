@@ -5,7 +5,15 @@ from dndtools.dnd.models import NewsEntry
 
 def unread_news(request):
     count = 0
+
+    top_news = -1
     if 'top_news' in request.COOKIES:
+        try:
+            top_news = int(request.COOKIES['top_news'])
+        except ValueError:
+            pass
+
+    if top_news >= 0:
         count = len(NewsEntry.objects.filter(enabled=True, pk__gt=request.COOKIES['top_news']))
     else:
         count = len(NewsEntry.objects.filter(enabled=True))
