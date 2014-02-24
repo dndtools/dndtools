@@ -23,12 +23,21 @@ def create_links(s):
 
     &quote;link title&quote;:feats/lords-of-madness--72/aberration-blood--8/
     &quote;link title&quote;:/feats/lords-of-madness--72/aberration-blood--8/
+    &quote;link title&quote;:http://foo.bar/feats/lords-of-madness--72/aberration-blood--8/
+    &quote;link title&quote;:https://foo.bar/feats/lords-of-madness--72/aberration-blood--8/
 
     The usage of "&quote;" instead of quote character itself is because text is escaped first and only then it is textilized.
 
-    wont create link that has anything other than A-z0-9, "(", ")", ":" or space in their name and wont allow for absolute URLs (eg. http://foo.bar)
+    wont create link that has anything other than A-z0-9, "(", ")", ":" or space in their name.
     """
-    return re.sub(r"&quot;((?:[-\w ():/]|&#39;)+)&quot;:/?(?![-a-z0-9/]+://)([-a-z0-9/]+)", r'<a href="/\2">\1</a>', s)
+    s = re.sub(r"&quot;((?:[-\w ():/]|&#39;)+)&quot;:/?(?![-a-z0-9/]+://)([-a-z0-9/]+)", r'<a href="/\2">\1</a>', s)
+    s = re.sub(
+        r'&quot;((?:[-\w ():/]|&#39;)+)&quot;:(https?://(?:(?:[-A-z0-9]+)\.)+(?:[-A-z0-9]+)+/(?:[-A-z0-9/?&=%.;]+))',
+        r'<a href="\2">\1</a>', s)
+    s = re.sub(r'&quot;&quot;:(https?://(?:(?:[-A-z0-9]+)\.)+(?:[-A-z0-9]+)+/(?:[-A-z0-9/?&=%.;]+))',
+               r'<a href="\1">\1</a>', s)
+
+    return s
 
 
 def create_hr(s):
