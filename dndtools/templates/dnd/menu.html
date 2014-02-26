@@ -8,6 +8,8 @@
             <li{% if request.menu_item == MenuItem.ITEMS %} class="selected arrow"{% endif %} id="menu_{{ MenuItem.ITEMS }}"><a href="{% url item_index %}">Items</a></li>
             <li{% if request.menu_item == MenuItem.ME %} class="selected arrow"{% endif %} id="menu_{{ MenuItem.ME }}"><span class="disabled" title="Not yet">My D&amp;D</span></li>
             <li{% if request.menu_item == MenuItem.CONTACTS %} class="selected arrow"{% endif %} id="menu_{{ MenuItem.CONTACTS }}"><a href="{% url contact %}">Contacts</a></li>
+            <li class="android"><a
+                    href="https://play.google.com/store/apps/details?id=com.jellware.dndsheet">Android</a></li>
         </ul>
     </div>
     <div id="submenubar">

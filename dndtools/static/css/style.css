@@ -228,9 +228,30 @@ div#submenubar ul li:first-child a {
     border-left: none;
 }
 
+ul#menu {
+    width: 1077px;
+}
+
 ul#menu li.selected a, ul#menu li.selected a:hover {
     color: #FFF;
     background-color: #1C2C3E;
+}
+
+ul#menu li.android {
+    float: right;
+}
+
+ul#menu li.android a {
+    background: url('android.png') no-repeat center;
+    width: 52px;
+    height: 52px;
+    padding: 0;
+    color: transparent;
+    overflow: hidden;
+}
+
+ul#menu li.android.arrow a {
+    background: url('android-arrow.png') no-repeat center;
 }
 
 ul#menu li.arrow a {
