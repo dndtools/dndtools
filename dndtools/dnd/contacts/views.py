@@ -66,3 +66,14 @@ def staff(request):
                                   'request': request,
                                   'page_body': page_body,
                               }, context_instance=RequestContext(request), )
+
+
+@menu_item(MenuItem.ANDROID)
+def android(request):
+    page_body = StaticPage.objects.get(name='android')
+
+    return render_to_response('dnd/static/android.html',
+                              {
+                                  'request': request,
+                                  'page_body': page_body,
+                              }, context_instance=RequestContext(request), )

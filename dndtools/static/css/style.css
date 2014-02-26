@@ -250,7 +250,12 @@ ul#menu li.android a {
     overflow: hidden;
 }
 
-ul#menu li.android.arrow a {
+ul#menu li.android.selected a, ul#menu li.android.selected a:hover {
+    background: url('android-selected.png') no-repeat center;
+    color: transparent;
+}
+
+ul#menu li.android.arrow a, ul#menu li.android.arrow a:hover {
     background: url('android-arrow.png') no-repeat center;
 }
 

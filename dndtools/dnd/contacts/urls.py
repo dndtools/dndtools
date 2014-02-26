@@ -24,4 +24,10 @@ urlpatterns = patterns(
         'staff',
         name='staff',
     ),
+    # android
+    url(
+        r'^android/$',
+        'android',
+        name='android',
+    ),
 )
