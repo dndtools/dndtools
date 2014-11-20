@@ -1,9 +1,9 @@
 {% extends "dnd/mobile/layout.html" %}
 
 {% block submenu %}
-    <li{% if request.submenu_item == "spells" %} class="selected"{% endif %}><a href="{% url spell_index_mobile %}">Spells</a></li>
-    <li{% if request.submenu_item == "schools" %} class="selected"{% endif %}><a href="{% url spell_school_list_mobile %}">Schools</a></li>
-    <li{% if request.submenu_item == "descriptors" %} class="selected"{% endif %}><a href="{% url spell_descriptor_list_mobile %}">Descriptors</a></li>
-    <li{% if request.submenu_item == "domains" %} class="selected"{% endif %}><a href="{% url spell_domain_list_mobile %}">Domains</a></li>
-    <li{% if request.submenu_item == "by_rulebooks" %} class="selected"{% endif %}><a href="{% url spell_list_by_rulebook_mobile %}">By Rulebooks</a></li>
+    <li{% if request.submenu_item == "spells" %} class="selected"{% endif %}><a href="{% url 'spell_index_mobile' %}">Spells</a></li>
+    <li{% if request.submenu_item == "schools" %} class="selected"{% endif %}><a href="{% url 'spell_school_list_mobile' %}">Schools</a></li>
+    <li{% if request.submenu_item == "descriptors" %} class="selected"{% endif %}><a href="{% url 'spell_descriptor_list_mobile' %}">Descriptors</a></li>
+    <li{% if request.submenu_item == "domains" %} class="selected"{% endif %}><a href="{% url 'spell_domain_list_mobile' %}">Domains</a></li>
+    <li{% if request.submenu_item == "by_rulebooks" %} class="selected"{% endif %}><a href="{% url 'spell_list_by_rulebook_mobile' %}">By Rulebooks</a></li>
 {% endblock %}

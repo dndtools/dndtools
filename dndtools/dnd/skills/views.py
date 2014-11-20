@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import get_object_or_404, render_to_response
 from django.template.context import RequestContext
-from dndtools.dnd.menu import MenuItem, menu_item, submenu_item
-from dndtools.dnd.views import permanent_redirect_object, permanent_redirect_view, is_3e_edition
-from dndtools.dnd.dnd_paginator import DndPaginator
-from dndtools.dnd.filters import SkillFilter
+from dnd.menu import MenuItem, menu_item, submenu_item
+from dnd.views import permanent_redirect_object, permanent_redirect_view, is_3e_edition
+from dnd.dnd_paginator import DndPaginator
+from dnd.filters import SkillFilter
 
-from dndtools.dnd.models import Rulebook, Skill, SkillVariant
+from dnd.models import Rulebook, Skill, SkillVariant
 
 @menu_item(MenuItem.CHARACTER_OPTIONS)
 @submenu_item(MenuItem.CharacterOptions.SKILLS)

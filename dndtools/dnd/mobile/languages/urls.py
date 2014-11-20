@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 
-from django.conf.urls.defaults import patterns, url
+from django.conf.urls import patterns, url
 
 
 urlpatterns = patterns(
-    'dndtools.dnd.mobile.languages.views',
+    'dnd.mobile.languages.views',
 
     # languages
     url(

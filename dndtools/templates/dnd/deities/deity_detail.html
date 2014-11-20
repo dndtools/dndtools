@@ -3,13 +3,13 @@
 {% block title %}{{ deity.name }} &ndash; Deities{% endblock %}
 
 {% block breadcrumbs %}
-    &raquo; <a href="{% url deity_list %}">Deities</a>
+    &raquo; <a href="{% url 'deity_list' %}">Deities</a>
     &raquo; <a href="{{ deity.get_absolute_url }}">{{ deity.name }}</a>
 {% endblock %}
 
 
 {% block admin_edit %}
-    <a href="{% url admin:dnd_deity_change deity.id %}">EDIT</a>
+    <a href="{% url 'admin:dnd_deity_change' deity.id %}">EDIT</a>
 {% endblock %}
 
 {% block content %}

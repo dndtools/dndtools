@@ -15,7 +15,7 @@
 </tr>
 {% for rulebook in rulebook_list %}
 <tr>
-    <td><a href="{% url spells_in_rulebook_mobile rulebook_slug=rulebook.slug rulebook_id=rulebook.id %}">{{ rulebook.name }}</a></td>
+    <td><a href="{% url 'spells_in_rulebook_mobile' rulebook_slug=rulebook.slug rulebook_id=rulebook.id %}">{{ rulebook.name }}</a></td>
     <td><a href="{{ rulebook.dnd_edition.get_absolute_url_mobile }}">{{ rulebook.dnd_edition.name }}</a></td>
 </tr>
 {% endfor %}

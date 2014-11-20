@@ -13,3 +13,13 @@
       $("#form").slideToggle("slow");
     });
 </script>
+{% if not no_chosen %}
+<script>
+    $('#form').find('select').chosen({
+        allow_single_deselect: true,
+        width: "310px",
+        placeholder_text_multiple: "Select multiple items",
+        placeholder_text_single: "Select single item"
+    });
+</script>
+{% endif %}

@@ -5,7 +5,7 @@ from django.db.models import Q
 from django.db.models.sql.constants import QUERY_TERMS
 from django.utils.translation import ugettext_lazy as _
 
-from dndtools.django_filters2.fields import RangeField, LookupTypeField
+from django_filters2.fields import RangeField, LookupTypeField
 
 __all__ = [
     'Filter', 'CharFilter', 'BooleanFilter', 'ChoiceFilter',
@@ -14,7 +14,7 @@ __all__ = [
     'RangeFilter', 'DateRangeFilter', 'AllValuesFilter',
 ]
 
-LOOKUP_TYPES = sorted(QUERY_TERMS.keys())
+LOOKUP_TYPES = sorted(QUERY_TERMS)
 
 class Filter(object):
     creation_counter = 0

@@ -1,24 +1,28 @@
 # -*- coding: utf-8 -*-
 from django import template
 from django.utils.safestring import mark_safe
-from dndtools import settings
-import locale
-from dndtools.dnd.utilities import int_with_commas
+import dndproject.settings
+from dnd.utilities import int_with_commas
 
 
 register = template.Library()
 
 BOOLEAN_MAPPING = {True: 'yes', False: 'no', None: 'unknown', 1: 'yes',
                    0: 'no', '1': 'yes', '0': 'no', u'1': 'yes'}
+
+
 def _boolean_as_img(value):
     try:
         mapped = BOOLEAN_MAPPING[value]
     except Exception:
         mapped = BOOLEAN_MAPPING[None]
 
-    return mark_safe(u'<img src="%simg/admin/icon-%s.gif" alt="%s" class="yes-no-icon" />' % (
-        settings.ADMIN_MEDIA_PREFIX, mapped, mapped))
+    return mark_safe(u'<img src="%simages/icons/icon-%s.gif" alt="%s" class="yes-no-icon" />' % (
+        dndproject.settings.STATIC_URL, mapped, mapped))
+
+
 _boolean_as_img.is_safe = False
+
 
 def _plus_minus(value):
     try:
@@ -31,10 +35,12 @@ def _plus_minus(value):
     except Exception:
         return value
 
+
 def _empty_as_dash(value):
     if value:
         return value
     return mark_safe(u'&mdash;')
+
 
 def _ordinal_number(value):
     if not value:
@@ -54,8 +60,10 @@ def _ordinal_number(value):
 
     return '%d%s' % (value, 'th')
 
+
 def _thousands_separator(value):
     return int_with_commas(value)
+
 
 register.filter('boolean_as_img', _boolean_as_img)
 register.filter('plus_minus', _plus_minus)

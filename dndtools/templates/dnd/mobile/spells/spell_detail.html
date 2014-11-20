@@ -21,7 +21,7 @@
 {% if spellclasslevel_set.count > 0 or spelldomainlevel_set.count > 0 or spell.corrupt_component %}
     <strong>Level:</strong>
     {% for class_level in spellclasslevel_set.all %}
-        <a href="{% url character_class_spells_mobile character_class_slug=class_level.character_class.slug level=class_level.level %}">{{ class_level.character_class.name }} {{ class_level.level }}</a>{% if class_level.extra %} ({{ class_level.extra }}){% endif %},
+        <a href="{% url 'character_class_spells_mobile' character_class_slug=class_level.character_class.slug level=class_level.level %}">{{ class_level.character_class.name }} {{ class_level.level }}</a>{% if class_level.extra %} ({{ class_level.extra }}){% endif %},
     {% endfor %}
     {% for domain_level in spelldomainlevel_set %}
         <a href="{{ domain_level.domain.get_absolute_url_mobile }}">{{ domain_level.domain.name }}</a> {{ domain_level.level }}{% if domain_level.extra %} ({{ domain_level.extra }}){% endif %},

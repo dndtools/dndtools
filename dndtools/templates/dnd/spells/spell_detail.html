@@ -5,14 +5,14 @@
 {% block title %}{{ spell.name }} &ndash; Spell{% endblock %}
 
 {% block breadcrumbs %}
-    &raquo; <a href="{% url spell_index  %}">Spells</a>
-    &raquo; <a href="{% url spells_in_rulebook rulebook_slug=rulebook.slug rulebook_id=rulebook.id  %}">{{ rulebook.name }}</a> (<a href="{{ rulebook.get_absolute_url }}">book</a>)
+    &raquo; <a href="{% url 'spell_index' %}">Spells</a>
+    &raquo; <a href="{% url 'spells_in_rulebook' rulebook_slug=rulebook.slug rulebook_id=rulebook.id %}">{{ rulebook.name }}</a> (<a href="{{ rulebook.get_absolute_url }}">book</a>)
     &raquo; <a href="{{ spell.get_absolute_url }}">{{ spell.name }}</a>
 {% endblock %}
 
 {% block admin_edit %}
-    <a href="{% url admin:dnd_spell_change spell.id %}">EDIT</a>
-    <a href="{% url spell_verify spell_id=spell.id %}" onclick="return window.confirm('Sure? You\'ll be marked as new Verify author');" {% if spell.verified %}title="{{ spell.verified_time }} by {{ spell.verified_author }}"{% endif %}>
+    <a href="{% url 'admin:dnd_spell_change' spell.id %}">EDIT</a>
+    <a href="{% url 'spell_verify' spell_id=spell.id %}" onclick="return window.confirm('Sure? You\'ll be marked as new Verify author');" {% if spell.verified %}title="{{ spell.verified_time }} by {{ spell.verified_author }}"{% endif %}>
         Mark as {% if spell.verified %}re{% endif %}verified {{ spell.verified|boolean_as_img }}
     </a>
 {% endblock %}
@@ -36,7 +36,7 @@
 {% if spellclasslevel_set.count > 0 or spelldomainlevel_set.count > 0 or spell.corrupt_component %}
     <strong>Level:</strong>
     {% for class_level in spellclasslevel_set.all %}
-        <a href="{% url character_class_spells character_class_slug=class_level.character_class.slug level=class_level.level %}">{{ class_level.character_class.name }} {{ class_level.level }}</a>{% if class_level.extra %} ({{ class_level.extra }}){% endif %},
+        <a href="{% url 'character_class_spells' character_class_slug=class_level.character_class.slug level=class_level.level %}">{{ class_level.character_class.name }} {{ class_level.level }}</a>{% if class_level.extra %} ({{ class_level.extra }}){% endif %},
     {% endfor %}
     {% for domain_level in spelldomainlevel_set %}
         <a href="{{ domain_level.domain.get_absolute_url }}">{{ domain_level.domain.name }}</a> {{ domain_level.level }}{% if domain_level.extra %} ({{ domain_level.extra }}){% endif %},

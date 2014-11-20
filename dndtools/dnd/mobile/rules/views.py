@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
-from dndtools.dnd.mobile.views import permanent_redirect_object_mobile
-from dndtools.dnd.models import Rule
-from dndtools.dnd.views import is_3e_edition
+from dnd.mobile.views import permanent_redirect_object_mobile
+from dnd.models import Rule
+from dnd.views import is_3e_edition
 
 
 def rule_detail_mobile(request, rulebook_slug, rulebook_id, rule_slug, rule_id):

@@ -3,21 +3,21 @@
 {% block title %}{{ character_class.name }} &ndash; Class{% endblock %}
 
 {% block breadcrumbs %}
-    &raquo; <a href="{% url character_class_list  %}">Classes</a>
+    &raquo; <a href="{% url 'character_class_list'  %}">Classes</a>
     &raquo; <a href="{{ character_class.get_absolute_url }}">{{ character_class.name }}</a>
 {% endblock %}
 
 {% block extra_link %}
   {{ block.super }}
   {% if use_canonical_link %}
-  <link rel="canonical" href="{% url character_class_detail character_class_slug=character_class.slug %}" />
+  <link rel="canonical" href="{% url 'character_class_detail' character_class_slug=character_class.slug %}" />
   {% endif %}
 {% endblock %}
 
 {% block admin_edit %}
-    <a href="{% url admin:dnd_characterclass_change character_class.id %}">EDIT</a>
+    <a href="{% url 'admin:dnd_characterclass_change' character_class.id %}">EDIT</a>
 {% if selected_variant %}
-    <a href="{% url admin:dnd_characterclassvariant_change selected_variant.id %}">EDIT VARIANT</a>
+    <a href="{% url 'admin:dnd_characterclassvariant_change' selected_variant.id %}">EDIT VARIANT</a>
 {% endif %}
 {% endblock %}
 
@@ -25,7 +25,7 @@
 
 <h2>{{ character_class.name }}</h2>
 {% if selected_variant %}
-<p>(<a href="{% url character_classes_in_rulebook selected_variant.rulebook.slug selected_variant.rulebook.id %}">{{ selected_variant.rulebook.name }}</a> variant, p. {{ selected_variant.page }})</p>
+<p>(<a href="{% url 'character_classes_in_rulebook' selected_variant.rulebook.slug selected_variant.rulebook.id %}">{{ selected_variant.rulebook.name }}</a> variant, p. {{ selected_variant.page }})</p>
 {% endif %}
 
 <div class="nice-textile">
@@ -51,16 +51,16 @@
 <h3>Spells for {{ character_class.name }}</h3>
 
 <ul>
-  <li><a href="{% url character_class_spells character_class_slug=character_class.slug level=0 %}">Level 0</a></li>
-  <li><a href="{% url character_class_spells character_class_slug=character_class.slug level=1 %}">Level 1</a></li>
-  <li><a href="{% url character_class_spells character_class_slug=character_class.slug level=2 %}">Level 2</a></li>
-  <li><a href="{% url character_class_spells character_class_slug=character_class.slug level=3 %}">Level 3</a></li>
-  <li><a href="{% url character_class_spells character_class_slug=character_class.slug level=4 %}">Level 4</a></li>
-  <li><a href="{% url character_class_spells character_class_slug=character_class.slug level=5 %}">Level 5</a></li>
-  <li><a href="{% url character_class_spells character_class_slug=character_class.slug level=6 %}">Level 6</a></li>
-  <li><a href="{% url character_class_spells character_class_slug=character_class.slug level=7 %}">Level 7</a></li>
-  <li><a href="{% url character_class_spells character_class_slug=character_class.slug level=8 %}">Level 8</a></li>
-  <li><a href="{% url character_class_spells character_class_slug=character_class.slug level=9 %}">Level 9</a></li>
+  <li><a href="{% url 'character_class_spells' character_class_slug=character_class.slug level=0 %}">Level 0</a></li>
+  <li><a href="{% url 'character_class_spells' character_class_slug=character_class.slug level=1 %}">Level 1</a></li>
+  <li><a href="{% url 'character_class_spells' character_class_slug=character_class.slug level=2 %}">Level 2</a></li>
+  <li><a href="{% url 'character_class_spells' character_class_slug=character_class.slug level=3 %}">Level 3</a></li>
+  <li><a href="{% url 'character_class_spells' character_class_slug=character_class.slug level=4 %}">Level 4</a></li>
+  <li><a href="{% url 'character_class_spells' character_class_slug=character_class.slug level=5 %}">Level 5</a></li>
+  <li><a href="{% url 'character_class_spells' character_class_slug=character_class.slug level=6 %}">Level 6</a></li>
+  <li><a href="{% url 'character_class_spells' character_class_slug=character_class.slug level=7 %}">Level 7</a></li>
+  <li><a href="{% url 'character_class_spells' character_class_slug=character_class.slug level=8 %}">Level 8</a></li>
+  <li><a href="{% url 'character_class_spells' character_class_slug=character_class.slug level=9 %}">Level 9</a></li>
 </ul>
 
 {% endblock %}

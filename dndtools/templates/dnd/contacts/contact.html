@@ -8,7 +8,7 @@
   like it better. We read all the messages and even if it takes some time to work them in, we consider every one.
   </p>
 
-  <form action="{% url contact %}" method="post">{% csrf_token %}
+  <form action="{% url 'contact' %}" method="post">{% csrf_token %}
     <div class="form_settings">
       {% for field in form %}
         <p>

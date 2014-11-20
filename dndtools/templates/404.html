@@ -5,7 +5,7 @@
 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Error 404</title>
-    <link rel="stylesheet" href="{% media "css/error.css" %}" type="text/css">
+    <link rel="stylesheet" href="{% static "css/error.css" %}" type="text/css">
 
     <style type="text/css">
 
@@ -34,7 +34,7 @@
 
                     <div class="box-left">
 
-                        <img src="{% media "css/error-yoda.jpg" %}" alt="Yoda">
+                        <img src="{% static "css/error-yoda.jpg" %}" alt="Yoda">
 
                     </div>
 
@@ -49,7 +49,7 @@
                         <p>
                             Remember, a Jedi's strength flows from the Force. But beware. Anger, fear, aggression. The dark side are they.
                             Once you start down the dark path, forever will it dominate your destiny.</p>
-                        <a href="{% url index %}" class="btn-big force" title="Use the force"><span>Home</span></a>
+                        <a href="{% url 'index' %}" class="btn-big force" title="Use the force"><span>Home</span></a>
                     </div>
 
                     <div class="clr"></div>

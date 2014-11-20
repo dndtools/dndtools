@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
-from dndtools.dnd.dnd_paginator import DndPaginator
-from dndtools.dnd.filters import RuleFilter
-from dndtools.dnd.menu import menu_item, MenuItem, submenu_item
-from dndtools.dnd.views import permanent_redirect_object
-from dndtools.dnd.models import Rule
-from dndtools.dnd.views import is_3e_edition
+from dnd.dnd_paginator import DndPaginator
+from dnd.filters import RuleFilter
+from dnd.menu import menu_item, MenuItem, submenu_item
+from dnd.views import permanent_redirect_object
+from dnd.models import Rule
+from dnd.views import is_3e_edition
 
 
 @menu_item(MenuItem.RULEBOOKS)

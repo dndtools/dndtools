@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.contrib.sitemaps import Sitemap
-from dndtools.dnd.models import (
+from dnd.models import (
     Spell, DndEdition, Rulebook, CharacterClass, Domain, SpellDescriptor,
     SpellSchool, SpellSubSchool, FeatCategory, Feat, CharacterClassVariant,
     Skill)

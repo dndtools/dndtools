@@ -2,12 +2,12 @@
 
 from django.shortcuts import get_object_or_404, render_to_response
 from django.template.context import RequestContext
-from dndtools.dnd.menu import MenuItem
-from dndtools.dnd.menu import menu_item, submenu_item
-from dndtools.dnd.dnd_paginator import DndPaginator
-from dndtools.dnd.filters import CharacterClassFilter
-from dndtools.dnd.models import Rulebook, Spell, CharacterClass, CharacterClassVariant
-from dndtools.dnd.views import is_3e_edition, permanent_redirect_view, permanent_redirect_object
+from dnd.menu import MenuItem
+from dnd.menu import menu_item, submenu_item
+from dnd.dnd_paginator import DndPaginator
+from dnd.filters import CharacterClassFilter
+from dnd.models import Rulebook, Spell, CharacterClass, CharacterClassVariant
+from dnd.views import is_3e_edition, permanent_redirect_view, permanent_redirect_object
 
 
 @menu_item(MenuItem.CHARACTER_OPTIONS)

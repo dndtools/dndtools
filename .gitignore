@@ -1,16 +1,2 @@
-#   IDEs   #
-############
-.idea
-
-# Configuration #
-#################
-/dndtools/local.py
-
-# Binaries #
-############
 *.pyc
-/dndtools/_revisions-initial.bat
-/dndtools/_runserver.bat
-/dndtools/_schema-migration-1-auto.bat
-/dndtools/_schema-migration-2-migrate.bat
-/dndtools/static/media/race/*.jpg
+dndtools/*.bat

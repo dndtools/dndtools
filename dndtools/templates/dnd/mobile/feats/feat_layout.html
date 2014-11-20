@@ -1,6 +1,6 @@
 {% extends "dnd/mobile/layout.html" %}
 
 {% block submenu %}
-  <li{% if request.submenu_item == "feats" %} class="selected"{% endif %}><a href="{% url feat_index_mobile %}">Feats</a></li>
-  <li{% if request.submenu_item == "categories" %} class="selected"{% endif %}><a href="{% url feat_category_list_mobile %}">Categories</a></li>
+  <li{% if request.submenu_item == "feats" %} class="selected"{% endif %}><a href="{% url 'feat_index_mobile' %}">Feats</a></li>
+  <li{% if request.submenu_item == "categories" %} class="selected"{% endif %}><a href="{% url 'feat_category_list_mobile' %}">Categories</a></li>
 {% endblock %}

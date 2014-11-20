@@ -2,11 +2,11 @@
 
 from django.shortcuts import get_object_or_404, render_to_response
 from django.template.context import RequestContext
-from dndtools.dnd.menu import menu_item, submenu_item, MenuItem
-from dndtools.dnd.dnd_paginator import DndPaginator
-from dndtools.dnd.filters import FeatFilter
-from dndtools.dnd.models import Rulebook, FeatCategory, Feat
-from dndtools.dnd.views import is_3e_edition, permanent_redirect_view, permanent_redirect_object
+from dnd.menu import menu_item, submenu_item, MenuItem
+from dnd.dnd_paginator import DndPaginator
+from dnd.filters import FeatFilter
+from dnd.models import Rulebook, FeatCategory, Feat
+from dnd.views import is_3e_edition, permanent_redirect_view, permanent_redirect_object
 
 
 @menu_item(MenuItem.CHARACTER_OPTIONS)

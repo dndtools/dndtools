@@ -2,12 +2,12 @@
 
 from django.shortcuts import get_object_or_404, render_to_response
 from django.template import RequestContext
-from dndtools.dnd.menu import menu_item, submenu_item
-from dndtools.dnd.mobile.views import permanent_redirect_object_mobile
-from dndtools.dnd.views import is_3e_edition, permanent_redirect_view
-from dndtools.dnd.mobile.dnd_paginator import DndMobilePaginator
-from dndtools.dnd.filters import SpellDomainFilter, SpellDescriptorFilter, SpellFilter
-from dndtools.dnd.models import SpellDescriptor, SpellSchool, SpellSubSchool, Domain, Spell, Rule, Rulebook, DomainVariant
+from dnd.menu import menu_item, submenu_item
+from dnd.mobile.views import permanent_redirect_object_mobile
+from dnd.views import is_3e_edition, permanent_redirect_view
+from dnd.mobile.dnd_paginator import DndMobilePaginator
+from dnd.filters import SpellDomainFilter, SpellDescriptorFilter, SpellFilter
+from dnd.models import SpellDescriptor, SpellSchool, SpellSubSchool, Domain, Spell, Rule, Rulebook, DomainVariant
 
 
 @menu_item("spells")

@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
-from dndtools.dnd.menu import menu_item, submenu_item
-from dndtools.dnd.filters import RaceTypeFilter, RaceFilter
-from dndtools.dnd.mobile.dnd_paginator import DndMobilePaginator
-from dndtools.dnd.models import Rulebook, Race, RaceType
-from dndtools.dnd.views import permanent_redirect_view, is_3e_edition
+from dnd.menu import menu_item, submenu_item
+from dnd.filters import RaceTypeFilter, RaceFilter
+from dnd.mobile.dnd_paginator import DndMobilePaginator
+from dnd.models import Rulebook, Race, RaceType
+from dnd.views import permanent_redirect_view, is_3e_edition
 
 
 @menu_item("races_monsters")

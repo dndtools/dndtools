@@ -2,7 +2,7 @@
 
 from django import forms
 from django.utils.safestring import mark_safe
-from dndtools import settings
+import dndproject.settings
 from recaptcha.client import captcha
 
 
@@ -14,7 +14,7 @@ class ReCaptcha(forms.Widget):
         final_attrs = self.build_attrs(attrs, type=self.input_type, name=name)
         html = u"<script>var RecaptchaOptions = {theme : '%s'};</script>" % (
             final_attrs.get('theme', 'white'))
-        html += captcha.displayhtml(settings.RECAPTCHA_PUBLIC)
+        html += captcha.displayhtml(dndproject.settings.RECAPTCHA_PUBLIC)
         return mark_safe(html)
 
     def value_from_datadict(self, data, files, name):
@@ -40,14 +40,14 @@ class ReCaptchaField(forms.FileField):
         'recaptcha-not-reachable': u"Could not contact reCAPTCHA server",
         }
 
-    def clean(self, data, initial):
+    def clean(self, data, initial=None):
         if initial is None or initial == '':
             raise Exception(
                 "ReCaptchaField requires the client's IP be set to the initial value")
         ip = initial
         resp = captcha.submit(data.get("recaptcha_challenge_field", None),
                               data.get("recaptcha_response_field", None),
-                              settings.RECAPTCHA_PRIVATE, ip)
+                              dndproject.settings.RECAPTCHA_PRIVATE, ip)
         if not resp.is_valid:
             raise forms.ValidationError(self.default_error_messages.get(
                 resp.error_code, "Unknown error: %s" % resp.error_code))

@@ -5,12 +5,12 @@
 {% block title %}{{ race_type.name }} &ndash; Race Types{% endblock %}
 
 {% block breadcrumbs %}
-    &raquo; <a href="{% url race_index %}">Races</a>
-    &raquo; <a href="{% url race_type_index %}">Types</a>
+    &raquo; <a href="{% url 'race_index' %}">Races</a>
+    &raquo; <a href="{% url 'race_type_index' %}">Types</a>
     &raquo; <a href="{{ race_type.get_absolute_url }}">{{ race_type.name }}</a>
 {% endblock %}
 
-{% block admin_edit %}<a href="{% url admin:dnd_racetype_change race_type.id %}">EDIT</a>{% endblock %}
+{% block admin_edit %}<a href="{% url 'admin:dnd_racetype_change' race_type.id %}">EDIT</a>{% endblock %}
 
 {% block content %}
 

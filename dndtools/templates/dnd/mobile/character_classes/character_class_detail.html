@@ -6,7 +6,7 @@
 
 <h2>{{ character_class.name }}</h2>
 {% if selected_variant %}
-<p>(<a href="{% url character_classes_in_rulebook_mobile selected_variant.rulebook.slug selected_variant.rulebook.id %}">{{ selected_variant.rulebook.name }}</a> variant, p. {{ selected_variant.page }})</p>
+<p>(<a href="{% url 'character_classes_in_rulebook_mobile' selected_variant.rulebook.slug selected_variant.rulebook.id %}">{{ selected_variant.rulebook.name }}</a> variant, p. {{ selected_variant.page }})</p>
 {% endif %}
 
 <div class="nice-textile">
@@ -32,16 +32,16 @@
 <h3>Spells for {{ character_class.name }}</h3>
 
 <ul>
-  <li><a href="{% url character_class_spells_mobile character_class_slug=character_class.slug level=0 %}">Level 0</a></li>
-  <li><a href="{% url character_class_spells_mobile character_class_slug=character_class.slug level=1 %}">Level 1</a></li>
-  <li><a href="{% url character_class_spells_mobile character_class_slug=character_class.slug level=2 %}">Level 2</a></li>
-  <li><a href="{% url character_class_spells_mobile character_class_slug=character_class.slug level=3 %}">Level 3</a></li>
-  <li><a href="{% url character_class_spells_mobile character_class_slug=character_class.slug level=4 %}">Level 4</a></li>
-  <li><a href="{% url character_class_spells_mobile character_class_slug=character_class.slug level=5 %}">Level 5</a></li>
-  <li><a href="{% url character_class_spells_mobile character_class_slug=character_class.slug level=6 %}">Level 6</a></li>
-  <li><a href="{% url character_class_spells_mobile character_class_slug=character_class.slug level=7 %}">Level 7</a></li>
-  <li><a href="{% url character_class_spells_mobile character_class_slug=character_class.slug level=8 %}">Level 8</a></li>
-  <li><a href="{% url character_class_spells_mobile character_class_slug=character_class.slug level=9 %}">Level 9</a></li>
+  <li><a href="{% url 'character_class_spells_mobile' character_class_slug=character_class.slug level=0 %}">Level 0</a></li>
+  <li><a href="{% url 'character_class_spells_mobile' character_class_slug=character_class.slug level=1 %}">Level 1</a></li>
+  <li><a href="{% url 'character_class_spells_mobile' character_class_slug=character_class.slug level=2 %}">Level 2</a></li>
+  <li><a href="{% url 'character_class_spells_mobile' character_class_slug=character_class.slug level=3 %}">Level 3</a></li>
+  <li><a href="{% url 'character_class_spells_mobile' character_class_slug=character_class.slug level=4 %}">Level 4</a></li>
+  <li><a href="{% url 'character_class_spells_mobile' character_class_slug=character_class.slug level=5 %}">Level 5</a></li>
+  <li><a href="{% url 'character_class_spells_mobile' character_class_slug=character_class.slug level=6 %}">Level 6</a></li>
+  <li><a href="{% url 'character_class_spells_mobile' character_class_slug=character_class.slug level=7 %}">Level 7</a></li>
+  <li><a href="{% url 'character_class_spells_mobile' character_class_slug=character_class.slug level=8 %}">Level 8</a></li>
+  <li><a href="{% url 'character_class_spells_mobile' character_class_slug=character_class.slug level=9 %}">Level 9</a></li>
 </ul>
 
 {% endblock %}

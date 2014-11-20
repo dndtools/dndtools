@@ -1,12 +1,15 @@
 # -*- coding: utf-8 -*-
 
-from django.conf.urls.defaults import *
-from django.views.generic.simple import direct_to_template
-from dndtools.dnd.feeds import AdminLogFeed
-
+from django.conf.urls import patterns, include, url
+from django.views.generic import TemplateView, RedirectView
+from django.conf.urls.static import static
+from django.contrib.sitemaps.views import sitemap
+from dnd.feeds import AdminLogFeed
+from dnd.sitemap import sitemaps
+from dndproject import settings
 
 urlpatterns = patterns(
-    'dndtools.dnd.views',
+    'dnd.views',
 
     # index
     url(
@@ -15,45 +18,46 @@ urlpatterns = patterns(
         name='index',
     ),
 
+
     # Rulebooks
-    (r'^rulebooks/', include('dndtools.dnd.rulebooks.urls')),
+    (r'^rulebooks/', include('dnd.rulebooks.urls')),
 
     # Feats
-    (r'^feats/', include('dndtools.dnd.feats.urls')),
+    (r'^feats/', include('dnd.feats.urls')),
 
     # Spells
-    (r'^spells/', include('dndtools.dnd.spells.urls')),
+    (r'^spells/', include('dnd.spells.urls')),
 
     # Classes
-    (r'^classes/', include('dndtools.dnd.character_classes.urls')),
+    (r'^classes/', include('dnd.character_classes.urls')),
 
     # Skills
-    (r'^skills/', include('dndtools.dnd.skills.urls')),
+    (r'^skills/', include('dnd.skills.urls')),
 
     # Races
-    (r'^races/', include('dndtools.dnd.races.urls')),
+    (r'^races/', include('dnd.races.urls')),
 
     # Monsters
-    (r'^monsters/', include('dndtools.dnd.monsters.urls')),
+    (r'^monsters/', include('dnd.monsters.urls')),
 
     # Items
-    (r'^items/', include('dndtools.dnd.items.urls')),
+    (r'^items/', include('dnd.items.urls')),
 
     # Languages
-    (r'^languages/', include('dndtools.dnd.languages.urls')),
+    (r'^languages/', include('dnd.languages.urls')),
 
     # Contacts
-    (r'^contacts/', include('dndtools.dnd.contacts.urls')),
+    (r'^contacts/', include('dnd.contacts.urls')),
 
     # Rules
-    (r'^rules/', include('dndtools.dnd.rules.urls')),
+    (r'^rules/', include('dnd.rules.urls')),
 
     # deities
-    (r'^deities/', include('dndtools.dnd.deities.urls')),
+    (r'^deities/', include('dnd.deities.urls')),
 
     # OTHERS
 
-    (r'^robots\.txt$', direct_to_template, {'template': 'robots.txt', 'mimetype': 'text/plain'}),
+    (r'^robots\.txt$', TemplateView.as_view(template_name='robots.txt', content_type='text/plain')),
 
     # inaccurate
     url(
@@ -68,6 +72,7 @@ urlpatterns = patterns(
         name='inaccurate_content_sent',
     ),
     (r'^rss.xml$', AdminLogFeed()),
+    (r'^sitemap\.xml$', sitemap, {'sitemaps': sitemaps}),
 
     # job
     url(
@@ -77,15 +82,16 @@ urlpatterns = patterns(
     ),
 
     # MOBILE
-
-    (r'^m/', include('dndtools.dnd.mobile.urls')),
+    (r'^m/', include('dnd.mobile.urls')),
 )
 
-urlpatterns += patterns(
-    'django.views.generic.simple',
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-    ('^contact/$', 'redirect_to', {'url': '/contacts/'}),
-    ('^staff/$', 'redirect_to', {'url': '/contacts/staff/'}),
-    ('^editions/$', 'redirect_to', {'url': '/rulebooks/editions/'}),
-    ('^feat-(?P<feat_id>\d+)-(.*)\.html$', 'redirect_to', {'url': '/feats/a--1/a--%(feat_id)s/'}),
+urlpatterns += patterns(
+    '',
+
+    ('^contact/$', RedirectView.as_view(url='/contacts/')),
+    ('^staff/$', RedirectView.as_view(url='/contacts/staff/')),
+    ('^editions/$', RedirectView.as_view(url='/rulebooks/editions/')),
+    ('^feat-(?P<feat_id>\d+)-(.*)\.html$', RedirectView.as_view(url='/feats/a--1/a--%(feat_id)s/')),
 )

@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from dndtools.dnd.menu import menu_item
-from dndtools.dnd.models import NewsEntry
+from dnd.menu import menu_item
+from dnd.models import NewsEntry
 
 
 @menu_item("home")

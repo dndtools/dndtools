@@ -2,7 +2,7 @@
 
 {% block content %}
 
-  <form action="{% url inaccurate_content %}" method="post">{% csrf_token %}
+  <form action="{% url 'inaccurate_content' %}" method="post">{% csrf_token %}
     <div class="form_settings">
       {% for field in form %}
         {% if field.name == "url" %}

@@ -1,6 +1,6 @@
 from django import forms
 
-from dndtools.django_filters2.widgets import RangeWidget, LookupTypeWidget
+from django_filters2.widgets import RangeWidget, LookupTypeWidget
 
 class RangeField(forms.MultiValueField):
     widget = RangeWidget(attrs={"class":"range"})

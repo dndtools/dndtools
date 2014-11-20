@@ -9,12 +9,12 @@
 <h3>In this rulebook</h3>
 
 <ul>
-  <li><a href="{% url spells_in_rulebook_mobile rulebook_slug=rulebook.slug rulebook_id=rulebook.id %}">Spells</a></li>
-  <li><a href="{% url feats_in_rulebook_mobile rulebook_slug=rulebook.slug rulebook_id=rulebook.id %}">Feats</a></li>
-  <li><a href="{% url character_classes_in_rulebook_mobile rulebook_slug=rulebook.slug rulebook_id=rulebook.id %}">Classes</a></li>
-  <li><a href="{% url skills_in_rulebook_mobile rulebook_slug=rulebook.slug rulebook_id=rulebook.id %}">Skills</a></li>
-  <li><a href="{% url items_in_rulebook_mobile rulebook_slug=rulebook.slug rulebook_id=rulebook.id %}">Items</a></li>
-  <li><a href="{% url races_in_rulebook_mobile rulebook_slug=rulebook.slug rulebook_id=rulebook.id %}">Races</a></li>
+  <li><a href="{% url 'spells_in_rulebook_mobile' rulebook_slug=rulebook.slug rulebook_id=rulebook.id %}">Spells</a></li>
+  <li><a href="{% url 'feats_in_rulebook_mobile' rulebook_slug=rulebook.slug rulebook_id=rulebook.id %}">Feats</a></li>
+  <li><a href="{% url 'character_classes_in_rulebook_mobile' rulebook_slug=rulebook.slug rulebook_id=rulebook.id %}">Classes</a></li>
+  <li><a href="{% url 'skills_in_rulebook_mobile' rulebook_slug=rulebook.slug rulebook_id=rulebook.id %}">Skills</a></li>
+  <li><a href="{% url 'items_in_rulebook_mobile' rulebook_slug=rulebook.slug rulebook_id=rulebook.id %}">Items</a></li>
+  <li><a href="{% url 'races_in_rulebook_mobile' rulebook_slug=rulebook.slug rulebook_id=rulebook.id %}">Races</a></li>
 </ul>
 
 {% endblock %}

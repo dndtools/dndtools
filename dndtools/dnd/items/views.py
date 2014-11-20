@@ -2,12 +2,12 @@
 from math import ceil
 from django.shortcuts import get_object_or_404, render_to_response
 from django.template.context import RequestContext
-from dndtools.dnd.menu import menu_item, submenu_item, MenuItem
-from dndtools.dnd.dnd_paginator import DndPaginator
-from dndtools.dnd.filters import ItemFilter
-from dndtools.dnd.models import Rulebook, Item
-from dndtools.dnd.utilities import int_with_commas
-from dndtools.dnd.views import is_3e_edition, permanent_redirect_view, permanent_redirect_object
+from dnd.menu import menu_item, submenu_item, MenuItem
+from dnd.dnd_paginator import DndPaginator
+from dnd.filters import ItemFilter
+from dnd.models import Rulebook, Item
+from dnd.utilities import int_with_commas
+from dnd.views import is_3e_edition, permanent_redirect_view, permanent_redirect_object
 
 
 @menu_item(MenuItem.ITEMS)

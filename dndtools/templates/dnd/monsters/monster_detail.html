@@ -5,13 +5,13 @@
 {% block title %}{{ monster.name }} &ndash; Monster{% endblock %}
 
 {% block breadcrumbs %}
-    &raquo; <a href="{% url monster_index  %}">Monsters</a>
-    &raquo; <a href="{% url monsters_in_rulebook rulebook_slug=rulebook.slug rulebook_id=rulebook.id  %}">{{ rulebook.name }}</a> (
+    &raquo; <a href="{% url 'monster_index'  %}">Monsters</a>
+    &raquo; <a href="{% url 'monsters_in_rulebook' rulebook_slug=rulebook.slug rulebook_id=rulebook.id  %}">{{ rulebook.name }}</a> (
     <a href="{{ rulebook.get_absolute_url }}">book</a>)
     &raquo; <a href="{{ monster.get_absolute_url }}">{{ monster.name }}</a>
 {% endblock %}
 
-{% block admin_edit %}<a href="{% url admin:dnd_monster_change monster.id %}">EDIT</a>{% endblock %}
+{% block admin_edit %}<a href="{% url 'admin:dnd_monster_change' monster.id %}">EDIT</a>{% endblock %}
 
 {% block content %}
 

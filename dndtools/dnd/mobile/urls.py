@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
-from django.conf.urls.defaults import patterns, url, include
+from django.conf.urls import patterns, url, include
 
 urlpatterns = patterns(
-    'dndtools.dnd.mobile.views',
+    'dnd.mobile.views',
 
     # force desktop
     url(
@@ -19,38 +19,38 @@ urlpatterns = patterns(
     ),
 
     # index
-    (r'^', include('dndtools.dnd.mobile.index.urls')),
+    (r'^', include('dnd.mobile.index.urls')),
 
     # character classes
-    (r'^classes/', include('dndtools.dnd.mobile.character_classes.urls')),
+    (r'^classes/', include('dnd.mobile.character_classes.urls')),
 
     # feats
-    (r'^feats/', include('dndtools.dnd.mobile.feats.urls')),
+    (r'^feats/', include('dnd.mobile.feats.urls')),
 
     # items
-    (r'^items/', include('dndtools.dnd.mobile.items.urls')),
+    (r'^items/', include('dnd.mobile.items.urls')),
 
     # languages
-    (r'^languages/', include('dndtools.dnd.mobile.languages.urls')),
+    (r'^languages/', include('dnd.mobile.languages.urls')),
 
     # monsters
-    (r'^monsters/', include('dndtools.dnd.mobile.monsters.urls')),
+    (r'^monsters/', include('dnd.mobile.monsters.urls')),
 
     # races
-    (r'^races/', include('dndtools.dnd.mobile.races.urls')),
+    (r'^races/', include('dnd.mobile.races.urls')),
 
     # rulebooks
-    (r'^rulebooks/', include('dndtools.dnd.mobile.rulebooks.urls')),
+    (r'^rulebooks/', include('dnd.mobile.rulebooks.urls')),
 
     # rules
-    (r'^rules/', include('dndtools.dnd.mobile.rules.urls')),
+    (r'^rules/', include('dnd.mobile.rules.urls')),
 
     # skills
-    (r'^skills/', include('dndtools.dnd.mobile.skills.urls')),
+    (r'^skills/', include('dnd.mobile.skills.urls')),
 
     # spells
-    (r'^spells/', include('dndtools.dnd.mobile.spells.urls')),
+    (r'^spells/', include('dnd.mobile.spells.urls')),
 
     # deities
-    (r'^deities/', include('dndtools.dnd.mobile.deities.urls')),
+    (r'^deities/', include('dnd.mobile.deities.urls')),
 )

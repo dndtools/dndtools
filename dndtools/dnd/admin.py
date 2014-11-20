@@ -1,27 +1,26 @@
 # -*- coding: utf-8 -*-
 from django import forms
-from reversion.admin import VersionAdmin
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
 
-from dndtools.dnd.models import (FeatCategory, Skill, SpecialFeatPrerequisite, TextFeatPrerequisite,
-                                 FeatSpecialFeatPrerequisite, FeatRequiresFeat, Feat, FeatRequiresSkill,
-                                 CharacterClassVariant, RaceFavoredCharacterClass, Race, RaceSize, RaceSpeed,
-                                 RaceSpeedType, SkillVariant, NewsEntry, StaticPage, CharacterClassVariantRequiresFeat,
-                                 CharacterClassVariantRequiresRace, CharacterClassVariantRequiresSkill, MonsterHasFeat,
-                                 MonsterHasSkill, MonsterSpeed, Monster, MonsterSubtype, MonsterType, Rule, Item,
-                                 ItemSlot, ItemAuraType, ItemActivationType, ItemProperty, Language, RaceType, Deity,
-                                 DndEdition, Rulebook, CharacterClass, SpellDescriptor,
-                                 SpellSchool, SpellSubSchool, Spell, SpellClassLevel,
-                                 Domain, SpellDomainLevel, DomainVariant)
+from dnd.models import (FeatCategory, Skill, SpecialFeatPrerequisite, TextFeatPrerequisite,
+                        FeatSpecialFeatPrerequisite, FeatRequiresFeat, Feat, FeatRequiresSkill,
+                        CharacterClassVariant, RaceFavoredCharacterClass, Race, RaceSize, RaceSpeed,
+                        RaceSpeedType, SkillVariant, NewsEntry, StaticPage, CharacterClassVariantRequiresFeat,
+                        CharacterClassVariantRequiresRace, CharacterClassVariantRequiresSkill, MonsterHasFeat,
+                        MonsterHasSkill, MonsterSpeed, Monster, MonsterSubtype, MonsterType, Rule, Item,
+                        ItemSlot, ItemAuraType, ItemActivationType, ItemProperty, Language, RaceType, Deity,
+                        DndEdition, Rulebook, CharacterClass, SpellDescriptor,
+                        SpellSchool, SpellSubSchool, Spell, SpellClassLevel,
+                        Domain, SpellDomainLevel, DomainVariant)
 
 
 class ModifiedUserAdmin(UserAdmin):
     list_display = ('username', 'email', 'first_name', 'last_name', 'is_active', 'is_staff', 'last_login')
 
 
-class DndEditionAdmin(VersionAdmin):
+class DndEditionAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("name",)}
     list_display = ('id', 'name', 'system', )
     list_display_links = ('name', )
@@ -29,7 +28,7 @@ class DndEditionAdmin(VersionAdmin):
     search_fields = ('name', )
 
 
-class RulebookAdmin(VersionAdmin):
+class RulebookAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("name",)}
     list_display = ('id', 'name', 'dnd_edition', )
     list_display_links = ('name', )
@@ -37,7 +36,7 @@ class RulebookAdmin(VersionAdmin):
     search_fields = ('name', )
 
 
-class CharacterClassAdmin(VersionAdmin):
+class CharacterClassAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("name",)}
     list_display = ('id', 'name', 'prestige')
     list_display_links = ('name', )
@@ -60,7 +59,7 @@ class CharacterClassVariantRequiresSkillInline(admin.TabularInline):
     extra = 3
 
 
-class CharacterClassVariantAdmin(VersionAdmin):
+class CharacterClassVariantAdmin(admin.ModelAdmin):
     list_display = ('id', 'character_class', 'rulebook', )
     list_filter = ('character_class', 'rulebook', )
     search_fields = ('character_class__name', )
@@ -71,7 +70,7 @@ class CharacterClassVariantAdmin(VersionAdmin):
     )
 
 
-class ItemAdmin(VersionAdmin):
+class ItemAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("name",)}
     list_display = ('id', 'name', 'price_gp', 'price_bonus')
     list_display_links = ('name', )
@@ -79,42 +78,42 @@ class ItemAdmin(VersionAdmin):
     filter_horizontal = ('required_spells', 'aura_schools', 'required_feats', )
 
 
-class ItemSlotAdmin(VersionAdmin):
+class ItemSlotAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("name",)}
     list_display = ('id', 'name')
     list_display_links = ('name', )
     search_fields = ('name', )
 
 
-class ItemAuraTypeAdmin(VersionAdmin):
+class ItemAuraTypeAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("name",)}
     list_display = ('id', 'name')
     list_display_links = ('name', )
     search_fields = ('name', )
 
 
-class ItemPropertyAdmin(VersionAdmin):
+class ItemPropertyAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("name",)}
     list_display = ('id', 'name')
     list_display_links = ('name', )
     search_fields = ('name', )
 
 
-class ItemActivationTypeAdmin(VersionAdmin):
+class ItemActivationTypeAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("name",)}
     list_display = ('id', 'name')
     list_display_links = ('name', )
     search_fields = ('name', )
 
 
-class DomainAdmin(VersionAdmin):
+class DomainAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("name",)}
     list_display = ('id', 'name',)
     list_display_links = ('name', )
     search_fields = ('name', )
 
 
-class DomainVariantAdmin(VersionAdmin):
+class DomainVariantAdmin(admin.ModelAdmin):
     list_display = ('id', 'domain', 'rulebook', )
     list_display_links = ('domain', )
     list_filter = ('domain', 'rulebook', )
@@ -122,21 +121,21 @@ class DomainVariantAdmin(VersionAdmin):
     filter_horizontal = ('deities', 'other_deities', )
 
 
-class SpellDescriptorAdmin(VersionAdmin):
+class SpellDescriptorAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("name",)}
     list_display = ('id', 'name', )
     list_display_links = ('name', )
     search_fields = ('name', )
 
 
-class SpellSchoolAdmin(VersionAdmin):
+class SpellSchoolAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("name",)}
     list_display = ('id', 'name', )
     list_display_links = ('name', )
     search_fields = ('name', )
 
 
-class SpellSubSchoolAdmin(VersionAdmin):
+class SpellSubSchoolAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("name",)}
     list_display = ('id', 'name', )
     list_display_links = ('name', )
@@ -153,7 +152,7 @@ class SpellDomainLevelInline(admin.TabularInline):
     extra = 3
 
 
-class SpellAdmin(VersionAdmin):
+class SpellAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("name",)}
     list_display = (
         'id', 'name', 'verified', 'verified_author', 'verified_time',
@@ -168,14 +167,14 @@ class SpellAdmin(VersionAdmin):
     filter_horizontal = ('descriptors', )
 
 
-class FeatCategoryAdmin(VersionAdmin):
+class FeatCategoryAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("name",)}
     list_display = ('id', 'name', )
     list_display_links = ('name', )
     search_fields = ('name', )
 
 
-class SkillAdmin(VersionAdmin):
+class SkillAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("name",)}
     list_display = (
         'id', 'name', 'base_skill', 'trained_only', 'armor_check_penalty',
@@ -185,12 +184,12 @@ class SkillAdmin(VersionAdmin):
     list_filter = ('base_skill', 'trained_only', 'armor_check_penalty',)
 
 
-class SkillVariantAdmin(VersionAdmin):
+class SkillVariantAdmin(admin.ModelAdmin):
     list_display = ('id', 'skill', 'rulebook', )
     list_filter = ('skill', 'rulebook', )
 
 
-class SpecialFeatPrerequisiteAdmin(VersionAdmin):
+class SpecialFeatPrerequisiteAdmin(admin.ModelAdmin):
     list_display = (
         'name', 'print_format',
     )
@@ -219,7 +218,7 @@ class FeatRequiresSkillInline(admin.TabularInline):
     extra = 3
 
 
-class FeatAdmin(VersionAdmin):
+class FeatAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("name",)}
     list_display = (
         'id', 'name', 'rulebook',
@@ -236,14 +235,14 @@ class FeatAdmin(VersionAdmin):
     )
 
 
-class MonsterTypeAdmin(VersionAdmin):
+class MonsterTypeAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("name",)}
     list_display = ('id', 'name', )
     list_display_links = ('name', )
     search_fields = ('name', )
 
 
-class MonsterSubtypeAdmin(VersionAdmin):
+class MonsterSubtypeAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("name",)}
     list_display = ('id', 'name', )
     list_display_links = ('name', )
@@ -277,7 +276,7 @@ class MonsterForm(forms.ModelForm):
         model = Monster
 
 
-class MonsterAdmin(VersionAdmin):
+class MonsterAdmin(admin.ModelAdmin):
     form = MonsterForm
     prepopulated_fields = {"slug": ("name",)}
     list_display = ('id', 'name', 'rulebook', )
@@ -299,7 +298,7 @@ class RaceSpeedInline(admin.TabularInline):
     extra = 1
 
 
-class RaceAdmin(VersionAdmin):
+class RaceAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("name",)}
     list_display = (
         'id', 'name', 'rulebook', 'str', 'dex', 'con', 'int', 'wis', 'cha', 'level_adjustment',
@@ -315,34 +314,34 @@ class RaceAdmin(VersionAdmin):
     filter_horizontal = ('automatic_languages', 'bonus_languages', )
 
 
-class RaceSizeAdmin(VersionAdmin):
+class RaceSizeAdmin(admin.ModelAdmin):
     list_display = (
         'name',
     )
     list_display_links = ('name', )
 
 
-class RaceSpeedTypeAdmin(VersionAdmin):
+class RaceSpeedTypeAdmin(admin.ModelAdmin):
     list_display = (
         'name', 'extra'
     )
     list_display_links = ('name', )
 
 
-class NewsEntryAdmin(VersionAdmin):
+class NewsEntryAdmin(admin.ModelAdmin):
     list_display = (
         'title', 'published', 'enabled',
     )
     date_hierarchy = 'published'
 
 
-class StaticPageAdmin(VersionAdmin):
+class StaticPageAdmin(admin.ModelAdmin):
     list_display = (
         'name',
     )
 
 
-class RuleAdmin(VersionAdmin):
+class RuleAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("name",)}
     search_fields = ('name', )
     list_display = (
@@ -350,16 +349,7 @@ class RuleAdmin(VersionAdmin):
     )
 
 
-class LanguageAdmin(VersionAdmin):
-    prepopulated_fields = {"slug": ("name",)}
-    list_display = (
-        'name',
-    )
-    list_display_links = ('name', )
-    search_fields = ('name', )
-
-
-class RaceTypeAdmin(VersionAdmin):
+class LanguageAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("name",)}
     list_display = (
         'name',
@@ -368,7 +358,16 @@ class RaceTypeAdmin(VersionAdmin):
     search_fields = ('name', )
 
 
-class DeityAdmin(VersionAdmin):
+class RaceTypeAdmin(admin.ModelAdmin):
+    prepopulated_fields = {"slug": ("name",)}
+    list_display = (
+        'name',
+    )
+    list_display_links = ('name', )
+    search_fields = ('name', )
+
+
+class DeityAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("name",)}
     list_display = (
         'name',

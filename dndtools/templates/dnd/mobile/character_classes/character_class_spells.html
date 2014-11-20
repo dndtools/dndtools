@@ -12,7 +12,7 @@
 More spell levels:
 {% for otherLevel in "0123456789" %}
     {% if otherLevel != level %}
-        <a href="{% url character_class_spells_mobile character_class_slug=character_class.slug level=otherLevel %}">{{ otherLevel }}</a>
+        <a href="{% url 'character_class_spells_mobile' character_class_slug=character_class.slug level=otherLevel %}">{{ otherLevel }}</a>
     {% else %}
         {{ otherLevel }}
     {% endif %}

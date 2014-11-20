@@ -2,12 +2,12 @@
 
 {% block content %}
 
-{% for newsEntry in newsEntries %}
-<h3>{{ newsEntry.title }}</h3>
-<p style="font-size: 11px;">{{ newsEntry.published }}</p>
+{% for news_entry in news_entries %}
+<h3>{{ news_entry.title }}</h3>
+<p style="font-size: 11px;">{{ news_entry.published }}</p>
 
 <div class="nice-textile">
-{{ newsEntry.body_html|safe }}
+{{ news_entry.body_html|safe }}
 </div>
 {% endfor %}
 

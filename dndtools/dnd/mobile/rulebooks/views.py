@@ -2,12 +2,12 @@
 
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
-from dndtools.dnd.menu import menu_item, submenu_item
-from dndtools.dnd.filters import RulebookFilter
-from dndtools.dnd.mobile.dnd_paginator import DndMobilePaginator
-from dndtools.dnd.mobile.views import permanent_redirect_object_mobile
-from dndtools.dnd.models import Rulebook, DndEdition
-from dndtools.dnd.views import is_3e_edition
+from dnd.menu import menu_item, submenu_item
+from dnd.filters import RulebookFilter
+from dnd.mobile.dnd_paginator import DndMobilePaginator
+from dnd.mobile.views import permanent_redirect_object_mobile
+from dnd.models import Rulebook, DndEdition
+from dnd.views import is_3e_edition
 
 
 @menu_item("rulebooks")

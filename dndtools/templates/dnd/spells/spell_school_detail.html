@@ -5,12 +5,12 @@
 {% block title %}Spells in {{ spell_school.name }}{% endblock %}
 
 {% block breadcrumbs %}
-    &raquo; <a href="{% url spell_index %}">Spells</a>
-    &raquo; <a href="{% url spell_school_list  %}">Spell Schools</a>
+    &raquo; <a href="{% url 'spell_index' %}">Spells</a>
+    &raquo; <a href="{% url 'spell_school_list'  %}">Spell Schools</a>
     &raquo; <a href="{{ spell_school.get_absolute_url }}">{{ spell_school.name }}</a>
 {% endblock %}
 
-{% block admin_edit %}<a href="{% url admin:dnd_spellschool_change spell_school.id %}">EDIT</a>{% endblock %}
+{% block admin_edit %}<a href="{% url 'admin:dnd_spellschool_change' spell_school.id %}">EDIT</a>{% endblock %}
 
 {% block content %}
 

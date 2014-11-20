@@ -1,12 +1,12 @@
 {% extends "dnd/races/race_layout.html" %}
 
-{#{% block extra_link %}<link rel="canonical" href="{% url races_in_rulebook rulebook_slug=rulebook.slug rulebook_id=rulebook.id  %}" />{% endblock %}#}
+{#{% block extra_link %}<link rel="canonical" href="{% url 'races_in_rulebook' rulebook_slug=rulebook.slug rulebook_id=rulebook.id  %}" />{% endblock %}#}
 
 {% block title %}Races in {{ rulebook.name }}{% endblock %}
 
 {% block breadcrumbs %}
-    &raquo; <a href="{% url race_index %}">Races</a>
-    &raquo; <a href="{% url races_in_rulebook rulebook_slug=rulebook.slug rulebook_id=rulebook.id  %}">{{ rulebook.name }}</a> (<a href="{{ rulebook.get_absolute_url }}">book</a>)
+    &raquo; <a href="{% url 'race_index' %}">Races</a>
+    &raquo; <a href="{% url 'races_in_rulebook' rulebook_slug=rulebook.slug rulebook_id=rulebook.id  %}">{{ rulebook.name }}</a> (<a href="{{ rulebook.get_absolute_url }}">book</a>)
 {% endblock %}
 
 {% block content %}

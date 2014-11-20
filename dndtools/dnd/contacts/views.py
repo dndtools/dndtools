@@ -4,9 +4,9 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template.context import RequestContext
-from dndtools.dnd.menu import menu_item, submenu_item, MenuItem
-from dndtools.dnd.forms import ContactForm
-from dndtools.dnd.models import StaticPage
+from dnd.menu import menu_item, submenu_item, MenuItem
+from dnd.forms import ContactForm
+from dnd.models import StaticPage
 
 
 @menu_item(MenuItem.CONTACTS)

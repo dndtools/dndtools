@@ -1,12 +1,12 @@
 {% extends "dnd/items/item_layout.html" %}
 
-{#{% block extra_link %}<link rel="canonical" href="{% url items_in_rulebook rulebook_slug=rulebook.slug rulebook_id=rulebook.id  %}" />{% endblock %}#}
+{#{% block extra_link %}<link rel="canonical" href="{% url 'items_in_rulebook' rulebook_slug=rulebook.slug rulebook_id=rulebook.id  %}" />{% endblock %}#}
 
 {% block title %}Items in {{ rulebook.name }}{% endblock %}
 
 {% block breadcrumbs %}
-    &raquo; <a href="{% url item_index %}">Items</a>
-    &raquo; <a href="{% url items_in_rulebook rulebook_slug=rulebook.slug rulebook_id=rulebook.id  %}">{{ rulebook.name }}</a> (<a href="{{ rulebook.get_absolute_url }}">book</a>)
+    &raquo; <a href="{% url 'item_index' %}">Items</a>
+    &raquo; <a href="{% url 'items_in_rulebook' rulebook_slug=rulebook.slug rulebook_id=rulebook.id  %}">{{ rulebook.name }}</a> (<a href="{{ rulebook.get_absolute_url }}">book</a>)
 {% endblock %}
 
 {% block content %}

@@ -5,11 +5,11 @@
 {% block title %}{{ dnd_edition.name }} &ndash; Editions{% endblock %}
 
 {% block breadcrumbs %}
-    &raquo; <a href="{% url edition_list  %}">Editions</a>
+    &raquo; <a href="{% url 'edition_list'  %}">Editions</a>
     &raquo; <a href="{{ dnd_edition.get_absolute_url }}">{{ dnd_edition.name }}</a>
 {% endblock %}
 
-{% block admin_edit %}<a href="{% url admin:dnd_dndedition_change dnd_edition.id %}">EDIT</a>{% endblock %}
+{% block admin_edit %}<a href="{% url 'admin:dnd_dndedition_change' dnd_edition.id %}">EDIT</a>{% endblock %}
 
 {% block content %}
 

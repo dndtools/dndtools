@@ -5,10 +5,9 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponsePermanentRedirect, HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template.context import RequestContext
-from reversion.revisions import revision
-from dndtools.dnd.menu import menu_item, submenu_item, MenuItem
-from dndtools.dnd.forms import InaccurateContentForm
-from dndtools.dnd.models import NewsEntry
+from dnd.menu import menu_item, submenu_item, MenuItem
+from dnd.forms import InaccurateContentForm
+from dnd.models import NewsEntry
 
 
 def permanent_redirect_view(request, view_name, args=None, kwargs=None):
@@ -43,16 +42,16 @@ def is_admin(request):
 @menu_item(MenuItem.CONTACTS)
 @submenu_item(MenuItem.Contacts.NEWS)
 def index(request):
-    newsEntries = NewsEntry.objects.filter(enabled=True).order_by('-published')[:15]
+    news_entries = NewsEntry.objects.filter(enabled=True).order_by('-published')[:15]
 
     response = render_to_response('dnd/index.html',
                                   {
-                                      'request': request, 'newsEntries': newsEntries,
+                                      'request': request, 'news_entries': news_entries,
                                   },
                                   context_instance=RequestContext(request), )
 
-    if len(newsEntries):
-        response.set_cookie('top_news', newsEntries[0].pk, 10 * 365 * 24 * 60 * 60)
+    if len(news_entries):
+        response.set_cookie('top_news', news_entries[0].pk, 10 * 365 * 24 * 60 * 60)
 
     return response
 
@@ -118,7 +117,7 @@ def inaccurate_content_sent(request):
                               }, context_instance=RequestContext(request), )
 
 
-@revision.create_on_success
+#@revision.create_on_success
 def very_secret_url(request):
     log = ''
 

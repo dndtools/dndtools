@@ -5,11 +5,10 @@ from django.db import models
 from django.db.models import Q
 from django.db.models.fields import FieldDoesNotExist
 from django.db.models.related import RelatedObject
-from django.db.models.sql.constants import LOOKUP_SEP
 from django.utils.datastructures import SortedDict
 from django.utils.text import capfirst
 
-from dndtools.django_filters2.filters import Filter, CharFilter, BooleanFilter, \
+from django_filters2.filters import Filter, CharFilter, BooleanFilter, \
     ChoiceFilter, DateFilter, DateTimeFilter, TimeFilter, ModelChoiceFilter, \
     ModelMultipleChoiceFilter, NumberFilter
 
@@ -37,7 +36,7 @@ def get_declared_filters(bases, attrs, with_base_filters=True):
     return SortedDict(filters)
 
 def get_model_field(model, f):
-    parts = f.split(LOOKUP_SEP)
+    parts = f.split('__')
     opts = model._meta
     for name in parts[:-1]:
         try:
@@ -183,9 +182,6 @@ FILTER_FOR_DBFIELD_DEFAULTS = {
         'filter_class': CharFilter,
     },
     models.URLField: {
-        'filter_class': CharFilter,
-    },
-    models.XMLField: {
         'filter_class': CharFilter,
     },
     models.IPAddressField: {

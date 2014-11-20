@@ -1,13 +1,13 @@
 # Create your views here.
 from django.shortcuts import get_object_or_404, render_to_response
 from django.template.context import RequestContext
-from dndtools.dnd.menu import MenuItem
-from dndtools.dnd.menu import menu_item, submenu_item
-from dndtools.dnd.dnd_paginator import DndPaginator
-from dndtools.dnd.filters import (   RaceFilter, RaceTypeFilter )
+from dnd.menu import MenuItem
+from dnd.menu import menu_item, submenu_item
+from dnd.dnd_paginator import DndPaginator
+from dnd.filters import (   RaceFilter, RaceTypeFilter )
 
-from dndtools.dnd.models import (Rulebook, Race, RaceType )
-from dndtools.dnd.views import is_3e_edition, permanent_redirect_view
+from dnd.models import (Rulebook, Race, RaceType )
+from dnd.views import is_3e_edition, permanent_redirect_view
 
 
 @menu_item(MenuItem.BESTIARY)

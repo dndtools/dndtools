@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 
-from dndtools import django_filters2
-from dndtools.dnd.models import (
+import django_filters2
+from dnd.models import (
     Spell, DndEdition, SpellSchool, SpellSubSchool, SpellDescriptor, FeatCategory,
     CharacterClass, Rulebook, Domain, Feat, Skill, Item, Language, RaceType, ItemSlot,
     ItemProperty, Deity, Rule)
-from dndtools.dnd.filters_fields import FeatMultiPrerequisiteFieldFilter
+from dnd.filters_fields import FeatMultiPrerequisiteFieldFilter
 
 
 def rulebook_choices(unknown_entry=True):

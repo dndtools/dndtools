@@ -4,7 +4,7 @@ from PIL import Image
 from django.contrib.auth.models import User
 from django.db import models
 
-from dndtools.dnd.utilities import update_html_cache_attributes
+from dnd.utilities import update_html_cache_attributes
 
 
 class DndEdition(models.Model):
@@ -73,7 +73,7 @@ class Rulebook(models.Model):
         help_text='Use 1 is day is not known and January if month is.',
     )
     image = models.ImageField(
-        upload_to='media/rulebook',
+        upload_to='rulebook',
         blank=True,
         null=True,
         help_text='200px * ~250px please.'
@@ -1842,7 +1842,7 @@ class Race(models.Model):
 
     # noinspection PyMethodParameters,PyUnusedLocal
     def image_filename(instance, filename):
-        return 'media/race/%d.jpg' % instance.id
+        return 'race/%d.jpg' % instance.id
 
     image = models.ImageField(
         upload_to=image_filename,

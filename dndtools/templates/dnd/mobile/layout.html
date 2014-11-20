@@ -5,22 +5,22 @@
     <title>{% block title %}Home{% endblock %} &ndash; D&amp;D Tools (mobile)</title>
     <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0"/>
     <meta name="robots" content="noindex, nofollow">
-    <link href="{% media "favicon-mobile.ico" %}" rel="SHORTCUT ICON"/>
-    <link rel="stylesheet" media="all" href="{% media "css/mobile/style.css" %}" type="text/css">
-    <script type="text/javascript" src="{% media "js/jquery-1.7.min.js" "no-timestamp" %}"></script>
+    <link href="{% static "favicon-mobile.ico" %}" rel="SHORTCUT ICON"/>
+    <link rel="stylesheet" media="all" href="{% static "css/mobile/style.css" %}" type="text/css">
+    <script type="text/javascript" src="{% static "js/jquery-1.7.min.js" "no-timestamp" %}"></script>
 </head>
 
 <body>
 <div class="wrap">
     <header>
         <div class="logo">
-            <a href="{% url index_mobile %}">
-                <img src="{% media "images/mobile/logo.png" %}" alt="D&ampD Tools (mobile)"/>
+            <a href="{% url 'index_mobile' %}">
+                <img src="{% static "images/mobile/logo.png" %}" alt="D&ampD Tools (mobile)"/>
             </a>
         </div>
         <div class="options">
             <ul>
-                <li id="options-desktop"><a href="{% url force_desktop_version %}{% if back_desktop_url %}?b={{ back_desktop_url|urlencode }}{% endif %}">Desktop</a></li>
+                <li id="options-desktop"><a href="{% url 'force_desktop_version' %}{% if back_desktop_url %}?b={{ back_desktop_url|urlencode }}{% endif %}">Desktop</a></li>
                 <li id="options-search">Search</li>
                 <li id="options-menu">Menu</li>
                 <li id="options-submenu">Submenu</li>
@@ -38,15 +38,15 @@
         </div>
         <nav class="vertical menu" id="menu">
             <ul>
-                <li{% if request.menu_item == "home" %} class="selected"{% endif %}><a href="{% url index_mobile %}">Home</a></li>
-                <li{% if request.menu_item == "rulebooks" %} class="selected"{% endif %}><a href="{% url rulebook_list_mobile %}">Rulebooks</a></li>
-                <li{% if request.menu_item == "feats" %} class="selected"{% endif %}><a href="{% url feat_index_mobile %}">Feats</a></li>
-                <li{% if request.menu_item == "spells" %} class="selected"{% endif %}><a href="{% url spell_index_mobile %}">Spells</a></li>
-                <li{% if request.menu_item == "classes" %} class="selected"{% endif %}><a href="{% url character_class_list_mobile %}">Classes</a></li>
-                <li{% if request.menu_item == "skills" %} class="selected"{% endif %}><a href="{% url skill_list_mobile %}">Skills</a></li>
-                <li{% if request.menu_item == "items" %} class="selected"{% endif %}><a href="{% url item_index_mobile %}">Items</a></li>
-                <li{% if request.menu_item == "races_monsters" %} class="selected"{% endif %}><a href="{% url monster_index_mobile %}">Races &amp; Monsters</a></li>
-                <li{% if request.menu_item == "deities" %} class="selected"{% endif %}><a href="{% url deity_list_mobile %}">Deities</a></li>
+                <li{% if request.menu_item == "home" %} class="selected"{% endif %}><a href="{% url 'index_mobile' %}">Home</a></li>
+                <li{% if request.menu_item == "rulebooks" %} class="selected"{% endif %}><a href="{% url 'rulebook_list_mobile' %}">Rulebooks</a></li>
+                <li{% if request.menu_item == "feats" %} class="selected"{% endif %}><a href="{% url 'feat_index_mobile' %}">Feats</a></li>
+                <li{% if request.menu_item == "spells" %} class="selected"{% endif %}><a href="{% url 'spell_index_mobile' %}">Spells</a></li>
+                <li{% if request.menu_item == "classes" %} class="selected"{% endif %}><a href="{% url 'character_class_list_mobile' %}">Classes</a></li>
+                <li{% if request.menu_item == "skills" %} class="selected"{% endif %}><a href="{% url 'skill_list_mobile' %}">Skills</a></li>
+                <li{% if request.menu_item == "items" %} class="selected"{% endif %}><a href="{% url 'item_index_mobile' %}">Items</a></li>
+                <li{% if request.menu_item == "races_monsters" %} class="selected"{% endif %}><a href="{% url 'monster_index_mobile' %}">Races &amp; Monsters</a></li>
+                <li{% if request.menu_item == "deities" %} class="selected"{% endif %}><a href="{% url 'deity_list_mobile' %}">Deities</a></li>
             </ul>
         </nav>
 
