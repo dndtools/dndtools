@@ -11,21 +11,44 @@ Also, this readme file is just an early preview to be updated as soon as someone
 
 If you find anything wrong, just start an issue.
 
-Installation info
------------------
-(Windows 7 steps, for linux/mac something will probably have to be change. Also, referring binaries that are now NOT part of the repository!)
+Installation
+------------
+We will install the project in a virtual environment.
+Virtualenvs allow to easily isolate the project dependencies from your system install.
 
-1. python 2.7
-2. Django-1.2.7.tar.gz
-3. etianen-django-reversion-release-1.3.3-0-g3c9a873.zip (setup.py install), https://nodeload.github.com/etianen/django-reversion/zipball/release-1.3.3
-4. appserv-win32-2.5.10.exe (MySQL), MySQL-python-1.2.3.win32-py2.7.exe (or 64b)
-4x. probably missing easy_install here
-5. ez_setup.py
-6. easy_install pip
-7. easy_install South
-8. easy_install django-pagination
-9. easy_install django-debug-toolbar
-10. easy_install textile
-11. PIL-1.1.7.win32-py2.7.exe
-12. alex-django-filter-0.5.3-2-g51b39fc.zip (setup.py install), https://nodeload.github.com/alex/django-filter/zipball/master
-13. easy_install recaptcha-client
+The following instruction were tested on Linux, but should work on OSX and Windows as well.
+The only requirements are Python 2.7 and Virtualenv.
+
+To install DnDTools, run the following commands:
+
+```sh
+# Clone the repository (my fork of DndTools)
+git clone https://github.com/antoinealb/dndtools.git
+cd dndtools/
+
+# Create a Python Virtual environment in env/ and enables it
+virtualenv --python=python2.7 env
+source env/bin/activate
+
+# First we have to install an old version of django-reversion, which is not in PyPI
+pip install https://github.com/etianen/django-reversion/archive/release-1.3.3.zip
+
+# Then install all the requirements from the PyPI
+pip install -r requirements.txt
+
+# Copy the default settings for development
+cd dndtools/
+cp local.py.sample local.py
+
+# Sync the database. You will be asked to create a user.
+# The "--all" means that even tables based on migrations will be synced.
+python manage.py syncdb --all
+
+# Marks all database migrations as done.
+python manage.py migrate --fake
+
+# Finally, run the development server.
+python manage.py runserver
+
+# Your own version of DnDTools is now available at http://127.0.0.1:8000
+```
