@@ -6,6 +6,9 @@
 #################
 /dndtools/local.py
 
+# Virtual environment
+env
+
 # Binaries #
 ############
 *.pyc
