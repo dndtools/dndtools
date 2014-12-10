@@ -16,7 +16,7 @@ download setuptools setuptools-0.6c11-py2.6.egg from https://pypi.python.org/pyp
 # easy_install South
 # easy_install django-pagination
 # easy_install django-debug-toolbar
-# pip textile
+# pip install textile
 # easy_install recaptcha-client
 # apt-get install python-imaging
 # apt-get install git
