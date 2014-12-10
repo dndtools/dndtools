@@ -6,20 +6,15 @@ import os
 
 DIRNAME = os.path.dirname(os.path.abspath(__file__))
 
-DEBUG = False
+# Change this to False if you run it in development
+DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
+# See https://docs.djangoproject.com/en/1.6/ref/settings/#databases for reference
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'TODO FILL',
-        'USER': 'TODO FILL',
-        'PASSWORD': 'TODO FILL',
-        'HOST': '',
-        'PORT': '',
-        'OPTIONS': {
-            'init_command': 'SET storage_engine=INNODB',
-            },
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'dndtools.sqlite',
         }
 }
 

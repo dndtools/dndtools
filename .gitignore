@@ -6,6 +6,12 @@
 #################
 /dndtools/local.py
 
+# Virtual environment
+env
+
+# SQLite database
+*.sqlite
+
 # Binaries #
 ############
 *.pyc
