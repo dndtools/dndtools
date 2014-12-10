@@ -58,61 +58,10 @@ USE_TZ = False
 
 # LOCAL PY
 
-DEBUG = True
-TEMPLATE_DEBUG = DEBUG
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'dndtools2-general-ci',
-        'USER': 'root',
-        'PASSWORD': 'root',
-        'OPTIONS': {
-            'init_command': 'SET storage_engine=INNODB',
-        },
-    }
-}
-
-SECRET_KEY = '_ex=pd@$*e9a8*g(3n=6zv-)igez_%s2_=1wu0$#(cop5fh##c'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_DIR = os.path.join(BASE_DIR, 'static')
 STATICFILES_DIRS = (STATIC_DIR, )
 SITE_ID = 1
-
-if DEBUG:
-    INTERNAL_IPS = ('127.0.0.1',)
-
-    DEBUG_TOOLBAR_PANELS = (
-        'debug_toolbar.panels.versions.VersionsPanel',
-        'debug_toolbar.panels.timer.TimerPanel',
-        'debug_toolbar.panels.settings.SettingsPanel',
-        'debug_toolbar.panels.headers.HeadersPanel',
-        'debug_toolbar.panels.request.RequestPanel',
-        'debug_toolbar.panels.sql.SQLPanel',
-        'debug_toolbar.panels.staticfiles.StaticFilesPanel',
-        'debug_toolbar.panels.templates.TemplatesPanel',
-        'debug_toolbar.panels.cache.CachePanel',
-        'debug_toolbar.panels.signals.SignalsPanel',
-        'debug_toolbar.panels.logging.LoggingPanel',
-        'debug_toolbar.panels.redirects.RedirectsPanel',
-
-
-        # 'debug_toolbar.panels.version.VersionDebugPanel',
-        # 'debug_toolbar.panels.timer.TimerDebugPanel',
-        # 'debug_toolbar.panels.settings_vars.SettingsVarsDebugPanel',
-        # 'debug_toolbar.panels.headers.HeaderDebugPanel',
-        # 'debug_toolbar.panels.profiling.ProfilingDebugPanel',
-        # 'debug_toolbar.panels.request_vars.RequestVarsDebugPanel',
-        # 'debug_toolbar.panels.sql.SQLDebugPanel',
-        # 'debug_toolbar.panels.template.TemplateDebugPanel',
-        # 'debug_toolbar.panels.cache.CacheDebugPanel',
-        # 'debug_toolbar.panels.signals.SignalDebugPanel',
-        # 'debug_toolbar.panels.logger.LoggingPanel',
-    )
-
-    # DEBUG_TOOLBAR_CONFIG = {
-    #     'DISABLE_PANELS': False,
-    # }
 
 TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, 'templates'),
@@ -120,3 +69,5 @@ TEMPLATE_DIRS = (
 
 RECAPTCHA_PUBLIC = ''
 WSGI_APPLICATION = 'dndproject.wsgi.application'
+
+from dndproject.local import *
