@@ -38,7 +38,7 @@ pip install -r requirements.txt
 
 # Copy the default settings for development
 cd dndtools/
-cp local.py.sample local.py
+cp dndproject/local.py.sample dndproject/local.py
 
 # Sync the database. You will be asked to create a user.
 # The "--all" means that even tables based on migrations will be synced.
