@@ -1,4 +1,4 @@
-Django==1.2.7
+Django==1.5.5
 Pillow==2.6.1
 South==0.7.4
 django-debug-toolbar==0.9.4
