@@ -22,8 +22,8 @@ The only requirements are Python 2.7 and Virtualenv.
 To install DnDTools, run the following commands:
 
 ```sh
-# Clone the repository (my fork of DndTools)
-git clone https://github.com/antoinealb/dndtools.git
+# Clone the repository 
+git clone https://github.com/dndtools/dndtools.git
 cd dndtools/
 
 # Create a Python Virtual environment in env/ and enables it
