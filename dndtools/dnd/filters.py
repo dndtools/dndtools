@@ -280,6 +280,7 @@ class CharacterClassFilter(django_filters2.FilterSet):
     required_skills__skill = django_filters2.MultipleChoiceFilter(
         label='Skills', choices=skill_choices()
     )
+    required_feats__feat = django_filters2.MultipleChoiceFilter(
         label='Feats', choices=feat_choices()
     )
     requirements = django_filters2.CharFilter(
