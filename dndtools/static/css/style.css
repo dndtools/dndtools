@@ -338,7 +338,7 @@ span.small-warning-bar {
 
 #content {
     text-align: left;
-    width: 795px;
+    /*width: 795px;*/
     padding: 0;
     min-height: 500px;
 }
