@@ -23,8 +23,8 @@
 
     <h2>{{ rule.name }}</h2>
     (<a href="{{ rulebook.get_absolute_url }}">{{ rulebook.name }}</a>{% if rule.page_from %},  p. {{ rule.page_from }}{% if rule.page_to %}&mdash;{{ rule.page_to }}{% endif %}{% endif %})
-
+	<div class="nice-textile">
     {{ rule.body_html|safe }}
-
+	</div>
 
 {% endblock %}

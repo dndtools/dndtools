@@ -4,29 +4,37 @@
 
 <table class="common">
 <tr>
-  {% if is_admin %}
-    <th>
-        <abbr title="Verified">V</abbr>
-    </th>
-  {% endif %}
   <th>Spell name</th>
   <th>Spell School</th>
-  <th>
-    <abbr title="Verbal Component">V</abbr>&nbsp;<abbr title="Somatic Component">S</abbr>&nbsp;<abbr title="Material Component">M</abbr>&nbsp;<abbr title="Arcane Focus Component">AF</abbr>&nbsp;<abbr title="Divine Focus Component">DF</abbr>&nbsp;<abbr title="XP Component">XP</abbr>
-  </th>
-  <th>Rulebook name</th>
-  <th>Edition</th>
+  <th>Rulebook</th>
+  <th>Effect</th>
+  <th>Duration</th>
+  <th>Range</th>
+  <th>Components</th>
+  <th>Casting Time</th>  
 </tr>
 {% for spell in spell_list %}
 <tr>
-    {% if is_admin %}
-        <td {% if spell.verified %}title="{{ spell.verified_time }} by {{ spell.verified_author }}"{% endif %}>{{ spell.verified|boolean_as_img }}</td>
-    {% endif %}
     <td><a href="{{ spell.get_absolute_url }}">{{ spell.name }}</a></td>
     <td><a href="{{ spell.school.get_absolute_url }}">{{ spell.school.name }}</a></td>
-    <td>{{ spell.verbal_component|boolean_as_img }}&nbsp;{{ spell.somatic_component|boolean_as_img }}&nbsp;{{ spell.material_component|boolean_as_img }}&nbsp;{{ spell.arcane_focus_component|boolean_as_img }}&nbsp;{{ spell.divine_focus_component|boolean_as_img }}&nbsp;{{ spell.xp_component|boolean_as_img }}</td>
-    <td><a href="{{ spell.rulebook.get_absolute_url }}">{{ spell.rulebook.name }}</a></td>
-    <td><a href="{{ spell.rulebook.dnd_edition.get_absolute_url }}">{{ spell.rulebook.dnd_edition.name }}</a></td>
+	<td><a href="{{ spell.rulebook.get_absolute_url }}">{{ spell.rulebook.abbr }}</a></td>
+    <td> </td>
+	<td>{{ spell.duration }}</td>
+	<td>{{ spell.range }}</td>
+	<td>
+		{% if spell.verbal_component %}<abbr title="Verbal">V</abbr>, {% endif %}
+		{% if spell.somatic_component %}<abbr title="Somatic">S</abbr>, {% endif %}
+		{% if spell.material_component %}<abbr title="Material">M</abbr>, {% endif %}
+		{% if spell.arcane_focus_component %}<abbr title="Arcane Focus">AF</abbr>, {% endif %}
+		{% if spell.divine_focus_component %}<abbr title="Divine Focus">DF</abbr>, {% endif %}
+		{% if spell.xp_component %}<abbr title="Experience">XP</abbr>, {% endif %}
+		{% if spell.meta_breath_component %}<abbr title="Meta Breath">MB</abbr>, {% endif %}
+		{% if spell.true_name_component %}<abbr title="True Name">TN</abbr>, {% endif %}
+		{% if spell.corrupt_component %}Corrupt, {% endif %}
+		{% if spell.extra_components %}{{ spell.extra_components }}{% endif %}
+	</td>
+	
+	<td>{{ spell.casting_time }}</td>
 </tr>
 {% endfor %}
 </table>
