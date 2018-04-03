@@ -105,6 +105,19 @@
             </td>
         </tr>
         {% endif %}
+        
+        {% if favored_classes %}
+        <tr class="separator">
+            <th>Favored Classes:</th>
+            <td>
+                {% for racefavored in favored_classes %}
+                    {% if not forloop.first %}, {% endif %}
+                    <a href="{{ racefavored.character_class.get_absolute_url }}">{{ racefavored.character_class.name }}</a>
+                {% endfor %}
+            </td>
+        </tr>
+        {% endif %}
+
         {% if bonus_languages %}
         <tr{% if not automatic_languages %} class="separator"{% endif %}>
             <th>Bonus Languages:</th>
